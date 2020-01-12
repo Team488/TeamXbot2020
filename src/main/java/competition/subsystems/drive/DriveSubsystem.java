@@ -16,9 +16,11 @@ public class DriveSubsystem extends BaseSubsystem {
     private static Logger log = Logger.getLogger(DriveSubsystem.class);
 
     public final XCANTalon leftMaster;
-    public final XCANTalon leftFollower;
+    public final XCANTalon leftFollower1;
+    public final XCANTalon leftFollower2;
     public final XCANTalon rightMaster;
-    public final XCANTalon rightFollower;
+    public final XCANTalon rightFollower1;
+    public final XCANTalon rightFollower2;
 
     double voltageLimit = 12.0;
 
@@ -26,15 +28,22 @@ public class DriveSubsystem extends BaseSubsystem {
     public DriveSubsystem(CommonLibFactory factory, XPropertyManager propManager) {
         log.info("Creating DriveSubsystem");
 
-        this.leftMaster = factory.createCANTalon(34);
-        this.leftFollower = factory.createCANTalon(35);
-        this.rightMaster = factory.createCANTalon(21);
-        this.rightFollower = factory.createCANTalon(20);
+        this.leftMaster = factory.createCANTalon(33);
+        this.leftFollower1 = factory.createCANTalon(34);
+        this.leftFollower2 = factory.createCANTalon(32);
 
-        XCANTalon.configureMotorTeam("LeftDrive", "LeftMaster", leftMaster, leftFollower, 
-        true, true, false);
-        XCANTalon.configureMotorTeam("RightDrive", "RightMaster", rightMaster, rightFollower, 
-        false, false, false);
+        this.rightMaster = factory.createCANTalon(22);
+        this.rightFollower1 = factory.createCANTalon(21);
+        this.rightFollower2 = factory.createCANTalon(23);
+
+        leftMaster.configureAsMasterMotor(this.getName(), "leftMaster", false, false);
+        rightMaster.configureAsMasterMotor(this.getName(), "rightMaster", true, true);
+
+        leftFollower1.configureAsFollowerMotor(leftMaster, false);
+        leftFollower2.configureAsFollowerMotor(leftMaster, false);
+
+        rightFollower1.configureAsFollowerMotor(rightMaster, true);
+        rightFollower2.configureAsFollowerMotor(rightMaster, true);
     }
 
     public void tankDrive(double leftPower, double rightPower) {
@@ -52,7 +61,7 @@ public class DriveSubsystem extends BaseSubsystem {
     }
 // y("leftDriveTicksPer5Feet", 12348.8);
 // 1029.066666666667 is ticks per inch
-    double pulsesPerInch = 1029.06;
+    double pulsesPerInch = 205.81;
 
     public double getLeftTotalInches() {
         return leftMaster.getSelectedSensorPosition(0) / pulsesPerInch;
