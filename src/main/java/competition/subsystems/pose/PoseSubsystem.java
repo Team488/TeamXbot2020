@@ -50,4 +50,10 @@ public class PoseSubsystem extends BasePoseSubsystem {
         return fancyOdometry.getPoseMeters();
     }
 
+    @Override
+    public void resetDistanceTraveled() {
+        super.resetDistanceTraveled();
+        fancyOdometry.resetPosition(new Pose2d(), new Rotation2d(Math.toRadians(90)));
+    }
+
 }

@@ -5,7 +5,6 @@ import com.google.inject.Singleton;
 
 import org.apache.log4j.Logger;
 
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANTalon;
@@ -73,5 +72,10 @@ public class DriveSubsystem extends BaseSubsystem {
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(getLeftInchesPerSecond(), getRightInchesPerSecond());
-      }
+    }
+
+    public void resetEncoders() {
+        leftMaster.setSelectedSensorPosition(0, 0, 0);
+        rightMaster.setSelectedSensorPosition(0, 0, 0);
+    }
 }
