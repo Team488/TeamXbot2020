@@ -20,4 +20,10 @@ public class Robot extends BaseRobot {
     protected void setupInjectionModule() {
         this.injectionModule = new CompetitionModule(true);
     }
+
+    @Override
+    public void autonomousInit() {
+        // base will run the command
+        super.autonomousInit();
+    }
 }
