@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import xbot.common.command.BaseRobot;
 
@@ -29,6 +30,7 @@ public class Robot extends BaseRobot {
         this.injector.getInstance(SubsystemDefaultCommandMap.class);
         this.injector.getInstance(OperatorCommandMap.class);
         registerPeriodicDataSource(this.injector.getInstance(PoseSubsystem.class));
+        CommandScheduler.getInstance().registerSubsystem(this.injector.getInstance(PoseSubsystem.class));
     }
 
     @Override

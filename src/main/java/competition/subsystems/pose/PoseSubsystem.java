@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
+import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 import xbot.common.subsystems.pose.BasePoseSubsystem;
 
@@ -16,6 +17,10 @@ public class PoseSubsystem extends BasePoseSubsystem {
 
     DifferentialDriveOdometry fancyOdometry;
     DriveSubsystem drive;
+
+    DoubleProperty fancyX;
+    DoubleProperty fancyY;
+    DoubleProperty fancyDegrees;
 
     @Inject
     public PoseSubsystem(CommonLibFactory clf, PropertyFactory propManager, DriveSubsystem drive) {
@@ -54,6 +59,11 @@ public class PoseSubsystem extends BasePoseSubsystem {
     public void resetDistanceTraveled() {
         super.resetDistanceTraveled();
         fancyOdometry.resetPosition(new Pose2d(), new Rotation2d(Math.toRadians(90)));
+    }
+
+    @Override
+    public void periodic() {
+        
     }
 
 }
