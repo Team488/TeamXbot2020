@@ -13,8 +13,8 @@ public class FrontCollectingSubsystem extends BaseSubsystem { // maybe call this
     
     final DoubleProperty intakePowerProp;
     double power;
-    int ballsCollected;
-    int currentTotalBalls;
+    boolean ballsCollected = false; //assuming we will use a sensor to detect a ball being intaked, this boolean will return true when a ball is detected
+    int currentTotalBalls = 0;
 
     @Inject
     public FrontCollectingSubsystem(CommonLibFactory factory, PropertyFactory pf) {
@@ -33,9 +33,10 @@ public class FrontCollectingSubsystem extends BaseSubsystem { // maybe call this
     }
 
     public void numberOfIntake () {
-        //if ballsCollected {
-            //currentTotalBalls++;
-       // }
+        if (ballsCollected = true) {
+            currentTotalBalls++;
+            //prints out current total of balls that have been intaked 
+        }
 
     }
 
@@ -43,8 +44,12 @@ public class FrontCollectingSubsystem extends BaseSubsystem { // maybe call this
         
     }
     
-    public boolean absorb() {
-        return false;
+    public boolean isCollecting() {
+        if (currentTotalBalls == 5) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void stop () {

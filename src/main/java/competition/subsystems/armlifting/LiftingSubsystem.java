@@ -13,6 +13,9 @@ public class LiftingSubsystem extends BaseSubsystem {
     
     final DoubleProperty liftingPowerProp;
     final DoubleProperty loweringPowerProp;
+    int maximumLiftHeight;
+    int currentLiftHeight;
+
 
     @Inject
     public LiftingSubsystem(CommonLibFactory factory, PropertyFactory pf) {
@@ -31,7 +34,10 @@ public class LiftingSubsystem extends BaseSubsystem {
         setPower(loweringPowerProp.get());
     }
 
-    public void maximum() {
+    public void maximum() { //sets a certain distance that the arm can lift up to
+        if (currentLiftHeight == maximumLiftHeight) {
+            //the robot won't be able to lift higher
+        }
 
     }
 
