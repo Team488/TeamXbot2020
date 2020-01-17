@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 
 import xbot.common.command.BaseSubsystem;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
+import xbot.common.math.MathUtils;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
  
@@ -37,6 +38,7 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
     }
 
     public void setPower (double power) {
+        MathUtils.constrainDouble(power, -1, maximumArmLiftHeight);
 
     }
 
