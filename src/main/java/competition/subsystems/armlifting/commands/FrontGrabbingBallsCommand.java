@@ -26,7 +26,6 @@ public class FrontGrabbingBallsCommand extends BaseCommand {
     @Override
     public void execute() {
         frontCollectingSubsystem.intake();
-        frontCollectingSubsystem.stop();
     }
     
 }

@@ -13,7 +13,6 @@ public class FrontCollectingSubsystem extends BaseSubsystem { // maybe call this
     
     final DoubleProperty intakePowerProp;
     double power;
-    boolean ballsCollected = false; //assuming we will use a sensor to detect a ball being intaked, this boolean will return true when a ball is detected
     int currentTotalBalls = 0;
 
     @Inject
@@ -32,20 +31,12 @@ public class FrontCollectingSubsystem extends BaseSubsystem { // maybe call this
         setPower(intakePowerProp.get());
     }
 
-    public void numberOfIntake () {
-        if (ballsCollected = true) {
-            currentTotalBalls++;
-            //prints out current total of balls that have been intaked 
-        }
-
-    }
-
     public void setPower(double power){
         
     }
     
-    public boolean isCollecting() {
-        if (currentTotalBalls == 5) {
+    public boolean isAtCapacity() {
+        if (currentTotalBalls >= 5) {
             return false;
         } else {
             return true;

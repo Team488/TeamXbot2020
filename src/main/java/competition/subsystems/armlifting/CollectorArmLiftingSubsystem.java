@@ -9,36 +9,31 @@ import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
  
 @Singleton
-public class LiftingSubsystem extends BaseSubsystem {
+public class CollectorArmLiftingSubsystem extends BaseSubsystem {
     
     final DoubleProperty liftingPowerProp;
-    final DoubleProperty loweringPowerProp;
-    int maximumLiftHeight;
-    int currentLiftHeight;
-
+    final DoubleProperty currentArmLiftHeightProp;
+    final DoubleProperty maximumArmLiftHeightProp;
+    int maximumArmLiftHeight;
+    int currentArmLiftHeight;
 
     @Inject
-    public LiftingSubsystem(CommonLibFactory factory, PropertyFactory pf) {
+    public CollectorArmLiftingSubsystem(CommonLibFactory factory, PropertyFactory pf) {
         log.info("Creating LiftingSubsystem");
         pf.setPrefix(this);
         liftingPowerProp = pf.createPersistentProperty("Lifting Power", 1);
-        loweringPowerProp = pf.createPersistentProperty("Lowering Power", 1);
-
+        currentArmLiftHeightProp = pf.createPersistentProperty("Arm Lift Height", 1);
+        maximumArmLiftHeightProp = pf.createPersistentProperty("Maximum Arm Lift Height", 10);
     }
 
     public void up() {
         setPower(liftingPowerProp.get());
     }
-    
-    public void down() {
-        setPower(loweringPowerProp.get());
-    }
 
     public void maximum() { //sets a certain distance that the arm can lift up to
-        if (currentLiftHeight == maximumLiftHeight) {
-            //the robot won't be able to lift higher
+        if (currentArmLiftHeight >= maximumArmLiftHeight) {
+            //the robot won't be able to lift higher, unsure how to write the code for that at the moment
         }
-
     }
 
     public void setPower (double power) {
@@ -47,7 +42,6 @@ public class LiftingSubsystem extends BaseSubsystem {
 
     public void stop () {
         setPower(0);
-
     }
 
 }
