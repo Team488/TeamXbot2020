@@ -15,7 +15,7 @@ public class FrontGrabbingBallsCommand extends BaseCommand {
     public FrontGrabbingBallsCommand(OperatorInterface oi, FrontCollectingSubsystem frontCollectingSubsystem) {
         this.oi = oi;
         this.frontCollectingSubsystem = frontCollectingSubsystem;
-        this.requires(this.frontCollectingSubsystem);
+        this.addRequirements(this.frontCollectingSubsystem);
     }
 
     @Override

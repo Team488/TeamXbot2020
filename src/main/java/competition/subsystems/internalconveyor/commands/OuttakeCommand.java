@@ -14,7 +14,7 @@ public class OuttakeCommand extends BaseCommand{
     public OuttakeCommand (OperatorInterface oi, InternalConveyorSubsystem internalConveyorSubsystem){
         this.oi = oi;
         this.internalConveyorSubsystem = internalConveyorSubsystem;
-        this.requires(internalConveyorSubsystem);
+        this.addRequirements(internalConveyorSubsystem);
     }
 
     @Override
