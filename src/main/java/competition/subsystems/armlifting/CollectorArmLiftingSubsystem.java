@@ -19,6 +19,7 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
     final DoubleProperty frozenPowerProp;
     int maximumArmLiftHeight;
     int currentArmLiftHeight;
+    int minimumArmLiftHeight;
     double power;
 
     @Inject
@@ -46,7 +47,7 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
     }
 
     public boolean isAtMinimum() {
-        return currentArmLiftHeight <= maximumArmLiftHeight;
+        return currentArmLiftHeight <= minimumArmLiftHeight;
     } 
     
     public void setPower (double power) {
