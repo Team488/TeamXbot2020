@@ -5,16 +5,16 @@ import competition.operator_interface.OperatorInterface;
 import competition.subsystems.hood.HoodSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class RetractCommand extends BaseCommand{
+public class ExtendHoodCommand extends BaseCommand{
 
     final OperatorInterface oi;
     final HoodSubsystem hoodSubsystem;
 
     @Inject
-    public RetractCommand(OperatorInterface oi, HoodSubsystem hoodSubsystem){
+    public ExtendHoodCommand(OperatorInterface oi, HoodSubsystem hoodSubsystem){
         this.oi = oi;
         this.hoodSubsystem = hoodSubsystem;
-        this.requires(hoodSubsystem);
+        this.addRequirements(hoodSubsystem);
     }
 
     @Override
@@ -23,6 +23,6 @@ public class RetractCommand extends BaseCommand{
     }
 
     public void execute(){
-        hoodSubsystem.retract();
+        hoodSubsystem.extend();
     }
 }
