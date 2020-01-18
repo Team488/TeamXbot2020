@@ -16,20 +16,18 @@ public class HoodSubsystem extends BaseSubsystem{
     final DoubleProperty retractPowerProp;
     final DoubleProperty maxAngleProp;
     final DoubleProperty minAngleProp;
-    final DoubleProperty curAngleProp;
-    double power;
+    final DoubleProperty currentAngleProp;
     double maxAngle;
     double minAngle;
 
     @Inject
     public HoodSubsystem(CommonLibFactory factory, PropertyFactory pf){
-
         pf.setPrefix(this);
         extendPowerProp = pf.createPersistentProperty("Extend Power", 0.5);
         retractPowerProp = pf.createPersistentProperty("Retract Power", -0.5);
         maxAngleProp = pf.createPersistentProperty("Max Angle", 1);
         minAngleProp = pf.createPersistentProperty("Min Angle", -1);
-        curAngleProp = pf.createEphemeralProperty("Current Angle", 0);
+        currentAngleProp = pf.createEphemeralProperty("Current Angle", 0);
 
     }
 
