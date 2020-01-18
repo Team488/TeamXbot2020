@@ -17,6 +17,7 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
     final DoubleProperty maximumArmLiftHeightProp;
     int maximumArmLiftHeight;
     int currentArmLiftHeight;
+    double power;
 
     @Inject
     public CollectorArmLiftingSubsystem(CommonLibFactory factory, PropertyFactory pf) {
@@ -31,15 +32,14 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
         setPower(liftingPowerProp.get());
     }
 
-    public void maximum() { //sets a certain distance that the arm can lift up to
-        if (currentArmLiftHeight >= maximumArmLiftHeight) {
-            //the robot won't be able to lift higher, unsure how to write the code for that at the moment
-        }
-    }
-
-    public void setPower (double power) {
+    public void maximum(double power) { //sets a certain distance that the arm can lift up to
         MathUtils.constrainDouble(power, -1, maximumArmLiftHeight);
-
+    }
+    
+    public void setPower (double power) {
+        if (currentArmLiftHeight >= maximumArmLiftHeight) {
+            maximum(power);
+        }
     }
 
     public void stop () {
