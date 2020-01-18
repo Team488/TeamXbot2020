@@ -15,7 +15,7 @@ public class SpinningShooterWheelCommand extends BaseCommand{
     public SpinningShooterWheelCommand(OperatorInterface oi, ShooterWheelSubsystem shooterWheelSubsystem){
         this.oi = oi;
         this.shooterWheelSubsystem = shooterWheelSubsystem;
-        this.requires(this.shooterWheelSubsystem);
+        this.addRequirements(this.shooterWheelSubsystem);
     }
 
     @Override

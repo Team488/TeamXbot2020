@@ -16,7 +16,6 @@ public class InternalConveyorSubsystem extends BaseSubsystem { //makes conveyer 
 
     @Inject
     public InternalConveyorSubsystem(CommonLibFactory factory, PropertyFactory pf){
-
         pf.setPrefix(this);
         intakePowerProp = pf.createPersistentProperty("IntakePower", 0.5);
         outtakePowerProp = pf.createPersistentProperty("OuttakePower", 0.5);
