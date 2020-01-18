@@ -12,9 +12,7 @@ import xbot.common.properties.PropertyFactory;
 public class ShooterWheelSubsystem extends BaseSubsystem {
     
     final DoubleProperty spinWheelPowerProp;
-    double power;
     
-
     @Inject
     public ShooterWheelSubsystem(CommonLibFactory factory, PropertyFactory pf) {
         log.info("Creating ShooterWheelSubsystem");
