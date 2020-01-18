@@ -15,7 +15,7 @@ public class GrabbingCommand extends BaseCommand{
     public GrabbingCommand(OperatorInterface oi, HangerSubsystem hangerSubsystem){
         this.oi = oi;
         this.hangerSubsystem = hangerSubsystem;
-        this.requires(this.hangerSubsystem);
+        this.addRequirements(this.hangerSubsystem);
     }
 
     @Override
