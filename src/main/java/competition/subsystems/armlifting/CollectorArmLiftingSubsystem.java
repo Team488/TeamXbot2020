@@ -52,10 +52,10 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
     
     public void setPower (double power) {
         if (isAtMaximum()) {
-            MathUtils.constrainDouble(power, -1, 0);
+            power = MathUtils.constrainDouble(power, -1, 0);
         }
         if (isAtMinimum()) {
-            MathUtils.constrainDouble(power, 0, 1);
+            power = MathUtils.constrainDouble(power, 0, 1);
         }
     }
 
