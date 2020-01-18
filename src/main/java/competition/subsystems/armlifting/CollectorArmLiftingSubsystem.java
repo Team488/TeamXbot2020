@@ -27,7 +27,7 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
         log.info("Creating LiftingSubsystem");
         pf.setPrefix(this);
         liftingPowerProp = pf.createPersistentProperty("Lifting Power", 1);
-        currentArmLiftHeightProp = pf.createPersistentProperty("Arm Lift Height", 0);
+        currentArmLiftHeightProp = pf.createEphemeralProperty("Arm Lift Height", 0);
         maximumArmLiftHeightProp = pf.createPersistentProperty("Maximum Arm Lift Height", 1);
         minimumArmLiftHeightProp = pf.createPersistentProperty("Minimum Arm Lift Height", -1);
         frozenPowerProp = pf.createPersistentProperty("Frozenpower", 0);
