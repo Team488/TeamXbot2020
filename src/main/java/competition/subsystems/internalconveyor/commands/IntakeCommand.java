@@ -14,7 +14,7 @@ public class IntakeCommand extends BaseCommand{
     public IntakeCommand(OperatorInterface oi, InternalConveyorSubsystem internalConveyorSubsystem){
         this.oi = oi;
         this.internalConveyorSubsystem = internalConveyorSubsystem;
-        this.requires(internalConveyorSubsystem);
+        this.addRequirements(internalConveyorSubsystem);
     }
 
     @Override
