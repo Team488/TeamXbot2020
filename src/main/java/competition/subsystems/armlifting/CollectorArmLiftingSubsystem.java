@@ -33,13 +33,13 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
     }
 
     public void maximum(double power) { //sets a certain distance that the arm can lift up to
-        MathUtils.constrainDouble(power, -1, maximumArmLiftHeight);
+        if (currentArmLiftHeight >= maximumArmLiftHeight) {
+            MathUtils.constrainDouble(power, -1, maximumArmLiftHeight);
+        }
     }
     
     public void setPower (double power) {
-        if (currentArmLiftHeight >= maximumArmLiftHeight) {
             maximum(power);
-        }
     }
 
     public void stop () {
