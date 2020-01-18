@@ -15,7 +15,7 @@ public class CollectorArmLiftingCommand extends BaseCommand {
     public CollectorArmLiftingCommand(OperatorInterface oi, CollectorArmLiftingSubsystem collectorArmLiftingSubsystem) {
         this.oi = oi;
         this.collectorArmLiftingSubsystem = collectorArmLiftingSubsystem;
-        this.requires(this.collectorArmLiftingSubsystem);
+        this.addRequirements(this.collectorArmLiftingSubsystem);
     }
 
     @Override
