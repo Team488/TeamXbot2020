@@ -22,15 +22,13 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
 
     public void spin () {
         setPower(spinWheelPowerProp.get());
-        
     }
 
     public void setPower(double power) {
-
+        
     }
   
     public void stop () {
         setPower(0);
-
     }
 }
