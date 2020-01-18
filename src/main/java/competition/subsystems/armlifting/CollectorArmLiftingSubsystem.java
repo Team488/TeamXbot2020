@@ -39,7 +39,7 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
 
     public void frozen () {
         setPower(0);
-        //is going to be different from stop. frozen just freezes the arm lift at a certain angle so that our team throw balls in but stop cause the arm to drop from no power
+        //different from stop, freezes arm lift position
     }
 
     public boolean isAtMaximum() { //sets a certain distance that the arm can lift up to
