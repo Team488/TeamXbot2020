@@ -3,7 +3,9 @@ package competition.subsystems.armlifting;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
+import xbot.common.controls.actuators.XCANTalon;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.math.MathUtils;
 import xbot.common.properties.DoubleProperty;
@@ -21,11 +23,18 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
     int currentArmLiftHeight;
     int minimumArmLiftHeight;
     double power;
+    public XCANTalon liftingCollectorArmMotor;
+    private IdealElectricalContract contract;
 
     @Inject
-    public CollectorArmLiftingSubsystem(CommonLibFactory factory, PropertyFactory pf) {
+    public CollectorArmLiftingSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating LiftingSubsystem");
         pf.setPrefix(this);
+
+        if (contract.isCollectorArmLiftingReady()) {
+            this.liftingCollectorArmMotor = factory.createCANTalon(contract.liftingCollectorArmMotor().channel);
+        }
+
         liftingPowerProp = pf.createPersistentProperty("Lifting Power", 1);
         currentArmLiftHeightProp = pf.createEphemeralProperty("Arm Lift Height", 0);
         maximumArmLiftHeightProp = pf.createPersistentProperty("Maximum Arm Lift Height", 1);
@@ -56,6 +65,10 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
         }
         if (isAtMinimum()) {
             power = MathUtils.constrainDouble(power, 0, 1);
+        }
+
+        if(contract.isCollectorArmLiftingReady()) {
+            liftingCollectorArmMotor.simpleSet(power);
         }
     }
 

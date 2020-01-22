@@ -23,5 +23,21 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(4, true);
     }
 
+    public boolean isCollectorArmLiftingReady() {
+        return true;
+    }
+
+    public DeviceInfo liftingCollectorArmMotor() {
+        return new DeviceInfo(5, false);
+    }
+
+    public boolean isFrontCollectingReady() {
+        return true;
+    }
+
+    public DeviceInfo frontCollectingMotor() {
+        return new DeviceInfo(6, false);
+    }
+
 
 }
