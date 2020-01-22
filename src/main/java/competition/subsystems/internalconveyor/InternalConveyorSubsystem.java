@@ -2,7 +2,9 @@ package competition.subsystems.internalconveyor;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
+import xbot.common.controls.actuators.XCANTalon;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
@@ -13,13 +15,19 @@ public class InternalConveyorSubsystem extends BaseSubsystem { //makes conveyer 
 
     final DoubleProperty intakePowerProp;
     final DoubleProperty outtakePowerProp;
+    private IdealElectricalContract contract;
+    public XCANTalon conveyorMotor;
 
     @Inject
-    public InternalConveyorSubsystem(CommonLibFactory factory, PropertyFactory pf){
-
+    public InternalConveyorSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
         pf.setPrefix(this);
+        this.contract = contract;
         intakePowerProp = pf.createPersistentProperty("IntakePower", 0.5);
         outtakePowerProp = pf.createPersistentProperty("OuttakePower", 0.5);
+
+        if(contract.isConveyorReady()){
+            this.conveyorMotor = factory.createCANTalon(contract.conveyorMotor().channel);
+        }
     }
 
     public void intake(){
@@ -35,6 +43,8 @@ public class InternalConveyorSubsystem extends BaseSubsystem { //makes conveyer 
     }
 
     public void setPower(double power){
-        
+        if(contract.isConveyorReady()){
+            conveyorMotor.simpleSet(power);
+        }
     }
 }

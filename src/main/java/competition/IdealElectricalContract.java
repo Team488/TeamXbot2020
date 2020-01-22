@@ -23,5 +23,29 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(4, true);
     }
 
+    public DeviceInfo hoodMotor(){
+        return new DeviceInfo(5, false);
+    }
+
+    public boolean isHoodReady(){
+        return true;
+    }
+    
+    public DeviceInfo conveyorMotor(){
+        return new DeviceInfo(6, false);
+    }
+
+    public boolean isConveyorReady(){
+        return true;
+    }
+
+    public DeviceInfo shooterWheelMotor(){
+        return new DeviceInfo(7, false);
+    }
+
+    public boolean isShooterWheelReady(){
+        return true;
+    }
+
 
 }

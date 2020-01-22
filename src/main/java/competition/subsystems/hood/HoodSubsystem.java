@@ -3,7 +3,10 @@ package competition.subsystems.hood;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
+import xbot.common.controls.actuators.XCANTalon;
+//import xbot.common.injection.ElectricalContract;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.math.MathUtils;
 import xbot.common.properties.DoubleProperty;
@@ -17,17 +20,24 @@ public class HoodSubsystem extends BaseSubsystem{
     final DoubleProperty maxAngleProp;
     final DoubleProperty minAngleProp;
     final DoubleProperty currentAngleProp;
+    private IdealElectricalContract contract;
     double maxAngle;
     double minAngle;
+    public XCANTalon hoodMotor;
 
     @Inject
-    public HoodSubsystem(CommonLibFactory factory, PropertyFactory pf){
+    public HoodSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
         pf.setPrefix(this);
+        this.contract = contract;
         extendPowerProp = pf.createPersistentProperty("Extend Power", 0.5);
         retractPowerProp = pf.createPersistentProperty("Retract Power", -0.5);
         maxAngleProp = pf.createPersistentProperty("Max Angle", 1);
         minAngleProp = pf.createPersistentProperty("Min Angle", -1);
         currentAngleProp = pf.createEphemeralProperty("Current Angle", 0);
+
+        if (contract.isHoodReady()) {
+             this.hoodMotor = factory.createCANTalon(contract.hoodMotor().channel);
+        }
 
     }
 
@@ -57,6 +67,10 @@ public class HoodSubsystem extends BaseSubsystem{
         }
         if(isFullyRetracted()){
             power = MathUtils.constrainDouble(power, 0, 1);
+        }
+
+        if (contract.isHoodReady()) {
+            hoodMotor.simpleSet(power);
         }
     }
 
