@@ -29,15 +29,18 @@ public class HoodSubsystem extends BaseSubsystem{
     public HoodSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
         pf.setPrefix(this);
         this.contract = contract;
-        extendPowerProp = pf.createPersistentProperty("Extend Power", 0.5);
-        retractPowerProp = pf.createPersistentProperty("Retract Power", -0.5);
-        maxAngleProp = pf.createPersistentProperty("Max Angle", 1);
-        minAngleProp = pf.createPersistentProperty("Min Angle", -1);
+        extendPowerProp = pf.createPersistentProperty("Extend Power", 1);
+        retractPowerProp = pf.createPersistentProperty("Retract Power", -1);
+        maxAngleProp = pf.createPersistentProperty("Max Angle", 5);
+        minAngleProp = pf.createPersistentProperty("Min Angle", -5);
         currentAngleProp = pf.createEphemeralProperty("Current Angle", 0);
 
         if (contract.isHoodReady()) {
              this.hoodMotor = factory.createCANTalon(contract.hoodMotor().channel);
         }
+
+        maxAngle = 5;
+        minAngle = -5;
 
     }
 
