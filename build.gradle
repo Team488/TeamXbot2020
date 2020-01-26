@@ -151,3 +151,8 @@ jacocoTestReport {
 
 // always generate the coverage report after the tests run
 test.finalizedBy { jacocoTestReport }
+
+// if we are running tests, make all local projects run their tests too
+test {
+    dependsOn gradle.includedBuilds*.task(':test')
+}
