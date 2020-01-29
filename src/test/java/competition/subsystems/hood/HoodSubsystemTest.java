@@ -24,5 +24,22 @@ public class HoodSubsystemTest extends BaseCompetitionTest {
         assertEquals(-1, hood.hoodMotor.getMotorOutputPercent(), 0.001);
     }
 
+    @Test
+    public void testIsFullyExtended(){
+        HoodSubsystem hood = this.injector.getInstance(HoodSubsystem.class);
+        hood.setAngle(5);
+        hood.setPower(1);
+        
+        assertEquals(0, hood.hoodMotor.getMotorOutputPercent(), 0.001);
+    }
+
+    @Test
+    public void testIsFullyExtracted(){
+        HoodSubsystem hood = this.injector.getInstance(HoodSubsystem.class);
+        hood.setAngle(-5);
+        hood.setPower(-1);
+        
+        assertEquals(0, hood.hoodMotor.getMotorOutputPercent(), 0.001);
+    }
     
 }

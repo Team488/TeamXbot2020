@@ -23,7 +23,7 @@ public class InternalConveyorSubsystem extends BaseSubsystem { //makes conveyer 
         pf.setPrefix(this);
         this.contract = contract;
         intakePowerProp = pf.createPersistentProperty("IntakePower", 0.5);
-        outtakePowerProp = pf.createPersistentProperty("OuttakePower", 0.5);
+        outtakePowerProp = pf.createPersistentProperty("OuttakePower", -0.5);
 
         if(contract.isConveyorReady()){
             this.conveyorMotor = factory.createCANTalon(contract.conveyorMotor().channel);

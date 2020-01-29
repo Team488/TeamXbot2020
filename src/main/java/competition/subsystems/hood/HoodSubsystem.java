@@ -24,6 +24,7 @@ public class HoodSubsystem extends BaseSubsystem{
     double maxAngle;
     double minAngle;
     public XCANTalon hoodMotor;
+    double angle;
 
     @Inject
     public HoodSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
@@ -45,7 +46,11 @@ public class HoodSubsystem extends BaseSubsystem{
     }
 
     public double getAngle(){
-        return 0; //return angle
+        return angle;
+    }
+
+    public void setAngle(double angle){
+        this.angle = angle;
     }
 
     public void extend(){
