@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import competition.BaseCompetitionTest;
 import competition.subsystems.armlifting.FrontCollectingSubsystem;
-import xbot.common.injection.BaseWPITest;
 
-public class FrontCollectingSubsystemTest extends BaseWPITest {
+public class FrontCollectingSubsystemTest extends BaseCompetitionTest {
     @Test
     public void testFrontCollecting() {
         FrontCollectingSubsystem frontCollect = this.injector.getInstance(FrontCollectingSubsystem.class);

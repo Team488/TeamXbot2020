@@ -24,22 +24,22 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
     int minimumArmLiftHeight;
     double power;
     public XCANTalon liftingCollectorArmMotor;
-    private IdealElectricalContract contract;
+    final private IdealElectricalContract contract;
 
     @Inject
     public CollectorArmLiftingSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating LiftingSubsystem");
         pf.setPrefix(this);
-
-        if (contract.isCollectorArmLiftingReady()) {
-            this.liftingCollectorArmMotor = factory.createCANTalon(contract.liftingCollectorArmMotor().channel);
-        }
-
         liftingPowerProp = pf.createPersistentProperty("Lifting Power", 1);
         currentArmLiftHeightProp = pf.createEphemeralProperty("Arm Lift Height", 0);
         maximumArmLiftHeightProp = pf.createPersistentProperty("Maximum Arm Lift Height", 1);
         minimumArmLiftHeightProp = pf.createPersistentProperty("Minimum Arm Lift Height", -1);
         frozenPowerProp = pf.createPersistentProperty("Frozenpower", 0);
+        this.contract = contract;
+
+        if (contract.isCollectorArmLiftingReady()) {
+            this.liftingCollectorArmMotor = factory.createCANTalon(contract.liftingCollectorArmMotor().channel);
+        }
     }
 
     public void up() {

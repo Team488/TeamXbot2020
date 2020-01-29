@@ -12,13 +12,13 @@ import xbot.common.properties.PropertyFactory;
 
 
 @Singleton
-public class FrontCollectingSubsystem extends BaseSubsystem { // maybe call this FrontCollectionSubsystem
+public class FrontCollectingSubsystem extends BaseSubsystem { 
     
     final DoubleProperty intakePowerProp;
     double power;
     int currentTotalBalls = 0;
     public XCANTalon frontCollectingMotor;
-    private IdealElectricalContract contract;
+    final private IdealElectricalContract contract;
 
 
     @Inject
@@ -26,6 +26,7 @@ public class FrontCollectingSubsystem extends BaseSubsystem { // maybe call this
         log.info("Creating CollectingSubsystem");
         pf.setPrefix(this);
         intakePowerProp = pf.createPersistentProperty("Intake Power", 1);
+        this.contract = contract;
 
         if (contract.isFrontCollectingReady()) {
             this.frontCollectingMotor = factory.createCANTalon(contract.frontCollectingMotor().channel);
@@ -40,6 +41,7 @@ public class FrontCollectingSubsystem extends BaseSubsystem { // maybe call this
         if(contract.isFrontCollectingReady()) {
             frontCollectingMotor.simpleSet(power);
         }
+
     }
     
     public boolean isAtCapacity() {
