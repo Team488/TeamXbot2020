@@ -6,13 +6,13 @@ import competition.operator_interface.OperatorInterface;
 import competition.subsystems.turret.TurretSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class turretRotationCommand extends BaseCommand
+public class TurretRotationCommand extends BaseCommand
 {
     final OperatorInterface oi;
     final TurretSubsystem turretSubsystem;
 
     @Inject
-    public turretRotationCommand(OperatorInterface oi , TurretSubsystem tSubsystem) {
+    public TurretRotationCommand(OperatorInterface oi , TurretSubsystem tSubsystem) {
         this.oi = oi;
         this.turretSubsystem = tSubsystem;
 

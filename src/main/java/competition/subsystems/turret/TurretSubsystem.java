@@ -32,12 +32,12 @@ public class TurretSubsystem extends BaseSubsystem {
         motor.setInverted(contract.rotationMotor().inverted);
     }
 
-    public void TurnLeft()
+    public void turnLeft()
     {
         motor.simpleSet(-turnSpeedProp.get());
     }
 
-    public void TurnRight()
+    public void turnRight()
     {
         motor.simpleSet(turnSpeedProp.get());
     }
