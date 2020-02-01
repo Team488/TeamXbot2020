@@ -27,9 +27,11 @@ public class TurretSubsystem extends BaseSubsystem {
         minAngleProp = pf.createPersistentProperty("MinAngle", -180);
         turnPowerProp = pf.createPersistentProperty("TurnSpeed", .03); 
 
-
-        this.motor = factory.createCANTalon(contract.rotationMotor().channel);
-        motor.setInverted(contract.rotationMotor().inverted);
+        if(contract.isConveyorReady())
+        {
+            this.motor = factory.createCANTalon(contract.rotationMotor().channel);
+            motor.setInverted(contract.rotationMotor().inverted);
+        }
     }
 
     public void turnLeft()
