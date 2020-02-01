@@ -8,7 +8,7 @@ public class IdealElectricalContract extends ElectricalContract {
     // Drive
     ///
     public DeviceInfo leftFrontDriveNeo() {
-        return new DeviceInfo(32, true);
+        return new DeviceInfo(32, false);
     }
 
     public DeviceInfo leftRearDriveNeo() {
