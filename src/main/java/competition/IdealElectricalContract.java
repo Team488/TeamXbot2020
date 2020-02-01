@@ -23,6 +23,26 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(22, false);
     }
 
+
+    public DeviceInfo hoodMotor(){
+        return new DeviceInfo(5, false);
+    }
+
+    public boolean isHoodReady(){
+        return true;
+    }
+    
+
+    public boolean isConveyorReady(){
+        return true;
+    }
+
+
+    public boolean isShooterWheelReady(){
+        return true;
+    }
+
+
     //Everything above sure about inversion
     //Everything below not sure about the inversion
     public DeviceInfo intakeMotor()
@@ -57,5 +77,6 @@ public class IdealElectricalContract extends ElectricalContract {
     {
         return new DeviceInfo(25, false);
     }
+
 
 }
