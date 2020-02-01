@@ -3,7 +3,6 @@ package competition.operator_interface;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import xbot.common.controls.sensors.XFTCGamepad;
 import xbot.common.controls.sensors.XXboxController;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.logging.RobotAssertionManager;
