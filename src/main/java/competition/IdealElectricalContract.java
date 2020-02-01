@@ -23,6 +23,7 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(22, false);
     }
 
+
     public DeviceInfo hoodMotor(){
         return new DeviceInfo(5, false);
     }
@@ -31,20 +32,50 @@ public class IdealElectricalContract extends ElectricalContract {
         return true;
     }
     
-    public DeviceInfo conveyorMotor(){
-        return new DeviceInfo(6, false);
-    }
 
     public boolean isConveyorReady(){
         return true;
     }
 
-    public DeviceInfo shooterWheelMotor(){
-        return new DeviceInfo(7, false);
-    }
 
     public boolean isShooterWheelReady(){
         return true;
+    }
+
+
+    //Everything above sure about inversion
+    //Everything below not sure about the inversion
+    public DeviceInfo intakeMotor()
+    {
+        return new DeviceInfo(24, false);
+    }
+
+    public DeviceInfo shooterMotorMaster()
+    {
+        return new DeviceInfo(21, false);
+    }
+    public DeviceInfo shooterMotorFollower()
+    {
+        return new DeviceInfo(34, false);
+    }
+
+    public DeviceInfo climberMotorMaster()
+    {
+        return new DeviceInfo(35, false);
+    }
+    public DeviceInfo climberMotorfollower()
+    {
+        return new DeviceInfo(20, false);
+    }
+
+    public DeviceInfo rotationMotor()
+    {
+        return new DeviceInfo(31, false);
+    }
+
+    public DeviceInfo carouselMotor()
+    {
+        return new DeviceInfo(25, false);
     }
 
 

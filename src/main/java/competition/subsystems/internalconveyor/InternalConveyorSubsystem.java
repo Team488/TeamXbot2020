@@ -15,19 +15,28 @@ public class InternalConveyorSubsystem extends BaseSubsystem { //makes conveyer 
 
     final DoubleProperty intakePowerProp;
     final DoubleProperty outtakePowerProp;
+
     private IdealElectricalContract contract;
-    public XCANTalon conveyorMotor;
+
+
+    public final XCANTalon intakeMotor;
 
     @Inject
     public InternalConveyorSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
+
         pf.setPrefix(this);
         this.contract = contract;
         intakePowerProp = pf.createPersistentProperty("IntakePower", 0.5);
+
         outtakePowerProp = pf.createPersistentProperty("OuttakePower", -0.5);
 
+
+
         if(contract.isConveyorReady()){
-            this.conveyorMotor = factory.createCANTalon(contract.conveyorMotor().channel);
+          this.intakeMotor = factory.createCANTalon(contract.intakeMotor().channel);
+          intakeMotor.setInverted(contract.intakeMotor().inverted);
         }
+
     }
 
     public void intake(){
