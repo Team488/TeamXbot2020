@@ -23,5 +23,10 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(22, true);
     }
 
+    public DeviceInfo intakeMotor()
+    {
+        return new DeviceInfo(24, false);
+    }
+
 
 }
