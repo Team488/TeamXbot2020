@@ -22,7 +22,7 @@ public class TurnLeft extends BaseCommand
 
     @Override
     public void execute() {
-        turretSubsystem.setPower(0);
+        turretSubsystem.turnLeft();
 
     }
 
