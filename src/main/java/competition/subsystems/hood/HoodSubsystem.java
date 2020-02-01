@@ -6,8 +6,6 @@ import com.google.inject.Singleton;
 import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANTalon;
-import xbot.common.injection.ElectricalContract;
-//import xbot.common.injection.ElectricalContract;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.math.MathUtils;
 import xbot.common.properties.DoubleProperty;
@@ -43,7 +41,6 @@ public class HoodSubsystem extends BaseSubsystem{
 
         maxAngle = 5;
         minAngle = -5;
-
     }
 
     public double getAngle(){
