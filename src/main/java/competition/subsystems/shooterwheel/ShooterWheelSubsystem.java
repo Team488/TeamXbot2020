@@ -15,7 +15,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     
     final DoubleProperty spinWheelPowerProp;
     private IdealElectricalContract contract;
-    public XCANTalon shooterWheelMotor;
+    public XCANTalon shooterWheelMaster;
     
     @Inject
     public ShooterWheelSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
@@ -25,7 +25,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         spinWheelPowerProp = pf.createPersistentProperty("Spinning Wheel Power", 1);
 
         if(contract.isShooterWheelReady()){
-            this.shooterWheelMotor = factory.createCANTalon(contract.shooterWheelMotor().channel);
+            this.shooterWheelMaster = factory.createCANTalon(contract.shooterMotorMaster().channel);
         }
     }
 
@@ -35,7 +35,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
 
     public void setPower(double power) {
         if(contract.isShooterWheelReady()){
-            shooterWheelMotor.simpleSet(power);
+            shooterWheelMaster.simpleSet(power);
         }
     }
   
