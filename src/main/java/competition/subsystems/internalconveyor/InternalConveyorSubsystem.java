@@ -17,9 +17,7 @@ public class InternalConveyorSubsystem extends BaseSubsystem { //makes conveyer 
     final DoubleProperty outtakePowerProp;
 
     private IdealElectricalContract contract;
-
-
-    public final XCANTalon intakeMotor;
+    public XCANTalon intakeMotor;
 
     @Inject
     public InternalConveyorSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
@@ -53,7 +51,7 @@ public class InternalConveyorSubsystem extends BaseSubsystem { //makes conveyer 
 
     public void setPower(double power){
         if(contract.isConveyorReady()){
-            conveyorMotor.simpleSet(power);
+            intakeMotor.simpleSet(power);
         }
     }
 }
