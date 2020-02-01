@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANTalon;
+import xbot.common.injection.ElectricalContract;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
@@ -15,12 +16,11 @@ public class InternalConveyorSubsystem extends BaseSubsystem { //makes conveyer 
 
     final DoubleProperty intakePowerProp;
     final DoubleProperty outtakePowerProp;
-
-    private IdealElectricalContract contract;
+    private ElectricalContract contract;
     public XCANTalon intakeMotor;
 
     @Inject
-    public InternalConveyorSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
+    public InternalConveyorSubsystem(CommonLibFactory factory, PropertyFactory pf, ElectricalContract contract){
 
         pf.setPrefix(this);
         this.contract = contract;

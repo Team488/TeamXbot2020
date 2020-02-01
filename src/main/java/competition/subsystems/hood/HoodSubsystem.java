@@ -6,6 +6,7 @@ import com.google.inject.Singleton;
 import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANTalon;
+import xbot.common.injection.ElectricalContract;
 //import xbot.common.injection.ElectricalContract;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.math.MathUtils;
@@ -20,14 +21,14 @@ public class HoodSubsystem extends BaseSubsystem{
     final DoubleProperty maxAngleProp;
     final DoubleProperty minAngleProp;
     final DoubleProperty currentAngleProp;
-    private IdealElectricalContract contract;
+    private ElectricalContract contract;
     double maxAngle;
     double minAngle;
     public XCANTalon hoodMotor;
     double angle;
 
     @Inject
-    public HoodSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
+    public HoodSubsystem(CommonLibFactory factory, PropertyFactory pf, ElectricalContract contract){
         pf.setPrefix(this);
         this.contract = contract;
         extendPowerProp = pf.createPersistentProperty("Extend Power", 1);
