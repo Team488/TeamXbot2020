@@ -16,11 +16,11 @@ public class InternalConveyorSubsystem extends BaseSubsystem { //makes conveyer 
 
     final DoubleProperty intakePowerProp;
     final DoubleProperty outtakePowerProp;
-    private ElectricalContract contract;
+    private IdealElectricalContract contract;
     public XCANTalon intakeMotor;
 
     @Inject
-    public InternalConveyorSubsystem(CommonLibFactory factory, PropertyFactory pf, ElectricalContract contract){
+    public InternalConveyorSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
 
         pf.setPrefix(this);
         this.contract = contract;

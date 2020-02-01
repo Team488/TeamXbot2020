@@ -21,14 +21,14 @@ public class HoodSubsystem extends BaseSubsystem{
     final DoubleProperty maxAngleProp;
     final DoubleProperty minAngleProp;
     final DoubleProperty currentAngleProp;
-    private ElectricalContract contract;
+    private IdealElectricalContract contract;
     double maxAngle;
     double minAngle;
     public XCANTalon hoodMotor;
     double angle;
 
     @Inject
-    public HoodSubsystem(CommonLibFactory factory, PropertyFactory pf, ElectricalContract contract){
+    public HoodSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
         pf.setPrefix(this);
         this.contract = contract;
         extendPowerProp = pf.createPersistentProperty("Extend Power", 1);
