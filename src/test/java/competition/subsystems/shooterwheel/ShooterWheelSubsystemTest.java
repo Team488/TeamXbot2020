@@ -15,5 +15,13 @@ public class ShooterWheelSubsystemTest extends BaseCompetitionTest {
 
         assertEquals(1, shooterWheel.shooterWheelMotor.getMotorOutputPercent(), 0.001);
     }
+
+    @Test
+    public void testStop() {
+        ShooterWheelSubsystem shooterWheel = this.injector.getInstance(ShooterWheelSubsystem.class);
+        shooterWheel.stop();
+
+        assertEquals(0, shooterWheel.shooterWheelMotor.getMotorOutputPercent(), 0.001);
+    }
     
 }
