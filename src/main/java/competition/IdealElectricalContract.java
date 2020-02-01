@@ -8,19 +8,19 @@ public class IdealElectricalContract extends ElectricalContract {
     // Drive
     ///
     public DeviceInfo leftFrontDriveNeo() {
-        return new DeviceInfo(1, false);
+        return new DeviceInfo(32, false);
     }
 
     public DeviceInfo leftRearDriveNeo() {
-        return new DeviceInfo(2, false);
+        return new DeviceInfo(33, true);
     }
 
     public DeviceInfo rightFrontDriveNeo() {
-        return new DeviceInfo(3, true);
+        return new DeviceInfo(23, false);
     }
 
     public DeviceInfo rightRearDriveNeo() {
-        return new DeviceInfo(4, true);
+        return new DeviceInfo(22, false);
     }
 
     public DeviceInfo hoodMotor(){
