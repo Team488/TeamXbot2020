@@ -5,7 +5,8 @@ import com.google.inject.Singleton;
 
 import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
-import xbot.common.controls.actuators.XCANSparkMax;
+import xbot.common.controls.actuators.XCANTalon;
+import xbot.common.injection.ElectricalContract;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
@@ -14,19 +15,22 @@ import xbot.common.properties.PropertyFactory;
 public class ShooterWheelSubsystem extends BaseSubsystem {
     
     final DoubleProperty spinWheelPowerProp;
-    public final XCANSparkMax neoMasterMotor;
-    public final XCANSparkMax neoFollowerMotor;
+    public XCANSparkMax neoMasterMotor;
+    public XCANSparkMax neoFollowerMotor;
+    IdealElectricalContract contract;
     
     
     @Inject
     public ShooterWheelSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating ShooterWheelSubsystem");
         pf.setPrefix(this);
+        this.contract = contract;
         spinWheelPowerProp = pf.createPersistentProperty("Spinning Wheel Power", 1);
 
+        if(contract.isShooterWheelReady()){
         this.neoMasterMotor = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterMaster");
         this.neoFollowerMotor = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
-
+        }
 
     }
 
@@ -35,7 +39,10 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     }
 
     public void setPower(double power) {
-        
+        if(contract.isShooterWheelReady()){
+        	neoMasterMotor.set(power);
+            neoFollowerMotor.set(power);
+        }
     }
   
     public void stop () {
