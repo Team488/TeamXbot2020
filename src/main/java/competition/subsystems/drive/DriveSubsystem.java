@@ -40,4 +40,12 @@ public class DriveSubsystem extends BaseSubsystem {
         this.leftMaster.set(leftPower);
         this.rightMaster.set(rightPower);
     }
+
+    public void arcadeDrive(double translate, double rotate) {
+        double left = translate - rotate;
+        double right = translate + rotate;
+
+        this.leftMaster.set(left);
+        this.rightMaster.set(right);
+    }
 }
