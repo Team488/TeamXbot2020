@@ -15,15 +15,16 @@ public class TurretRotationCommand extends BaseCommand
     public TurretRotationCommand(OperatorInterface oi , TurretSubsystem tSubsystem) {
         this.oi = oi;
         this.turretSubsystem = tSubsystem;
-
         this.addRequirements(this.turretSubsystem);
-
     }
 
     @Override
     public void execute() {
-        turretSubsystem.setPower(0);
-
+        double yAxis = oi.gamepad.getRightStickX();
+        if(yAxis>0 && turretSubsystem.canTurnLeft() || yAxis<0 && turretSubsystem.canTurnRight())
+        {
+            turretSubsystem.setPower(yAxis);
+        }
     }
 
     @Override

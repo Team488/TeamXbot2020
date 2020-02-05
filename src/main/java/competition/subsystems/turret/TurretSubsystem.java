@@ -14,6 +14,7 @@ import xbot.common.properties.PropertyFactory;
 public class TurretSubsystem extends BaseSubsystem {
     
     public XCANTalon motor;
+    public double currentAngle;
     DoubleProperty maxAngleProp;
     DoubleProperty minAngleProp;
     DoubleProperty turnPowerProp;
@@ -27,7 +28,7 @@ public class TurretSubsystem extends BaseSubsystem {
         minAngleProp = pf.createPersistentProperty("MinAngle", -180);
         turnPowerProp = pf.createPersistentProperty("TurnSpeed", .03); 
 
-        if(contract.isConveyorReady())
+        if(contract.isTurretReady())
         {
             this.motor = factory.createCANTalon(contract.rotationMotor().channel);
             motor.setInverted(contract.rotationMotor().inverted);
@@ -45,23 +46,28 @@ public class TurretSubsystem extends BaseSubsystem {
     }
 
     public void setPower(double power) {
-        if(power<0 && canTurnLeft(0))
+        if(power<0 && canTurnLeft())
         {
             motor.simpleSet(power);
-        }else if(power>0 && canTurnRight(0))
+        }else if(power>0 && canTurnRight())
         {
             motor.simpleSet(power);
         }
     }
     
-    public boolean canTurnRight(double currentAngle)
+    public boolean canTurnRight()
     {
-        return currentAngle <= maxAngleProp.get();
+        return getCurrentAngle() <= maxAngleProp.get();
     }
 
-    public boolean canTurnLeft(double currentAngle)
+    public boolean canTurnLeft()
     {
-        return currentAngle >= minAngleProp.get();
+        return getCurrentAngle() >= minAngleProp.get();
+    }
+
+    public double getCurrentAngle()
+    {
+        return currentAngle;
     }
 
     public void stop() {

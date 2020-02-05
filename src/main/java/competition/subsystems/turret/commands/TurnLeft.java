@@ -15,21 +15,17 @@ public class TurnLeft extends BaseCommand
     public TurnLeft(OperatorInterface oi , TurretSubsystem tSubsystem) {
         this.oi = oi;
         this.turretSubsystem = tSubsystem;
-
         this.addRequirements(this.turretSubsystem);
-
     }
 
     @Override
     public void execute() {
         turretSubsystem.turnLeft();
-
     }
 
     @Override
     public void initialize() {
         log.info("Initializing");
-
     }
     
 }

@@ -28,6 +28,8 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         if(contract.isShooterWheelReady()){
             this.neoMasterMotor = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterMaster");
             this.neoFollowerMotor = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
+
+            neoFollowerMotor.follow(neoMasterMotor, true);
         }
     }
 
@@ -39,7 +41,6 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         if(contract.isShooterWheelReady())
         {
             neoMasterMotor.set(power);
-            neoFollowerMotor.set(power);
 
         }
     }
