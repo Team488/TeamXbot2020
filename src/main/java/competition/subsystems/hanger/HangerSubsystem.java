@@ -25,15 +25,15 @@ public class HangerSubsystem extends BaseSubsystem {
         retractHangerHeightProp = pf.createPersistentProperty("Retract Hanger Height", 1);    
     }
 
-    public void extendHanger () { //hanger extend up to objective
+    public void extendHanger () {
         setPower(extendHangerHeightProp.get());
     }
 
-    public void grabber () { //grabs onto objective
+    public void grabber () {
 
     }
 
-    public void retractHanger () { //retracts hanger to lift robot
+    public void retractHanger () {
         setPower(retractHangerHeightProp.get());
     }
 
