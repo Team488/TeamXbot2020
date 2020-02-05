@@ -12,7 +12,7 @@ public class ShooterWheelSubsystemTest extends BaseCompetitionTest {
     public void testSpin() {
         ShooterWheelSubsystem shooterWheel = this.injector.getInstance(ShooterWheelSubsystem.class);
         shooterWheel.spin();
-
+      
         assertEquals(1, shooterWheel.neoMasterMotor.get(), 0.001);
     }
 

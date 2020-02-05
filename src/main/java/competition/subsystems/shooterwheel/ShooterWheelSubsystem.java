@@ -18,7 +18,6 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     public XCANSparkMax neoFollowerMotor;
     IdealElectricalContract contract;
     
-    
     @Inject
     public ShooterWheelSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating ShooterWheelSubsystem");
@@ -30,7 +29,6 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
             this.neoMasterMotor = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterMaster");
             this.neoFollowerMotor = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
         }
-
     }
 
     public void spin () {
@@ -41,6 +39,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         if(contract.isShooterWheelReady()){
         	neoMasterMotor.set(power);
             neoFollowerMotor.set(power);
+
         }
     }
   
