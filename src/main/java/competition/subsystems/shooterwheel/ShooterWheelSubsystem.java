@@ -36,8 +36,9 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     }
 
     public void setPower(double power) {
-        if(contract.isShooterWheelReady()){
-        	neoMasterMotor.set(power);
+        if(contract.isShooterWheelReady())
+        {
+            neoMasterMotor.set(power);
             neoFollowerMotor.set(power);
 
         }
