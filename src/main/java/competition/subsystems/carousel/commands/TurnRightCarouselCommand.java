@@ -6,13 +6,13 @@ import competition.operator_interface.OperatorInterface;
 import competition.subsystems.carousel.CarouselSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class SpinCarouselCommand extends BaseCommand{    
+public class TurnRightCarouselCommand extends BaseCommand{    
    
     final CarouselSubsystem carouselSubsystem;
     final OperatorInterface oi;
 
     @Inject
-    public SpinCarouselCommand(OperatorInterface oi, CarouselSubsystem carouselSubsystem){
+    public TurnRightCarouselCommand(OperatorInterface oi, CarouselSubsystem carouselSubsystem){
         this.oi = oi;
         this.carouselSubsystem = carouselSubsystem;
         this.addRequirements(this.carouselSubsystem);
@@ -24,6 +24,6 @@ public class SpinCarouselCommand extends BaseCommand{
     }
 
     public void execute(){
-       carouselSubsystem.spin();
+       carouselSubsystem.turnRight();
     }
 }

@@ -48,8 +48,4 @@ public class CarouselSubsystem extends BaseSubsystem{
             carouselMotor.simpleSet(power);
         }
     }
-    
-
-    
-
 }
