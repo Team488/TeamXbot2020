@@ -12,7 +12,6 @@ public class FrontCollectingSubsystemTest extends BaseCompetitionTest {
     public void testFrontCollecting() {
         FrontCollectingSubsystem frontCollect = this.injector.getInstance(FrontCollectingSubsystem.class);
         frontCollect.intake();
-
         assertEquals(1, frontCollect.frontCollectingMotor.getMotorOutputPercent(), 0.001);
     }
 }

@@ -59,15 +59,17 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
     } 
     
     public void setPower (double power) {
-        if (isAtMaximum()) {
-            power = MathUtils.constrainDouble(power, -1, 0);
-        }
-        if (isAtMinimum()) {
-            power = MathUtils.constrainDouble(power, 0, 1);
-        }
 
         if(contract.isCollectorArmLiftingReady()) {
             liftingCollectorArmMotor.simpleSet(power);
+        }
+
+        if (isAtMaximum()) {
+            power = MathUtils.constrainDouble(power, -1, 0);
+        }
+        
+        if (isAtMinimum()) {
+            power = MathUtils.constrainDouble(power, 0, 1);
         }
     }
 
