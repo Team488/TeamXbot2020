@@ -6,8 +6,8 @@ import competition.operator_interface.OperatorInterface;
 import competition.subsystems.carousel.CarouselSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class StopCarousel extends BaseCommand{    
-   
+public class StopCarousel extends BaseCommand{
+     
     final CarouselSubsystem carouselSubsystem;
     final OperatorInterface oi;
 
