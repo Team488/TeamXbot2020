@@ -16,10 +16,11 @@ public class SpinningShooterWheelCommand extends BaseCommand{
         this.oi = oi;
         this.shooterWheelSubsystem = shooterWheelSubsystem;
         this.addRequirements(this.shooterWheelSubsystem);
+    
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
         log.info("Initializing");
     }
 

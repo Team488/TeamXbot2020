@@ -36,5 +36,13 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(6, true);
     }
 
+    public boolean isHangingReady() {
+        return true;
+    }
+
+    public DeviceInfo hangerMotor() {
+        return new DeviceInfo(7, true);
+    }
+
 
 }

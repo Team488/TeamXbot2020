@@ -11,4 +11,9 @@ public class ActualElectricalContract extends IdealElectricalContract {
     public boolean isFrontCollectingReady() {
         return false;
     }
+
+    @Override
+    public boolean isHangingReady() {
+        return false;
+    }
 }
