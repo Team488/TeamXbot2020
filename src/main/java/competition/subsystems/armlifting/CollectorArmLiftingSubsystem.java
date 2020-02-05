@@ -48,10 +48,9 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
 
     public void frozen () {
         setPower(0);
-        //different from stop, freezes arm lift position
     }
 
-    public boolean isAtMaximum() { //sets a certain distance that the arm can lift up to
+    public boolean isAtMaximum() { 
         return currentArmLiftHeight >= maximumArmLiftHeight;
     }
 

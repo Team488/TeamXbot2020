@@ -8,7 +8,6 @@ import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 
 @Singleton
 public class SubsystemDefaultCommandMap {
-    //For setting the default commands on subsystems
 
     @Inject
     public void setupDriveSubsystem(DriveSubsystem driveSubsystem, TankDriveWithJoysticksCommand command) {

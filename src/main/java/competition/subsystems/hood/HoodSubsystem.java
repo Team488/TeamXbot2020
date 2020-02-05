@@ -32,7 +32,7 @@ public class HoodSubsystem extends BaseSubsystem{
     }
 
     public double getAngle(){
-        return 0; //return angle
+        return 0; 
     }
 
     public void extend(){
