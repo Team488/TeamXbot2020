@@ -36,6 +36,7 @@ public class OperatorCommandMap {
         operatorInterface.driverGamepad.getifAvailable(8).whenPressed(resetHeading);
     }
 
+    @Inject
     public void setupBasicCommands(OperatorInterface operatorInterface, ExtendHoodCommand extendHood, RetractHoodCommand retractHood,
     StopCarouselCommand stopCarousel, TurnLeftCarouselCommand carouselLeft, TurnRightCarouselCommand carouselRight,
     FrontGrabbingBallsCommand frontIntake, CollectorArmLiftingCommand liftArm, SpinningShooterWheelCommand spinShooterWheel)
