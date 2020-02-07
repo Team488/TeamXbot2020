@@ -15,14 +15,20 @@ import xbot.common.properties.PropertyFactory;
  */
 @Singleton
 public class OperatorInterface implements IPropertySupport {
-    public XXboxController gamepad;
+    public XXboxController driverGamepad;
+    public XXboxController operatorGamepad;
     final DoubleProperty joystickDeadband;
 
     @Inject
     public OperatorInterface(CommonLibFactory factory, PropertyFactory pf) {
-        gamepad = factory.createXboxController(0);
-        gamepad.setLeftInversion(false, true);
-        gamepad.setRightInversion(true, true);
+        driverGamepad = factory.createXboxController(0);
+        driverGamepad.setLeftInversion(false, true);
+        driverGamepad.setRightInversion(true, true);
+
+        operatorGamepad = factory.createXboxController(1);
+        operatorGamepad.setLeftInversion(false, true);
+        operatorGamepad.setRightInversion(false, true);
+
         pf.setPrefix(this);
         joystickDeadband = pf.createPersistentProperty("JoystickDeadband", 0.08);
     }
