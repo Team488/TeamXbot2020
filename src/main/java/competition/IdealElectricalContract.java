@@ -38,7 +38,7 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public boolean isTurretReady(){
-        return false;
+        return true;
     }
 
     public boolean isShooterWheelReady(){

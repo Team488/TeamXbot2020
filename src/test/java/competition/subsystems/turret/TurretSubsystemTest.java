@@ -13,7 +13,7 @@ public class TurretSubsystemTest extends BaseCompetitionTest {
         TurretSubsystem turret = this.injector.getInstance(TurretSubsystem.class);
         turret.stop();
 
-        assertEquals(0, turret.motor.getMotorOutputPercent(), 0.001);
+        assertEquals(0 , turret.motor.getMotorOutputPercent(), 0.001);
     }
 
 }

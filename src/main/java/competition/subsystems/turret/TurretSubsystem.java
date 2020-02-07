@@ -15,18 +15,21 @@ public class TurretSubsystem extends BaseSubsystem {
     
     public XCANTalon motor;
     public double currentAngle;
-    DoubleProperty maxAngleProp;
-    DoubleProperty minAngleProp;
-    DoubleProperty turnPowerProp;
+    final DoubleProperty maxAngleProp;
+    final DoubleProperty minAngleProp;
+    final DoubleProperty turnPowerProp;
 
     @Inject
-    public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
+    public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract ) {
         log.info("Creating TurretSubsystem");
         pf.setPrefix(this);
         
-        maxAngleProp = pf.createPersistentProperty("MaxAngle",180);
-        minAngleProp = pf.createPersistentProperty("MinAngle", -180);
-        turnPowerProp = pf.createPersistentProperty("TurnSpeed", .03); 
+        currentAngle = 0;
+        maxAngleProp = pf.createPersistentProperty("Max Angle", 180);
+        minAngleProp = pf.createPersistentProperty("Min Angle", -180);
+        turnPowerProp = pf.createPersistentProperty("Turn Speed", .03);
+
+        
 
         if(contract.isTurretReady())
         {
@@ -46,13 +49,15 @@ public class TurretSubsystem extends BaseSubsystem {
     }
 
     public void setPower(double power) {
-        if(power<0 && canTurnLeft())
-        {
-            motor.simpleSet(power);
-        }else if(power>0 && canTurnRight())
+        if((power<0 && canTurnLeft())||(power>0 && canTurnRight()))
         {
             motor.simpleSet(power);
         }
+        else if(power == 0)
+        {
+            motor.simpleSet(power);
+        }
+
     }
     
     public boolean canTurnRight()
