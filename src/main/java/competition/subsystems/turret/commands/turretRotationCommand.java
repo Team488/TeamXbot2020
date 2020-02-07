@@ -8,6 +8,7 @@ import xbot.common.command.BaseCommand;
 
 public class TurretRotationCommand extends BaseCommand
 {
+    //comment so i can commit this one character change
     final OperatorInterface oi;
     final TurretSubsystem turretSubsystem;
 
