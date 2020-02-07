@@ -18,7 +18,7 @@ public class FrontCollectingSubsystem extends BaseSubsystem {
     double power;
     int currentTotalBalls = 0;
     public XCANTalon frontCollectingMotor;
-    final private IdealElectricalContract contract;
+    final IdealElectricalContract contract;
 
 
     @Inject

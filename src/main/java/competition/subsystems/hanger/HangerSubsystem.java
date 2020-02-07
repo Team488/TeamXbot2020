@@ -18,7 +18,7 @@ public class HangerSubsystem extends BaseSubsystem {
     final DoubleProperty extendHangerHeightProp;
     final DoubleProperty retractHangerHeightProp;
     public XCANTalon hangerMotor;
-    final private IdealElectricalContract contract;
+    final IdealElectricalContract contract;
 
     @Inject
     public HangerSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {

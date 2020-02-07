@@ -24,7 +24,7 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
     int minimumArmLiftHeight;
     double power;
     public XCANTalon liftingCollectorArmMotor;
-    final private IdealElectricalContract contract;
+    final IdealElectricalContract contract;
 
     @Inject
     public CollectorArmLiftingSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
