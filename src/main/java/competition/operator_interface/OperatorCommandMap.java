@@ -37,18 +37,17 @@ public class OperatorCommandMap {
     }
 
     @Inject
-    public void setupBasicCommands(OperatorInterface operatorInterface, ExtendHoodCommand extendHood, RetractHoodCommand retractHood,
-    StopCarouselCommand stopCarousel, TurnLeftCarouselCommand carouselLeft, TurnRightCarouselCommand carouselRight,
+    public void setupBasicCommands(OperatorInterface operatorInterface, ExtendHoodCommand extendHood, 
+    RetractHoodCommand retractHood, TurnLeftCarouselCommand carouselLeft, TurnRightCarouselCommand carouselRight,
     FrontGrabbingBallsCommand frontIntake, CollectorArmLiftingCommand liftArm, SpinningShooterWheelCommand spinShooterWheel)
     {
-        operatorInterface.operatorGamepad.getifAvailable(1).whenPressed(carouselLeft);
-        operatorInterface.operatorGamepad.getifAvailable(2).whenPressed(carouselRight);
-        operatorInterface.operatorGamepad.getifAvailable(3).whenPressed(stopCarousel);
-        operatorInterface.operatorGamepad.getifAvailable(4).whenPressed(extendHood);
-        operatorInterface.operatorGamepad.getifAvailable(5).whenPressed(retractHood);
-        operatorInterface.operatorGamepad.getifAvailable(6).whenPressed(frontIntake);
-        operatorInterface.operatorGamepad.getifAvailable(7).whenPressed(liftArm);
-        operatorInterface.operatorGamepad.getifAvailable(8).whenPressed(spinShooterWheel);
+        operatorInterface.operatorGamepad.getifAvailable(1).whileHeld(carouselLeft);
+        operatorInterface.operatorGamepad.getifAvailable(2).whileHeld(carouselRight);
+        operatorInterface.operatorGamepad.getifAvailable(3).whileHeld(extendHood);
+        operatorInterface.operatorGamepad.getifAvailable(4).whileHeld(retractHood);
+        operatorInterface.operatorGamepad.getifAvailable(5).whileHeld(frontIntake);
+        operatorInterface.operatorGamepad.getifAvailable(6).whileHeld(liftArm);
+        operatorInterface.operatorGamepad.getifAvailable(7).whileHeld(spinShooterWheel);
         //TODO: add hang command
     }
 }

@@ -31,8 +31,7 @@ public class CarouselSubsystemTest extends BaseCompetitionTest {
         if(carousel.carouselMotor.getMotorOutputPercent() > 0){
             carousel.stop();
         }
-
+        
         assertEquals(0, carousel.carouselMotor.getMotorOutputPercent(), 0.001);
     }
-    
 }
