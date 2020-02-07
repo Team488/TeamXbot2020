@@ -27,7 +27,10 @@ public class CarouselSubsystemTest extends BaseCompetitionTest {
     @Test
     public void testStop() {
         CarouselSubsystem carousel = this.injector.getInstance(CarouselSubsystem.class);
-        carousel.stop();
+        carousel.turnLeft();
+        if(carousel.carouselMotor.getMotorOutputPercent() > 0){
+            carousel.stop();
+        }
 
         assertEquals(0, carousel.carouselMotor.getMotorOutputPercent(), 0.001);
     }
