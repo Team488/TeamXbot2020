@@ -57,6 +57,7 @@ public class IdealElectricalContract extends ElectricalContract {
     {
         return new DeviceInfo(21, false);
     }
+    
     public DeviceInfo shooterMotorFollower()
     {
         return new DeviceInfo(34, false);
@@ -78,7 +79,11 @@ public class IdealElectricalContract extends ElectricalContract {
 
     public DeviceInfo carouselMotor()
     {
-        return new DeviceInfo(25, false);
+        return new DeviceInfo(35, false);
+    }
+
+    public boolean isCarouselReady(){
+        return true;
     }
 
 

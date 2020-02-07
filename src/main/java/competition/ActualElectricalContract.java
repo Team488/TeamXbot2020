@@ -6,6 +6,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
     public boolean isConveyorReady() {
         return false;
     }
+
     @Override
     public boolean isHoodReady() {
         return false;
@@ -13,6 +14,11 @@ public class ActualElectricalContract extends IdealElectricalContract {
     
     @Override
     public boolean isShooterWheelReady() {
+        return false;
+    }
+
+    @Override
+    public boolean isCarouselReady(){
         return false;
     }
 }
