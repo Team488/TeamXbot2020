@@ -51,25 +51,29 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
     }
 
     public boolean isAtMaximum() { 
-        return currentArmLiftHeight >= maximumArmLiftHeight;
+        return currentArmLiftHeight > maximumArmLiftHeight;
     }
 
     public boolean isAtMinimum() {
-        return currentArmLiftHeight <= minimumArmLiftHeight;
+        return currentArmLiftHeight < minimumArmLiftHeight;
     } 
+
+    public void setCurrentArmLiftHeight(int currentArmLiftHeight) {
+        this.currentArmLiftHeight = currentArmLiftHeight;
+    }
     
     public void setPower (double power) {
 
-        if(contract.isCollectorArmLiftingReady()) {
-            liftingCollectorArmMotor.simpleSet(power);
+        if (isAtMinimum()) {
+            power = MathUtils.constrainDouble(power, 0, 1);
         }
 
         if (isAtMaximum()) {
             power = MathUtils.constrainDouble(power, -1, 0);
         }
-        
-        if (isAtMinimum()) {
-            power = MathUtils.constrainDouble(power, 0, 1);
+      
+        if(contract.isCollectorArmLiftingReady()) {
+            liftingCollectorArmMotor.simpleSet(power);
         }
     }
 

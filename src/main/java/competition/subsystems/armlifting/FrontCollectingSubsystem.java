@@ -37,18 +37,26 @@ public class FrontCollectingSubsystem extends BaseSubsystem {
         setPower(intakePowerProp.get());
     }
 
-    public void setPower(double power){
-        if(contract.isFrontCollectingReady()) {
-            frontCollectingMotor.simpleSet(power);
-        }
-
-    }
-    
     public boolean isAtCapacity() {
         if (currentTotalBalls >= 5) {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setCurrentTotalBalls (int currentTotalBalls) {
+        this.currentTotalBalls = currentTotalBalls;
+    }
+
+    public void setPower(double power){
+
+        if(isAtCapacity()) {
+            power = 0;
+        }
+
+        if(contract.isFrontCollectingReady()) {
+            frontCollectingMotor.simpleSet(power);
         }
     }
 

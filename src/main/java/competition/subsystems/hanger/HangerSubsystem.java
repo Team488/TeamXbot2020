@@ -26,7 +26,8 @@ public class HangerSubsystem extends BaseSubsystem {
         pf.setPrefix(this);
         hangingPowerProp = pf.createPersistentProperty("Hanging Power", 1);
         extendHangerHeightProp = pf.createPersistentProperty("Extend Hanger Height", 1);    
-        retractHangerHeightProp = pf.createPersistentProperty("Retract Hanger Height", 1);   
+        retractHangerHeightProp = pf.createPersistentProperty("Retract Hanger Height", -1); 
+
         this.contract = contract;
 
         if (contract.isHangingReady()) {
@@ -38,12 +39,16 @@ public class HangerSubsystem extends BaseSubsystem {
         setPower(extendHangerHeightProp.get());
     }
 
-    public void grabber () {
-
-    }
-
     public void retractHanger () {
         setPower(retractHangerHeightProp.get());
+    }
+
+    public void grabClamp () {
+        setPower(1);
+    }
+
+    public void releaseClamp () {
+        setPower(-1);
     }
 
     public void setPower (double power) {
