@@ -3,22 +3,36 @@ package competition.operator_interface;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import xbot.common.controls.sensors.XFTCGamepad;
+import xbot.common.controls.sensors.XXboxController;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
-import xbot.common.logging.RobotAssertionManager;
+import xbot.common.properties.DoubleProperty;
+import xbot.common.properties.IPropertySupport;
+import xbot.common.properties.PropertyFactory;
 
 /**
  * This class is the glue that binds the controls on the physical operator interface to the commands and command groups
  * that allow control of the robot.
  */
 @Singleton
-public class OperatorInterface {
-    public XFTCGamepad gamepad;
+public class OperatorInterface implements IPropertySupport {
+    public XXboxController gamepad;
+    final DoubleProperty joystickDeadband;
 
     @Inject
-    public OperatorInterface(CommonLibFactory factory, RobotAssertionManager assertionManager) {
-        gamepad = factory.createGamepad(0, 12);
+    public OperatorInterface(CommonLibFactory factory, PropertyFactory pf) {
+        gamepad = factory.createXboxController(0);
         gamepad.setLeftInversion(false, true);
-        gamepad.setRightInversion(false, true);
+        gamepad.setRightInversion(true, true);
+        pf.setPrefix(this);
+        joystickDeadband = pf.createPersistentProperty("JoystickDeadband", 0.08);
+    }
+    
+    public double getJoystickDeadband() {
+        return joystickDeadband.get();
+    }
+    
+    @Override
+    public String getPrefix() {
+        return "OperatorInterface";
     }
 }
