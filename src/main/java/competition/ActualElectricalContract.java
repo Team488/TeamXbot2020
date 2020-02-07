@@ -17,7 +17,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 		return false;
 	}
 
-	@Overide
+	@Override
     public boolean isHoodReady() {
         return false;
     }
@@ -32,7 +32,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 		return false;
 	}
 
-	@Overide
+	@Override
     public boolean isCarouselReady() {
         return false;
     }

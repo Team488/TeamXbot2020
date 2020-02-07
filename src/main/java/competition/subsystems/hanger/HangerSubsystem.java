@@ -44,7 +44,7 @@ public class HangerSubsystem extends BaseSubsystem {
     }
 
     public void grabClamp () {
-        setPower(1);
+        setPower(hangingPowerProp.get());
     }
 
     public void releaseClamp () {
