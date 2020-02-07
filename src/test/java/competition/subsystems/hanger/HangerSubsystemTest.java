@@ -39,7 +39,11 @@ public class HangerSubsystemTest extends BaseCompetitionTest {
     @Test
     public void testHangerStop() {
         HangerSubsystem hanger = this.injector.getInstance(HangerSubsystem.class);
-        hanger.stop();
+        hanger.extendHanger();
+        if (hanger.hangerMotor.getMotorOutputPercent() > 0) {
+            hanger.stop();
+        }
+        
         assertEquals(0, hanger.hangerMotor.getMotorOutputPercent(), 0.001);
     }
 }
