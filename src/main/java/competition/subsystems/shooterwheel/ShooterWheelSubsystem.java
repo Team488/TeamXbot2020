@@ -7,10 +7,6 @@ import com.revrobotics.ControlType;
 import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANSparkMax;
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
@@ -18,29 +14,17 @@ import xbot.common.properties.PropertyFactory;
 @Singleton
 public class ShooterWheelSubsystem extends BaseSubsystem {
     
-<<<<<<< HEAD
-    final DoubleProperty spinWheelPowerProp;
-    private IdealElectricalContract contract;
-    public XCANSparkMax shooterWheelMaster;
-    public double speed;
-=======
     final DoubleProperty targetRpmProp;
     final DoubleProperty currentRpmProp;
     public XCANSparkMax leader;
     public XCANSparkMax follower;
     IdealElectricalContract contract;
->>>>>>> master
     
     @Inject
     public ShooterWheelSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating ShooterWheelSubsystem");
         pf.setPrefix(this);
         this.contract = contract;
-<<<<<<< HEAD
-        spinWheelPowerProp = pf.createPersistentProperty("Spinning Wheel Power", 1);
-        if(contract.isShooterWheelReady()){
-            this.shooterWheelMaster = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterWheel");
-=======
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
 
@@ -48,7 +32,6 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
             this.leader = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterMaster");
             this.follower = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
             follower.follow(leader, true);
->>>>>>> master
         }
     }
 
@@ -75,19 +58,18 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
 
 
     public void setPower(double power) {
-<<<<<<< HEAD
-        if(contract.isShooterWheelReady()){
-            shooterWheelMaster.set(power);
-=======
         if(contract.isShooterWheelReady())
         {
             leader.set(power);
->>>>>>> master
         }
     }
     
     public boolean isAtSpeed () {
+        if(currentRpmProp == targetRpmProp){
+            return true;
+        } else {
         return false;
+        }
     }
 
     public void stop () {
