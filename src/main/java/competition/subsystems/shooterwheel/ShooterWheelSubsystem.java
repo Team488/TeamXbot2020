@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 
 import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
-import xbot.common.controls.actuators.XCANTalon;
+import xbot.common.controls.actuators.XCANSparkMax;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
@@ -15,7 +15,8 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     
     final DoubleProperty spinWheelPowerProp;
     private IdealElectricalContract contract;
-    public XCANTalon shooterWheelMaster;
+    public XCANSparkMax shooterWheelMaster;
+    public double speed;
     
     @Inject
     public ShooterWheelSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
@@ -23,9 +24,8 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         pf.setPrefix(this);
         this.contract = contract;
         spinWheelPowerProp = pf.createPersistentProperty("Spinning Wheel Power", 1);
-
         if(contract.isShooterWheelReady()){
-            this.shooterWheelMaster = factory.createCANTalon(contract.shooterMotorMaster().channel);
+            this.shooterWheelMaster = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterWheel");
         }
     }
 
@@ -35,10 +35,14 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
 
     public void setPower(double power) {
         if(contract.isShooterWheelReady()){
-            shooterWheelMaster.simpleSet(power);
+            shooterWheelMaster.set(power);
         }
     }
-  
+    
+    public boolean isAtSpeed () {
+        return false;
+    }
+
     public void stop () {
         setPower(0);
     }
