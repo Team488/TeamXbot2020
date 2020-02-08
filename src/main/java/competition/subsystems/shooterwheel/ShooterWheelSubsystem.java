@@ -65,7 +65,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     }
     
     public boolean isAtSpeed () {
-        if(currentRpmProp == targetRpmProp){
+        if(Math.abs(currentRpmProp.get() - targetRpmProp.get()) <= 150.0){
             return true;
         } else {
         return false;
