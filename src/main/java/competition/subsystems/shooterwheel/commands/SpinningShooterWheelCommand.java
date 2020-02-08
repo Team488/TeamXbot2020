@@ -24,6 +24,7 @@ public class SpinningShooterWheelCommand extends BaseCommand{
     }
 
     public void execute(){
-       shooterWheelSubsystem.spin();
+        double speed = shooterWheelSubsystem.getTargetSpeed();
+        shooterWheelSubsystem.setPidGoal(speed);
     }
 }
