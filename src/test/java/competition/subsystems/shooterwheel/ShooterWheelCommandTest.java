@@ -15,6 +15,8 @@ public class ShooterWheelCommandTest extends BaseCompetitionTest {
         SpinningShooterWheelCommand command = this.injector.getInstance(SpinningShooterWheelCommand.class);
         command.initialize();
         command.execute();
+
+        shooterWheel.changeTargetSpeed(100);
     
         assertEquals(shooterWheel.getTargetSpeed(), shooterWheel.neoMasterMotor.getVelocity(), 150);
     }
@@ -22,8 +24,8 @@ public class ShooterWheelCommandTest extends BaseCompetitionTest {
     @Test
     public void testStop() {
         ShooterWheelSubsystem shooterWheel = this.injector.getInstance(ShooterWheelSubsystem.class);
+        shooterWheel.changeTargetSpeed(100);
         shooterWheel.stop();
-
         assertEquals(0, shooterWheel.neoMasterMotor.get(), 0.001);
     }
     
