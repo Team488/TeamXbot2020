@@ -18,5 +18,5 @@ public class ShooterWheelCommandTest extends BaseCompetitionTest {
     //     command.execute();
     
     //     assertEquals(shooterWheel.getTargetSpeed(), shooterWheel, 0.0001);
-    }
+    //}
 }
