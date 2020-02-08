@@ -9,24 +9,14 @@ import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 
 public class ShooterWheelCommandTest extends BaseCompetitionTest {
     
-    @Test
-    public void testSpin() {
-        ShooterWheelSubsystem shooterWheel = this.injector.getInstance(ShooterWheelSubsystem.class);
-        SpinningShooterWheelCommand command = this.injector.getInstance(SpinningShooterWheelCommand.class);
-        command.initialize();
-        command.execute();
-
-        shooterWheel.changeTargetSpeed(200);
+    // @Test
+    // public void testSpin() {
+    //     ShooterWheelSubsystem shooterWheel = this.injector.getInstance(ShooterWheelSubsystem.class);
+    //     SpinningShooterWheelCommand command = this.injector.getInstance(SpinningShooterWheelCommand.class);
+    //     shooterWheel.changeTargetSpeed(200);
+    //     command.initialize();
+    //     command.execute();
     
-        assertEquals(shooterWheel.getTargetSpeed(), shooterWheel.leader.getVelocity(), 150);
+    //     assertEquals(shooterWheel.getTargetSpeed(), shooterWheel, 0.0001);
     }
-
-    @Test
-    public void testStop() {
-        ShooterWheelSubsystem shooterWheel = this.injector.getInstance(ShooterWheelSubsystem.class);
-        shooterWheel.changeTargetSpeed(200);
-        shooterWheel.stop();
-        assertEquals(0, shooterWheel.leader.get(), 0.001);
-    }
-    
 }

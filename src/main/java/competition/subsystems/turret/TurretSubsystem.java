@@ -12,7 +12,7 @@ import xbot.common.properties.PropertyFactory;
 
 @Singleton
 public class TurretSubsystem extends BaseSubsystem {
-    
+
     public XCANTalon motor;
     public double currentAngle;
     final DoubleProperty maxAngleProp;
@@ -20,58 +20,47 @@ public class TurretSubsystem extends BaseSubsystem {
     final DoubleProperty turnPowerProp;
 
     @Inject
-    public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract ) {
+    public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating TurretSubsystem");
         pf.setPrefix(this);
-        
+
         currentAngle = 0;
         maxAngleProp = pf.createPersistentProperty("Max Angle", 180);
         minAngleProp = pf.createPersistentProperty("Min Angle", -180);
         turnPowerProp = pf.createPersistentProperty("Turn Speed", .03);
 
-        
-
-        if(contract.isTurretReady())
-        {
+        if (contract.isTurretReady()) {
             this.motor = factory.createCANTalon(contract.rotationMotor().channel);
             motor.setInverted(contract.rotationMotor().inverted);
         }
     }
 
-    public void turnLeft()
-    {
+    public void turnLeft() {
         motor.simpleSet(turnPowerProp.get());
     }
 
-    public void turnRight()
-    {
+    public void turnRight() {
         motor.simpleSet(-turnPowerProp.get());
     }
 
     public void setPower(double power) {
-        if((power<0 && canTurnLeft())||(power>0 && canTurnRight()))
-        {
+        if ((power < 0 && canTurnLeft()) || (power > 0 && canTurnRight())) {
             motor.simpleSet(power);
-        }
-        else if(power == 0)
-        {
-            motor.simpleSet(power);
+        } else {
+            motor.simpleSet(0);
         }
 
     }
-    
-    public boolean canTurnRight()
-    {
+
+    public boolean canTurnRight() {
         return getCurrentAngle() <= maxAngleProp.get();
     }
 
-    public boolean canTurnLeft()
-    {
+    public boolean canTurnLeft() {
         return getCurrentAngle() >= minAngleProp.get();
     }
 
-    public double getCurrentAngle()
-    {
+    public double getCurrentAngle() {
         return currentAngle;
     }
 
@@ -79,9 +68,3 @@ public class TurretSubsystem extends BaseSubsystem {
         setPower(0);
     }
 }
-
-
-
-
-
-
