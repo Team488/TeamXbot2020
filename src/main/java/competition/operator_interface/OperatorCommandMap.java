@@ -7,6 +7,8 @@ import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
+import competition.subsystems.turret.commands.TurnLeft;
+import competition.subsystems.turret.commands.TurnRight;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -24,13 +26,20 @@ public class OperatorCommandMap {
             OperatorInterface operatorInterface,
             SetRobotHeadingCommand resetHeading,
             ArcadeDriveCommand arcade,
-            TankDriveWithJoysticksCommand tank)
+            TankDriveWithJoysticksCommand tank,
+            TurnLeft turnLeft,
+            TurnRight turnRight)
     {
+        
         resetHeading.setHeadingToApply(90);
-        operatorInterface.gamepad.getifAvailable(1).whenPressed(arcade);
-        operatorInterface.gamepad.getifAvailable(2).whenPressed(tank);
-        operatorInterface.gamepad.getifAvailable(8).whenPressed(resetHeading);
+        // operatorInterface.gamepad.getifAvailable(4).whenPressed(arcade);
+        // operatorInterface.gamepad.getifAvailable(3).whenPressed(tank);
+        // operatorInterface.gamepad.getifAvailable(8).whenPressed(resetHeading);
+        operatorInterface.gamepad2.getifAvailable(3).whileHeld(turnLeft);
+        operatorInterface.gamepad2.getifAvailable(4).whileHeld(turnRight);
     }
+
+    @Inject
     public void setupShootercommands(
         OperatorInterface operatorInterface,
         ShooterWheelSubsystem shooter,
@@ -39,7 +48,8 @@ public class OperatorCommandMap {
         Command speedUp = new InstantCommand(() -> shooter.changeTargetSpeed(100));
         Command slowDown = new InstantCommand(() -> shooter.changeTargetSpeed(-100));
         Command stop = new RunCommand(() -> shooter.stop(), shooter);
-
+        singleWheel.setRunsWhenDisabled(true);
+        
         operatorInterface.gamepad2.getifAvailable(1).whenPressed(singleWheel);
         operatorInterface.gamepad2.getifAvailable(2).whenPressed(stop);
         operatorInterface.gamepad2.getifAvailable(5).whenPressed(speedUp);

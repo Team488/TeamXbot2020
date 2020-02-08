@@ -37,15 +37,16 @@ public class TurretSubsystem extends BaseSubsystem {
 
     public void turnLeft() {
         motor.simpleSet(turnPowerProp.get());
+
     }
 
     public void turnRight() {
         motor.simpleSet(-turnPowerProp.get());
     }
 
-    public void setPower(double power) {
+    public void setPower(double power, double max) {
         if ((power < 0 && canTurnLeft()) || (power > 0 && canTurnRight())) {
-            motor.simpleSet(power);
+            motor.simpleSet(power*max);
         } else {
             motor.simpleSet(0);
         }
@@ -65,6 +66,6 @@ public class TurretSubsystem extends BaseSubsystem {
     }
 
     public void stop() {
-        setPower(0);
+        setPower(0,0);
     }
 }
