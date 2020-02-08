@@ -8,7 +8,6 @@ import xbot.common.command.BaseCommand;
 
 public class TurretRotationCommand extends BaseCommand
 {
-    //comment so i can commit this one character change
     final OperatorInterface oi;
     final TurretSubsystem turretSubsystem;
 
@@ -22,10 +21,7 @@ public class TurretRotationCommand extends BaseCommand
     @Override
     public void execute() {
         double yAxis = oi.gamepad.getRightStickX();
-        if(yAxis>0 && turretSubsystem.canTurnLeft() || yAxis<0 && turretSubsystem.canTurnRight())
-        {
-            turretSubsystem.setPower(yAxis);
-        }
+        turretSubsystem.setPower(yAxis);
     }
 
     @Override

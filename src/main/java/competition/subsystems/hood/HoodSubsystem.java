@@ -1,8 +1,6 @@
 package competition.subsystems.hood;
-
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-
 import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANTalon;

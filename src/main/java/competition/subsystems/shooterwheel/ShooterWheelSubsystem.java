@@ -17,8 +17,8 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     
     final DoubleProperty targetRpmProp;
     final DoubleProperty currentRpmProp;
-    public XCANSparkMax neoMasterMotor;
-    public XCANSparkMax neoFollowerMotor;
+    public XCANSparkMax leader;
+    public XCANSparkMax follower;
     IdealElectricalContract contract;
     
     @Inject
@@ -30,9 +30,9 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
 
         if(contract.isShooterWheelReady()){
-            this.neoMasterMotor = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterMaster");
-            this.neoFollowerMotor = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
-            neoFollowerMotor.follow(neoMasterMotor, true);
+            this.leader = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterMaster");
+            this.follower = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
+            follower.follow(leader, true);
         }
     }
 
@@ -51,14 +51,17 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     }
 
     public void setPidGoal(double speed) {
-        neoMasterMotor.setReference(speed, ControlType.kVelocity);
+        if(contract.isShooterWheelReady())
+        {
+            leader.setReference(speed, ControlType.kVelocity);
+        }
     }
 
 
     public void setPower(double power) {
         if(contract.isShooterWheelReady())
         {
-            neoMasterMotor.set(power);
+            leader.set(power);
         }
     }
   
@@ -67,7 +70,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     }
 
     public void periodic() {
-        neoMasterMotor.periodic();
-        currentRpmProp.set(neoMasterMotor.getVelocity());
+        leader.periodic();
+        currentRpmProp.set(leader.getVelocity());
     }
 }
