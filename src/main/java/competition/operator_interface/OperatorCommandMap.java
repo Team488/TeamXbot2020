@@ -14,6 +14,11 @@ import competition.subsystems.hood.commands.ExtendHoodCommand;
 import competition.subsystems.hood.commands.RetractHoodCommand;
 import competition.subsystems.internalconveyor.commands.IntakeCommand;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
+import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
+import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
 
 /**
@@ -49,5 +54,19 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(6).whileHeld(liftArm);
         operatorInterface.operatorGamepad.getifAvailable(7).whileHeld(spinShooterWheel);
         //TODO: add hang command
+    }
+    public void setupShootercommands(
+        OperatorInterface operatorInterface,
+        ShooterWheelSubsystem shooter,
+        SpinningShooterWheelCommand singleWheel) {
+        
+        Command speedUp = new InstantCommand(() -> shooter.changeTargetSpeed(100));
+        Command slowDown = new InstantCommand(() -> shooter.changeTargetSpeed(-100));
+        Command stop = new RunCommand(() -> shooter.stop(), shooter);
+
+        operatorInterface.gamepad2.getifAvailable(1).whenPressed(singleWheel);
+        operatorInterface.gamepad2.getifAvailable(2).whenPressed(stop);
+        operatorInterface.gamepad2.getifAvailable(5).whenPressed(speedUp);
+        operatorInterface.gamepad2.getifAvailable(6).whenPressed(slowDown);
     }
 }
