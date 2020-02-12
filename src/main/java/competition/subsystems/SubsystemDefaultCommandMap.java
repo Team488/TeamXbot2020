@@ -14,9 +14,14 @@ public class SubsystemDefaultCommandMap {
     // For setting the default commands on subsystems
 
     @Inject
-    public void setupDriveSubsystem(XScheduler scheduler, DriveSubsystem drive, ArcadeDriveCommand command,
-                                                          TurretSubsystem tSub, TurretStop stop) {
+    public void setupDriveSubsystem(XScheduler scheduler, DriveSubsystem drive, ArcadeDriveCommand command) {
         scheduler.setDefaultCommand(drive, command);
+    }
+
+    @Inject
+    public void setupTurretSubsystem(XScheduler scheduler, TurretSubsystem tSub, TurretStop stop)
+    {
         scheduler.setDefaultCommand(tSub, stop);
     }
+
 }
