@@ -61,6 +61,10 @@ public class HoodSubsystem extends BaseSubsystem{
         setPower(retractPowerProp.get());
     }
 
+    public void stop(){
+        setPower(0);
+    }
+
     public boolean isFullyExtended(){
         return (getAngle() >= maxAngle);
     }
