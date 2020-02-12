@@ -6,7 +6,7 @@ import competition.operator_interface.OperatorInterface;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class SpinningShooterWheelCommand extends BaseCommand{    
+public class SpinningShooterWheelCommand extends BaseCommand{
    
     final ShooterWheelSubsystem shooterWheelSubsystem;
     final OperatorInterface oi;
@@ -24,6 +24,7 @@ public class SpinningShooterWheelCommand extends BaseCommand{
     }
 
     public void execute(){
-       shooterWheelSubsystem.spin();
+        double speed = shooterWheelSubsystem.getTargetSpeed();
+        shooterWheelSubsystem.setPidGoal(speed);
     }
 }
