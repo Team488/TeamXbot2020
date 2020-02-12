@@ -9,6 +9,7 @@ import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANSparkMax;
 
 import xbot.common.injection.wpi_factories.CommonLibFactory;
+import xbot.common.properties.BooleanProperty;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
@@ -16,6 +17,8 @@ import xbot.common.properties.PropertyFactory;
 public class ShooterWheelSubsystem extends BaseSubsystem {
     
     final DoubleProperty targetRpmProp;
+    final BooleanProperty dashboardLightProp;
+    final DoubleProperty currentToTargetProp;
     final DoubleProperty currentRpmProp;
     public XCANSparkMax leader;
     public XCANSparkMax follower;
@@ -26,6 +29,8 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         log.info("Creating ShooterWheelSubsystem");
         pf.setPrefix(this);
         this.contract = contract;
+        currentToTargetProp = pf.createEphemeralProperty("currentToTarget", 0);
+        dashboardLightProp = pf.createEphemeralProperty("DashboardLight", false);
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
 
@@ -57,7 +62,6 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         }
     }
 
-
     public void setPower(double power) {
         if(contract.isShooterWheelReady())
         {
@@ -72,5 +76,13 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     public void periodic() {
         leader.periodic();
         currentRpmProp.set(leader.getVelocity());
+        dashboardLightProp.set(dashboardLight());
+    }
+
+    public boolean dashboardLight() {
+        if (currentRpmProp.get() >= targetRpmProp.get() - currentToTargetProp.get()) {
+            return true;
+        }
+        return false;
     }
 }
