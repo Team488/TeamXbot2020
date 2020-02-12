@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import com.revrobotics.ControlType;
 
 import competition.IdealElectricalContract;
-import xbot.common.command.BaseSubsystem;
+import xbot.common.command.BaseSetpointSubsystem;
 import xbot.common.controls.actuators.XCANSparkMax;
 
 import xbot.common.injection.wpi_factories.CommonLibFactory;
@@ -13,7 +13,7 @@ import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
 @Singleton
-public class ShooterWheelSubsystem extends BaseSubsystem {
+public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     
     final DoubleProperty targetRpmProp;
     final DoubleProperty currentRpmProp;
@@ -72,5 +72,9 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     public void periodic() {
         leader.periodic();
         currentRpmProp.set(leader.getVelocity());
+    }
+
+    public void maintainer() {
+        
     }
 }
