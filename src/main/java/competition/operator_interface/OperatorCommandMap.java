@@ -5,7 +5,6 @@ import com.google.inject.Singleton;
 
 import competition.subsystems.armlifting.commands.CollectorArmLiftingCommand;
 import competition.subsystems.armlifting.commands.FrontGrabbingBallsCommand;
-import competition.subsystems.carousel.commands.StopCarouselCommand;
 import competition.subsystems.carousel.commands.TurnLeftCarouselCommand;
 import competition.subsystems.carousel.commands.TurnRightCarouselCommand;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
