@@ -31,6 +31,8 @@ public class OperatorCommandMap {
         operatorInterface.gamepad.getifAvailable(2).whenPressed(tank);
         operatorInterface.gamepad.getifAvailable(8).whenPressed(resetHeading);
     }
+
+    @Inject
     public void setupShootercommands(
         OperatorInterface operatorInterface,
         ShooterWheelSubsystem shooter,
