@@ -3,43 +3,61 @@ package competition.subsystems.armlifting;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
+import xbot.common.controls.actuators.XCANTalon;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
+
 @Singleton
-public class FrontCollectingSubsystem extends BaseSubsystem { // maybe call this FrontCollectionSubsystem
+public class FrontCollectingSubsystem extends BaseSubsystem { 
     
     final DoubleProperty intakePowerProp;
     double power;
     int currentTotalBalls = 0;
+    public XCANTalon frontCollectingMotor;
+    final IdealElectricalContract contract;
+
 
     @Inject
-    public FrontCollectingSubsystem(CommonLibFactory factory, PropertyFactory pf) {
+    public FrontCollectingSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating CollectingSubsystem");
         pf.setPrefix(this);
         intakePowerProp = pf.createPersistentProperty("Intake Power", 1);
+        this.contract = contract;
 
-        // do ^ for as many as you can to adjust during dashboard
-        // make a set power for both subsystems
-        // make a stop for both subsystems as the default
-
+        if (contract.isFrontCollectingReady()) {
+            this.frontCollectingMotor = factory.createCANTalon(contract.frontCollectingMotor().channel);
+            frontCollectingMotor.setInverted(contract.frontCollectingMotor().inverted);
+        }
     }
 
     public void intake() {
         setPower(intakePowerProp.get());
     }
 
-    public void setPower(double power){
-        
-    }
-    
     public boolean isAtCapacity() {
         if (currentTotalBalls >= 5) {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setCurrentTotalBalls (int currentTotalBalls) {
+        this.currentTotalBalls = currentTotalBalls;
+    }
+
+    public void setPower(double power){
+
+        if(isAtCapacity()) {
+            power = 0;
+        }
+
+        if(contract.isFrontCollectingReady()) {
+            frontCollectingMotor.simpleSet(power);
         }
     }
 

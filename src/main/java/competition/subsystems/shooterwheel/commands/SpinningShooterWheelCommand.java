@@ -19,7 +19,7 @@ public class SpinningShooterWheelCommand extends BaseCommand{
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
         log.info("Initializing");
     }
 
