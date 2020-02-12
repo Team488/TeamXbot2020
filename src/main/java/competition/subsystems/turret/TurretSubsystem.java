@@ -23,12 +23,10 @@ public class TurretSubsystem extends BaseSubsystem {
     public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating TurretSubsystem");
         pf.setPrefix(this);
-
         currentAngle = 0;
         maxAngleProp = pf.createPersistentProperty("Max Angle", 180);
         minAngleProp = pf.createPersistentProperty("Min Angle", -180);
         turnPowerProp = pf.createPersistentProperty("Turn Speed", .03);
-
         if (contract.isTurretReady()) {
             this.motor = factory.createCANTalon(contract.rotationMotor().channel);
             motor.setInverted(contract.rotationMotor().inverted);
@@ -44,20 +42,21 @@ public class TurretSubsystem extends BaseSubsystem {
     }
 
     public void setPower(double power) {
-        if ((power < 0 && canTurnLeft()) || (power > 0 && canTurnRight())) {
+        if (canTurnLeft(power)) {
             motor.simpleSet(power);
-        } else {
-            motor.simpleSet(0);
+        } else if (canTurnRight(power)) {
+            motor.simpleSet(power);
+        } else if (power == 0) {
+            motor.simpleSet(power);
         }
-
     }
 
-    public boolean canTurnRight() {
-        return getCurrentAngle() <= maxAngleProp.get();
+    public boolean canTurnRight(double power) {
+        return (getCurrentAngle() >= maxAngleProp.get()) && (power < 0);
     }
 
-    public boolean canTurnLeft() {
-        return getCurrentAngle() >= minAngleProp.get();
+    public boolean canTurnLeft(double power) {
+        return (getCurrentAngle() <= minAngleProp.get()) && (power > 0);
     }
 
     public double getCurrentAngle() {
