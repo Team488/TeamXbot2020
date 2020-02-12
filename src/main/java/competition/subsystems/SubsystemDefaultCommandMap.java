@@ -13,6 +13,6 @@ public class SubsystemDefaultCommandMap {
 
     @Inject
     public void setupDriveSubsystem(XScheduler scheduler, DriveSubsystem drive, ArcadeDriveCommand command) {
-        scheduler.setDefaultCommand(drive, command);
+        //scheduler.setDefaultCommand(drive, command);
     }
 }

@@ -20,7 +20,7 @@ public class TurretRotationCommand extends BaseCommand
 
     @Override
     public void execute() {
-        double yAxis = oi.gamepad.getRightStickX();
+        double yAxis = oi.gamepad2.getRightStickX();
         turretSubsystem.setPower(yAxis);
     }
 

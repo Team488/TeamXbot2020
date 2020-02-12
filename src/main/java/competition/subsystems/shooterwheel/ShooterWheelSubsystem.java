@@ -29,11 +29,12 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
 
-        if(contract.isShooterWheelReady()){
-            this.leader = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterMaster");
-            this.follower = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
-            follower.follow(leader, true);
-        }
+        //if(contract.isShooterWheelReady()){
+            this.leader = factory.createCANSparkMax(34, /*contract.shooterMotorMaster().channel*/ this.getPrefix(), "ShooterMaster");
+            this.follower = factory.createCANSparkMax(21, /*contract.shooterMotorFollower().channel*/ this.getPrefix(), "ShooterFollower");
+            //follower.follow(leader, false);
+            this.follower.set(0);
+        //}
     }
 
     public void setTargetSpeed(double speed) {
