@@ -22,7 +22,7 @@ public class IdealElectricalContract extends ElectricalContract {
 
 
     public DeviceInfo hoodMotor(){
-        return new DeviceInfo(5, false);
+        return new DeviceInfo(90, false); //Motor not real
     }
 
     public boolean isHoodReady(){
