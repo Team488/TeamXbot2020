@@ -26,10 +26,10 @@ public class ArcadeDriveCommand extends BaseCommand {
 
     @Override
     public void execute() {
-        double translate = oi.gamepad.getLeftVector().y;
+        double translate = oi.driverGamepad.getLeftVector().y;
         translate = MathUtils.deadband(translate, oi.getJoystickDeadband());
 
-        double rotate = oi.gamepad.getRightVector().x;
+        double rotate = oi.driverGamepad.getRightVector().x;
         rotate = MathUtils.deadband(rotate, oi.getJoystickDeadband());
 
         translate = MathUtils.exponentAndRetainSign(translate, 3);
