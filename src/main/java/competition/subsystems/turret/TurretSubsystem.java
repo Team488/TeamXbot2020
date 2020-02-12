@@ -20,7 +20,7 @@ public class TurretSubsystem extends BaseSubsystem {
     final DoubleProperty maxAngleProp;
     final DoubleProperty minAngleProp;
     final DoubleProperty turnPowerProp;
-	public OperatorInterface turret;
+    public OperatorInterface turret;
 
     @Inject
     public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {

@@ -74,7 +74,7 @@ public class IdealElectricalContract extends ElectricalContract {
 
     public DeviceInfo rotationMotor()
     {
-        return new DeviceInfo(31, false);
+        return new DeviceInfo(31, true);
     }
 
     public DeviceInfo carouselMotor()
