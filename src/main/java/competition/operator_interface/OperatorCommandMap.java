@@ -3,8 +3,16 @@ package competition.operator_interface;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import competition.subsystems.armlifting.commands.CollectorArmLiftingCommand;
+import competition.subsystems.armlifting.commands.FrontGrabbingBallsCommand;
+import competition.subsystems.carousel.commands.TurnLeftCarouselCommand;
+import competition.subsystems.carousel.commands.TurnRightCarouselCommand;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
+import competition.subsystems.hood.commands.ExtendHoodCommand;
+import competition.subsystems.hood.commands.RetractHoodCommand;
+import competition.subsystems.internalconveyor.commands.IntakeCommand;
+import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,9 +35,38 @@ public class OperatorCommandMap {
             TankDriveWithJoysticksCommand tank)
     {
         resetHeading.setHeadingToApply(90);
-        operatorInterface.gamepad.getifAvailable(1).whenPressed(arcade);
-        operatorInterface.gamepad.getifAvailable(2).whenPressed(tank);
-        operatorInterface.gamepad.getifAvailable(8).whenPressed(resetHeading);
+        operatorInterface.driverGamepad.getifAvailable(1).whenPressed(arcade);
+        operatorInterface.driverGamepad.getifAvailable(2).whenPressed(tank);
+        operatorInterface.driverGamepad.getifAvailable(8).whenPressed(resetHeading);
+    }
+
+    @Inject
+    public void setupBasicCommands(OperatorInterface operatorInterface, ExtendHoodCommand extendHood, 
+    RetractHoodCommand retractHood, TurnLeftCarouselCommand carouselLeft, TurnRightCarouselCommand carouselRight,
+    FrontGrabbingBallsCommand frontIntake, CollectorArmLiftingCommand liftArm, SpinningShooterWheelCommand spinShooterWheel)
+    {
+        operatorInterface.operatorGamepad.getifAvailable(1).whileHeld(carouselLeft);
+        operatorInterface.operatorGamepad.getifAvailable(2).whileHeld(carouselRight);
+        operatorInterface.operatorGamepad.getifAvailable(3).whileHeld(extendHood);
+        operatorInterface.operatorGamepad.getifAvailable(4).whileHeld(retractHood);
+        operatorInterface.operatorGamepad.getifAvailable(5).whileHeld(frontIntake);
+        operatorInterface.operatorGamepad.getifAvailable(6).whileHeld(liftArm);
+        operatorInterface.operatorGamepad.getifAvailable(7).whileHeld(spinShooterWheel);
+        //TODO: add hang command
+    }
+    public void setupShootercommands(
+        OperatorInterface operatorInterface,
+        ShooterWheelSubsystem shooter,
+        SpinningShooterWheelCommand singleWheel) {
+        
+        Command speedUp = new InstantCommand(() -> shooter.changeTargetSpeed(100));
+        Command slowDown = new InstantCommand(() -> shooter.changeTargetSpeed(-100));
+        Command stop = new RunCommand(() -> shooter.stop(), shooter);
+
+        operatorInterface.gamepad2.getifAvailable(1).whenPressed(singleWheel);
+        operatorInterface.gamepad2.getifAvailable(2).whenPressed(stop);
+        operatorInterface.gamepad2.getifAvailable(5).whenPressed(speedUp);
+        operatorInterface.gamepad2.getifAvailable(6).whenPressed(slowDown);
     }
 
     @Inject

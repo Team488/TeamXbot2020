@@ -6,13 +6,13 @@ import competition.operator_interface.OperatorInterface;
 import competition.subsystems.carousel.CarouselSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class StopCarousel extends BaseCommand{
+public class StopCarouselCommand extends BaseCommand{
      
     final CarouselSubsystem carouselSubsystem;
     final OperatorInterface oi;
 
     @Inject
-    public StopCarousel(OperatorInterface oi, CarouselSubsystem carouselSubsystem){
+    public StopCarouselCommand(OperatorInterface oi, CarouselSubsystem carouselSubsystem){
         this.oi = oi;
         this.carouselSubsystem = carouselSubsystem;
         this.addRequirements(this.carouselSubsystem);

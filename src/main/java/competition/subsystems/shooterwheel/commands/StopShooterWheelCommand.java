@@ -6,25 +6,24 @@ import competition.operator_interface.OperatorInterface;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class SpinningShooterWheelCommand extends BaseCommand{
-   
+public class StopShooterWheelCommand extends BaseCommand{
+
     final ShooterWheelSubsystem shooterWheelSubsystem;
     final OperatorInterface oi;
 
     @Inject
-    public SpinningShooterWheelCommand(OperatorInterface oi, ShooterWheelSubsystem shooterWheelSubsystem){
+    public StopShooterWheelCommand(OperatorInterface oi, ShooterWheelSubsystem shooterWheelSubsystem){
         this.oi = oi;
         this.shooterWheelSubsystem = shooterWheelSubsystem;
         this.addRequirements(this.shooterWheelSubsystem);
     }
 
     @Override
-    public void initialize() {
+    public void initialize(){
         log.info("Initializing");
     }
 
     public void execute(){
-        double speed = shooterWheelSubsystem.getTargetSpeed();
-        shooterWheelSubsystem.setPidGoal(speed);
+        shooterWheelSubsystem.stop();
     }
 }

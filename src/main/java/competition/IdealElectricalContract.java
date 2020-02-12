@@ -4,9 +4,6 @@ import xbot.common.injection.ElectricalContract;
 
 public class IdealElectricalContract extends ElectricalContract {
 
-    ///
-    // Drive
-    ///
     public DeviceInfo leftFrontDriveNeo() {
         return new DeviceInfo(32, false);
     }
@@ -25,7 +22,7 @@ public class IdealElectricalContract extends ElectricalContract {
 
 
     public DeviceInfo hoodMotor(){
-        return new DeviceInfo(5, false);
+        return new DeviceInfo(90, false); //Motor not real
     }
 
     public boolean isHoodReady(){
@@ -84,6 +81,30 @@ public class IdealElectricalContract extends ElectricalContract {
 
     public boolean isCarouselReady(){
         return true;
+    }
+
+    public boolean isCollectorArmLiftingReady() {
+        return true;
+    }
+
+    public DeviceInfo liftingCollectorArmMotor() {
+        return new DeviceInfo(5, true);
+    }
+
+    public boolean isFrontCollectingReady() {
+        return true;
+    }
+
+    public DeviceInfo frontCollectingMotor() {
+        return new DeviceInfo(6, true);
+    }
+
+    public boolean isHangingReady() {
+        return true;
+    }
+
+    public DeviceInfo hangerMotor() {
+        return new DeviceInfo(7, true);
     }
 
 
