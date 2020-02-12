@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import competition.IdealElectricalContract;
+import competition.operator_interface.OperatorInterface;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANTalon;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
@@ -15,9 +16,11 @@ public class TurretSubsystem extends BaseSubsystem {
 
     public XCANTalon motor;
     public double currentAngle;
+    
     final DoubleProperty maxAngleProp;
     final DoubleProperty minAngleProp;
     final DoubleProperty turnPowerProp;
+	public OperatorInterface turret;
 
     @Inject
     public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
