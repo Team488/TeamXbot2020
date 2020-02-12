@@ -30,6 +30,7 @@ public class FrontCollectingSubsystem extends BaseSubsystem {
 
         if (contract.isFrontCollectingReady()) {
             this.frontCollectingMotor = factory.createCANTalon(contract.frontCollectingMotor().channel);
+            frontCollectingMotor.setInverted(contract.frontCollectingMotor().inverted);
         }
     }
 

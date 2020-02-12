@@ -32,6 +32,7 @@ public class HangerSubsystem extends BaseSubsystem {
 
         if (contract.isHangingReady()) {
             this.hangerMotor = factory.createCANTalon(contract.hangerMotor().channel);
+            hangerMotor.setInverted(contract.hangerMotor().inverted);
         }
     }
 

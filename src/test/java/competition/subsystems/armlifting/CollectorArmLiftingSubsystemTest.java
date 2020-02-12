@@ -42,6 +42,7 @@ public class CollectorArmLiftingSubsystemTest extends BaseCompetitionTest {
     public void testCollectorArmLiftingStop() {
         CollectorArmLiftingSubsystem collectArmLifting = this.injector.getInstance(CollectorArmLiftingSubsystem.class);
         collectArmLifting.up();
+        assertEquals(1, collectArmLifting.liftingCollectorArmMotor.getMotorOutputPercent(), 0.001);
         if(collectArmLifting.liftingCollectorArmMotor.getMotorOutputPercent() > 0) {
             collectArmLifting.stop();
         }

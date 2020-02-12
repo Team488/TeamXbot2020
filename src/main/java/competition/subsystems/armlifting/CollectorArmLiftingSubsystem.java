@@ -39,7 +39,9 @@ public class CollectorArmLiftingSubsystem extends BaseSubsystem {
 
         if (contract.isCollectorArmLiftingReady()) {
             this.liftingCollectorArmMotor = factory.createCANTalon(contract.liftingCollectorArmMotor().channel);
+            liftingCollectorArmMotor.setInverted(contract.liftingCollectorArmMotor().inverted);
         }
+
     }
 
     public void up() {
