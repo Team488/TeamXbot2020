@@ -21,6 +21,8 @@ public class StopShooterWheelCommand extends BaseCommand{
     @Override
     public void initialize(){
         log.info("Initializing");
+        shooterWheelSubsystem.resetPID();
+        shooterWheelSubsystem.setTargetSpeed(0);
     }
 
     public void execute(){

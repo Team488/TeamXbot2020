@@ -29,12 +29,18 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
 
-        //if(contract.isShooterWheelReady()){
-            this.leader = factory.createCANSparkMax(34, /*contract.shooterMotorMaster().channel*/ this.getPrefix(), "ShooterMaster");
-            this.follower = factory.createCANSparkMax(21, /*contract.shooterMotorFollower().channel*/ this.getPrefix(), "ShooterFollower");
+        if(contract.isShooterWheelReady()){
+            this.leader = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterMaster");
+            this.follower = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
+
+            leader.restoreFactoryDefaults();
+            follower.restoreFactoryDefaults();
+
             //follower.follow(leader, false);
             this.follower.set(0);
-        //}
+        }
+
+        leader.setIMaxAccum(1, 0);
     }
 
     public void setTargetSpeed(double speed) {
@@ -68,6 +74,10 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
   
     public void stop () {
         setPower(0);
+    }
+
+    public void resetPID() {
+        leader.setIAccum(0);
     }
 
     public void periodic() {

@@ -28,7 +28,7 @@ import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
  */
 @Singleton
 public class OperatorCommandMap {
-    
+    /*
     // Example for setting up a command to fire when a button is pressed:
     @Inject
     public void setupMyCommands(
@@ -41,8 +41,8 @@ public class OperatorCommandMap {
         operatorInterface.driverGamepad.getifAvailable(1).whenPressed(arcade);
         operatorInterface.driverGamepad.getifAvailable(2).whenPressed(tank);
         operatorInterface.driverGamepad.getifAvailable(8).whenPressed(resetHeading);
-    }
-
+    }*/
+/*
     @Inject
     public void setupBasicCommands(OperatorInterface operatorInterface, ExtendHoodCommand extendHood, 
     RetractHoodCommand retractHood, TurnLeftCarouselCommand carouselLeft, TurnRightCarouselCommand carouselRight,
@@ -54,6 +54,11 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(4).whileHeld(retractHood);
         operatorInterface.operatorGamepad.getifAvailable(5).whileHeld(frontIntake);
         operatorInterface.operatorGamepad.getifAvailable(6).whileHeld(liftArm);
+    } */
+
+    @Inject
+    public void setupTurretCommands(OperatorInterface oi, TurretRotationCommand rotate) {
+        oi.operatorGamepad.getifAvailable(3).whenPressed(rotate);
     }
 
     @Inject
@@ -65,10 +70,12 @@ public class OperatorCommandMap {
         Command speedUp = new InstantCommand(() -> shooter.changeTargetSpeed(100));
         Command slowDown = new InstantCommand(() -> shooter.changeTargetSpeed(-100));
         Command stop = new RunCommand(() -> shooter.stop(), shooter);
+        Command twentyPercent = new RunCommand(() -> shooter.setPower(0.2), shooter);
 
         operatorInterface.operatorGamepad.getifAvailable(1).whenPressed(singleWheel);
         operatorInterface.operatorGamepad.getifAvailable(2).whenPressed(stop);
         operatorInterface.operatorGamepad.getifAvailable(5).whenPressed(speedUp);
         operatorInterface.operatorGamepad.getifAvailable(6).whenPressed(slowDown);
+        operatorInterface.operatorGamepad.getifAvailable(4).whenPressed(twentyPercent);
     }
 }

@@ -8,6 +8,7 @@ import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.command.XScheduler;
 import xbot.common.controls.actuators.XCANTalon;
+import xbot.common.controls.sensors.XAS5600;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
@@ -22,6 +23,7 @@ public class TurretSubsystem extends BaseSubsystem {
     final DoubleProperty turnPowerProp;
     final DoubleProperty currentAngleProp;
     final DoubleProperty offsetProp;
+    final XAS5600 turretSensor;
 
     @Inject
     public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract, XScheduler scheduler) {
@@ -40,7 +42,7 @@ public class TurretSubsystem extends BaseSubsystem {
             motor.setInverted(contract.rotationMotor().inverted);
         }
 
-        motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+        turretSensor = factory.createXAS5600(motor);
 
         scheduler.registerSubsystem(this);
     }
@@ -75,7 +77,7 @@ public class TurretSubsystem extends BaseSubsystem {
     }
 
     public double getCurrentAngle() {
-        return motor.getSelectedSensorPosition(0);
+        return turretSensor.getPosition();
     }
 
     public void stop() {
