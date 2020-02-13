@@ -15,9 +15,12 @@ import competition.subsystems.internalconveyor.commands.IntakeCommand;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
+import competition.subsystems.turret.commands.TurretRotationCommand;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import xbot.common.command.XScheduler;
 import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
 
 /**
@@ -51,9 +54,9 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(4).whileHeld(retractHood);
         operatorInterface.operatorGamepad.getifAvailable(5).whileHeld(frontIntake);
         operatorInterface.operatorGamepad.getifAvailable(6).whileHeld(liftArm);
-        operatorInterface.operatorGamepad.getifAvailable(7).whileHeld(spinShooterWheel);
-        //TODO: add hang command
     }
+
+    @Inject
     public void setupShootercommands(
         OperatorInterface operatorInterface,
         ShooterWheelSubsystem shooter,
