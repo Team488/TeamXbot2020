@@ -18,8 +18,6 @@ public class OperatorInterface implements IPropertySupport {
   
     public XXboxController driverGamepad;
     public XXboxController operatorGamepad;
-    public XXboxController gamepad;
-    public XXboxController gamepad2;
     final DoubleProperty joystickDeadband;
 
     @Inject

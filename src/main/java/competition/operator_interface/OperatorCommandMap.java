@@ -40,7 +40,7 @@ public class OperatorCommandMap {
         resetHeading.setHeadingToApply(90);
         operatorInterface.driverGamepad.getifAvailable(1).whenPressed(arcade);
         operatorInterface.driverGamepad.getifAvailable(2).whenPressed(tank);
-        operatorInterface.gamepad.getifAvailable(3).whenPressed(turret);
+        operatorInterface.driverGamepad.getifAvailable(3).whenPressed(turret);
         operatorInterface.driverGamepad.getifAvailable(8).whenPressed(resetHeading);
     }
 
@@ -51,7 +51,7 @@ public class OperatorCommandMap {
 
         Command calibrate = new InstantCommand(() -> turret.calibrateTurret());
 
-        oi.gamepad.getifAvailable(2).whenPressed(calibrate);
+        oi.operatorGamepad.getifAvailable(2).whenPressed(calibrate);
         
         }
 
@@ -80,9 +80,9 @@ public class OperatorCommandMap {
         Command slowDown = new InstantCommand(() -> shooter.changeTargetSpeed(-100));
         Command stop = new RunCommand(() -> shooter.stop(), shooter);
 
-        operatorInterface.gamepad2.getifAvailable(1).whenPressed(singleWheel);
-        operatorInterface.gamepad2.getifAvailable(2).whenPressed(stop);
-        operatorInterface.gamepad2.getifAvailable(5).whenPressed(speedUp);
-        operatorInterface.gamepad2.getifAvailable(6).whenPressed(slowDown);
+        operatorInterface.driverGamepad.getifAvailable(1).whenPressed(singleWheel);
+        operatorInterface.driverGamepad.getifAvailable(2).whenPressed(stop);
+        operatorInterface.driverGamepad.getifAvailable(5).whenPressed(speedUp);
+        operatorInterface.driverGamepad.getifAvailable(6).whenPressed(slowDown);
     }
 }
