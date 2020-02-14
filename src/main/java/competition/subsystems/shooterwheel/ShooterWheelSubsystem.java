@@ -17,7 +17,7 @@ import xbot.common.properties.PropertyFactory;
 public class ShooterWheelSubsystem extends BaseSubsystem {
     
     final DoubleProperty targetRpmProp;
-    final BooleanProperty speedAtToleranceProp;
+    final BooleanProperty speedWithinToleranceProp;
     final DoubleProperty speedToleranceProp;
     final DoubleProperty currentRpmProp;
     public XCANSparkMax leader;
@@ -30,7 +30,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         pf.setPrefix(this);
         this.contract = contract;
         speedToleranceProp = pf.createEphemeralProperty("speedTolerance", 0);
-        speedAtToleranceProp = pf.createEphemeralProperty("speedAtTolerance", false);
+        speedWithinToleranceProp = pf.createEphemeralProperty("speedWithinTolerance", false);
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
 
@@ -76,7 +76,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     public void periodic() {
         leader.periodic();
         currentRpmProp.set(leader.getVelocity());
-        speedAtToleranceProp.set(getShooterWheelAtTargetSpeed());
+        speedWithinToleranceProp.set(getShooterWheelAtTargetSpeed());
     }
 
     public boolean getShooterWheelAtTargetSpeed() {
