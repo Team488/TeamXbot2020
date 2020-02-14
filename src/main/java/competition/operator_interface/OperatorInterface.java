@@ -28,14 +28,9 @@ public class OperatorInterface implements IPropertySupport {
         driverGamepad.setLeftInversion(false, true);
         driverGamepad.setRightInversion(true, true);
 
-        operatorGamepad = factory.createXboxController(1);
-        operatorGamepad.setLeftInversion(false, true);
-        operatorGamepad.setRightInversion(false, true);
-
         pf.setPrefix(this);
         joystickDeadband = pf.createPersistentProperty("JoystickDeadband", 0.08);
         gamepad2 = factory.createXboxController(1);
-
         gamepad2.setLeftInversion(false, true);
         gamepad2.setRightInversion(true, true);
     }
