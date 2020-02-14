@@ -77,4 +77,9 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     public void maintainer() {
         
     }
+    //in ticks timer 
+    //setcurrent to goal
+    //tick goal 
+    //distance of something in ticks
+    //maintainer for ticks
 }
