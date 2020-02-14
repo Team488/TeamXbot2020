@@ -44,6 +44,7 @@ public class OperatorCommandMap {
         operatorInterface.driverGamepad.getifAvailable(8).whenPressed(resetHeading);
     }
 
+    @Inject
     public void setupTurretCommands(
         OperatorInterface oi,
         TurretSubsystem turret) {
@@ -68,7 +69,8 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(7).whileHeld(spinShooterWheel);
         //TODO: add hang command
     }
-    
+
+    @Inject
     public void setupShootercommands(
         OperatorInterface operatorInterface,
         ShooterWheelSubsystem shooter,
