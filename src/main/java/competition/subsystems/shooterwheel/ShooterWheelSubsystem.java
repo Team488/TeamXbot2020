@@ -17,8 +17,8 @@ import xbot.common.properties.PropertyFactory;
 public class ShooterWheelSubsystem extends BaseSubsystem {
     
     final DoubleProperty targetRpmProp;
-    final BooleanProperty dashboardLightProp;
-    final DoubleProperty currentToTargetProp;
+    final BooleanProperty speedAtToleranceProp;
+    final DoubleProperty speedToleranceProp;
     final DoubleProperty currentRpmProp;
     public XCANSparkMax leader;
     public XCANSparkMax follower;
@@ -29,8 +29,8 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         log.info("Creating ShooterWheelSubsystem");
         pf.setPrefix(this);
         this.contract = contract;
-        currentToTargetProp = pf.createEphemeralProperty("currentToTarget", 0);
-        dashboardLightProp = pf.createEphemeralProperty("DashboardLight", false);
+        speedToleranceProp = pf.createEphemeralProperty("speedTolerance", 0);
+        speedAtToleranceProp = pf.createEphemeralProperty("speedAtTolerance", false);
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
 
@@ -76,11 +76,11 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     public void periodic() {
         leader.periodic();
         currentRpmProp.set(leader.getVelocity());
-        dashboardLightProp.set(dashboardLight());
+        speedAtToleranceProp.set(getShooterWheelAtTargetSpeed());
     }
 
-    public boolean dashboardLight() {
-        if (currentRpmProp.get() >= targetRpmProp.get() - currentToTargetProp.get()) {
+    public boolean getShooterWheelAtTargetSpeed() {
+        if (Math.abs(currentRpmProp.get() - targetRpmProp.get()) < speedToleranceProp.get()) {
             return true;
         }
         return false;
