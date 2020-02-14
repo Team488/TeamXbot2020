@@ -69,19 +69,4 @@ public class OperatorCommandMap {
         operatorInterface.gamepad2.getifAvailable(6).whenPressed(slowDown);
     }
 
-    @Inject
-    public void setupShootercommands(
-        OperatorInterface operatorInterface,
-        ShooterWheelSubsystem shooter,
-        SpinningShooterWheelCommand singleWheel) {
-        
-        Command speedUp = new InstantCommand(() -> shooter.changeTargetSpeed(100));
-        Command slowDown = new InstantCommand(() -> shooter.changeTargetSpeed(-100));
-        Command stop = new RunCommand(() -> shooter.stop(), shooter);
-
-        operatorInterface.gamepad2.getifAvailable(1).whenPressed(singleWheel);
-        operatorInterface.gamepad2.getifAvailable(2).whenPressed(stop);
-        operatorInterface.gamepad2.getifAvailable(5).whenPressed(speedUp);
-        operatorInterface.gamepad2.getifAvailable(6).whenPressed(slowDown);
-    }
 }
