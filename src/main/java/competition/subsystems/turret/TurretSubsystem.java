@@ -15,6 +15,7 @@ public class TurretSubsystem extends BaseSubsystem {
 
     public XCANTalon motor;
     public double currentAngle;
+    public double storedAngle = 0.0;
     final DoubleProperty maxAngleProp;
     final DoubleProperty minAngleProp;
     final DoubleProperty turnPowerProp;
@@ -33,6 +34,12 @@ public class TurretSubsystem extends BaseSubsystem {
             this.motor = factory.createCANTalon(contract.rotationMotor().channel);
             motor.setInverted(contract.rotationMotor().inverted);
         }
+    }
+
+    public void calibrateTurret(){ //here
+        currentAngle = currentAngle - storedAngle;
+        storedAngle = getCurrentAngle();
+        log.info("Angle set as facing forward");
     }
 
     public void turnLeft() {

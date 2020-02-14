@@ -13,6 +13,8 @@ import competition.subsystems.hood.commands.ExtendHoodCommand;
 import competition.subsystems.hood.commands.RetractHoodCommand;
 import competition.subsystems.internalconveyor.commands.IntakeCommand;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
+import competition.subsystems.turret.TurretSubsystem;
+import competition.subsystems.turret.commands.TurretRotationCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,13 +34,25 @@ public class OperatorCommandMap {
             OperatorInterface operatorInterface,
             SetRobotHeadingCommand resetHeading,
             ArcadeDriveCommand arcade,
+            TurretRotationCommand turret,
             TankDriveWithJoysticksCommand tank)
     {
         resetHeading.setHeadingToApply(90);
         operatorInterface.driverGamepad.getifAvailable(1).whenPressed(arcade);
         operatorInterface.driverGamepad.getifAvailable(2).whenPressed(tank);
+        operatorInterface.gamepad.getifAvailable(3).whenPressed(turret);
         operatorInterface.driverGamepad.getifAvailable(8).whenPressed(resetHeading);
     }
+
+    public void setupTurretCommands(
+        OperatorInterface oi,
+        TurretSubsystem turret) {
+
+        Command calibrate = new InstantCommand(() -> turret.calibrateTurret());
+
+        oi.gamepad.getifAvailable(2).whenPressed(calibrate);
+        
+        }
 
     @Inject
     public void setupBasicCommands(OperatorInterface operatorInterface, ExtendHoodCommand extendHood, 
@@ -54,6 +68,7 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(7).whileHeld(spinShooterWheel);
         //TODO: add hang command
     }
+    
     public void setupShootercommands(
         OperatorInterface operatorInterface,
         ShooterWheelSubsystem shooter,
