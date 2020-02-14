@@ -12,6 +12,7 @@ import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 import competition.subsystems.hood.commands.ExtendHoodCommand;
 import competition.subsystems.hood.commands.RetractHoodCommand;
 import competition.subsystems.internalconveyor.commands.IntakeCommand;
+import competition.subsystems.shooterwheel.commands.BangBangCommand;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
@@ -43,7 +44,8 @@ public class OperatorCommandMap {
     @Inject
     public void setupBasicCommands(OperatorInterface operatorInterface, ExtendHoodCommand extendHood, 
     RetractHoodCommand retractHood, TurnLeftCarouselCommand carouselLeft, TurnRightCarouselCommand carouselRight,
-    FrontGrabbingBallsCommand frontIntake, CollectorArmLiftingCommand liftArm, SpinningShooterWheelCommand spinShooterWheel)
+    FrontGrabbingBallsCommand frontIntake, CollectorArmLiftingCommand liftArm, SpinningShooterWheelCommand spinShooterWheel,
+    BangBangCommand BangBang)
     {
         operatorInterface.operatorGamepad.getifAvailable(1).whileHeld(carouselLeft);
         operatorInterface.operatorGamepad.getifAvailable(2).whileHeld(carouselRight);
@@ -52,6 +54,7 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(5).whileHeld(frontIntake);
         operatorInterface.operatorGamepad.getifAvailable(6).whileHeld(liftArm);
         operatorInterface.operatorGamepad.getifAvailable(7).whileHeld(spinShooterWheel);
+        operatorInterface.operatorGamepad.getifAvailable(8).whileHeld(BangBang);
         //TODO: add hang command
     }
     public void setupShootercommands(
