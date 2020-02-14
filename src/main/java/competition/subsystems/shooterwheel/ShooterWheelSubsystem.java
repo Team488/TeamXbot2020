@@ -36,6 +36,10 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         }
     }
 
+    public double getCurrentSpeed(){
+        return currentRpmProp.get();
+    }
+
     public void setTargetSpeed(double speed) {
         targetRpmProp.set(speed);
     }
