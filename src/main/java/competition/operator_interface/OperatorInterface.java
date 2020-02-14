@@ -18,8 +18,6 @@ public class OperatorInterface implements IPropertySupport {
   
     public XXboxController driverGamepad;
     public XXboxController operatorGamepad;
-    public XXboxController gamepad;
-    public XXboxController gamepad2;
     final DoubleProperty joystickDeadband;
 
     @Inject
@@ -34,9 +32,6 @@ public class OperatorInterface implements IPropertySupport {
 
         pf.setPrefix(this);
         joystickDeadband = pf.createPersistentProperty("JoystickDeadband", 0.08);
-        gamepad2 = factory.createXboxController(2);
-        gamepad2.setLeftInversion(false, true);
-        gamepad2.setRightInversion(true, true);
     }
     
     public double getJoystickDeadband() {
