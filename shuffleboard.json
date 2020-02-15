@@ -915,11 +915,9 @@
               1
             ],
             "content": {
-              "_type": "Boolean Box",
+              "_type": "Toggle Button",
               "_source0": "network_table:///SmartDashboard/TurretSubsystem/Calibrated",
-              "_title": "SmartDashboard/TurretSubsystem/Calibrated",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
+              "_title": "SmartDashboard/TurretSubsystem/Calibrated"
             }
           },
           "6,0": {
@@ -963,7 +961,40 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/TurretSubsystem/Current Angle",
-              "_title": "SmartDashboard/TurretSubsystem/Current Angle"
+              "_title": "Turret Heading"
+            }
+          },
+          "8,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/PoseSubsystem/CurrentHeading",
+              "_title": "SmartDashboard/PoseSubsystem/CurrentHeading"
+            }
+          },
+          "4,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/TurretPID/P",
+              "_title": "SmartDashboard/TurretPID/P"
+            }
+          },
+          "5,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/TurretPID/D",
+              "_title": "SmartDashboard/TurretPID/D"
             }
           }
         }
