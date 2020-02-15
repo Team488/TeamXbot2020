@@ -60,6 +60,7 @@ public class OperatorCommandMap {
     RetractHoodCommand retractHood, TurnLeftCarouselCommand carouselLeft, TurnRightCarouselCommand carouselRight,
     FrontGrabbingBallsCommand frontIntake, CollectorArmLiftingCommand liftArm, SpinningShooterWheelCommand spinShooterWheel)
     {
+        /*
         operatorInterface.operatorGamepad.getifAvailable(1).whileHeld(carouselLeft);
         operatorInterface.operatorGamepad.getifAvailable(2).whileHeld(carouselRight);
         operatorInterface.operatorGamepad.getifAvailable(3).whileHeld(extendHood);
@@ -67,6 +68,7 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(5).whileHeld(frontIntake);
         operatorInterface.operatorGamepad.getifAvailable(6).whileHeld(liftArm);
         operatorInterface.operatorGamepad.getifAvailable(7).whileHeld(spinShooterWheel);
+        */
         //TODO: add hang command
     }
 
@@ -80,9 +82,10 @@ public class OperatorCommandMap {
         Command slowDown = new InstantCommand(() -> shooter.changeTargetSpeed(-100));
         Command stop = new RunCommand(() -> shooter.stop(), shooter);
 
-        operatorInterface.driverGamepad.getifAvailable(1).whenPressed(singleWheel);
-        operatorInterface.driverGamepad.getifAvailable(2).whenPressed(stop);
-        operatorInterface.driverGamepad.getifAvailable(5).whenPressed(speedUp);
-        operatorInterface.driverGamepad.getifAvailable(6).whenPressed(slowDown);
+        operatorInterface.operatorGamepad.getifAvailable(1).whenPressed(singleWheel);
+        operatorInterface.operatorGamepad.getifAvailable(2).whenPressed(stop);
+        operatorInterface.operatorGamepad.getifAvailable(5).whenPressed(speedUp);
+        operatorInterface.operatorGamepad.getifAvailable(6).whenPressed(slowDown);
     }
+
 }
