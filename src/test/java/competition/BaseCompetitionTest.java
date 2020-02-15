@@ -2,6 +2,7 @@ package competition;
 
 import competition.operator_interface.OperatorInterface;
 import competition.subsystems.pose.PoseSubsystem;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import xbot.common.injection.BaseWPITest;
 import xbot.common.injection.ElectricalContract;
 import xbot.common.injection.UnitTestModule;
@@ -19,6 +20,7 @@ public class BaseCompetitionTest extends BaseWPITest {
 
             this.bind(ElectricalContract.class).to(IdealElectricalContract.class);
             this.bind(BasePoseSubsystem.class).to(PoseSubsystem.class);
+            this.bind(NetworkTableInstance.class).toInstance(NetworkTableInstance.create());
         }
     }
 

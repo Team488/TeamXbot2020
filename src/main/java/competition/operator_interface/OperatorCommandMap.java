@@ -15,13 +15,21 @@ import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.BangBangCommand;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import competition.subsystems.turret.TurretSubsystem;
+<<<<<<< HEAD
 import competition.subsystems.turret.commands.PointTurretToFieldOrientedHeadingCommand;
 import competition.subsystems.turret.commands.TurretMaintainerCommand;
+=======
+import competition.subsystems.turret.commands.TurretRotateToVisionTargetCommand;
+>>>>>>> master
 import competition.subsystems.turret.commands.TurretRotateViaJoysticksCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+<<<<<<< HEAD
 import xbot.common.command.SmartDashboardCommandPutter;
+=======
+import xbot.common.controls.sensors.XXboxController.XboxButton;
+>>>>>>> master
 import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
 
 /**
@@ -35,15 +43,22 @@ public class OperatorCommandMap {
     public void setupMyCommands(OperatorInterface operatorInterface, SetRobotHeadingCommand resetHeading,
             ArcadeDriveCommand arcade, TankDriveWithJoysticksCommand tank) {
         resetHeading.setHeadingToApply(90);
+<<<<<<< HEAD
         operatorInterface.driverGamepad.getifAvailable(1).whenPressed(arcade);
         operatorInterface.driverGamepad.getifAvailable(2).whenPressed(tank);
         operatorInterface.driverGamepad.getifAvailable(8).whenPressed(resetHeading);
 
         operatorInterface.operatorGamepad.getifAvailable(7).whenPressed(resetHeading);
+=======
+        operatorInterface.driverGamepad.getifAvailable(XboxButton.A).whenPressed(arcade);
+        operatorInterface.driverGamepad.getifAvailable(XboxButton.B).whenPressed(tank);
+        operatorInterface.driverGamepad.getifAvailable(XboxButton.Start).whenPressed(resetHeading);
+>>>>>>> master
     }
 
     @Inject
     public void setupTurretCommands(OperatorInterface oi, TurretSubsystem turret,
+<<<<<<< HEAD
             TurretRotateViaJoysticksCommand rotateTurret,
             PointTurretToFieldOrientedHeadingCommand pointDownrange,
             TurretMaintainerCommand maintain) {
@@ -52,6 +67,14 @@ public class OperatorCommandMap {
         
         oi.operatorGamepad.getifAvailable(8).whileHeld(pointDownrange);
         oi.operatorGamepad.getifAvailable(10).whenPressed(calibrate);
+=======
+            TurretRotateViaJoysticksCommand rotateTurret, TurretRotateToVisionTargetCommand rotateToTarget) {
+        Command calibrate = new InstantCommand(() -> turret.calibrateTurret());
+
+        oi.operatorGamepad.getifAvailable(XboxButton.RightStick).whenPressed(calibrate);
+        oi.operatorGamepad.getifAvailable(XboxButton.X).whenPressed(rotateTurret);
+        oi.operatorGamepad.getifAvailable(XboxButton.Start).whenPressed(rotateToTarget);
+>>>>>>> master
     }
 
     @Inject
@@ -80,11 +103,11 @@ public class OperatorCommandMap {
         Command slowDown = new InstantCommand(() -> shooter.changeTargetRPM(-500));
         Command stop = new RunCommand(() -> shooter.stop(), shooter);
 
-        operatorInterface.operatorGamepad.getifAvailable(1).whenPressed(singleWheel);
-        operatorInterface.operatorGamepad.getifAvailable(2).whenPressed(stop);
-        operatorInterface.operatorGamepad.getifAvailable(4).whenPressed(bangBang);
-        operatorInterface.operatorGamepad.getifAvailable(5).whenPressed(slowDown);
-        operatorInterface.operatorGamepad.getifAvailable(6).whenPressed(speedUp);
+        operatorInterface.operatorGamepad.getifAvailable(XboxButton.A).whenPressed(singleWheel);
+        operatorInterface.operatorGamepad.getifAvailable(XboxButton.B).whenPressed(stop);
+        operatorInterface.operatorGamepad.getifAvailable(XboxButton.Y).whenPressed(bangBang);
+        operatorInterface.operatorGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(slowDown);
+        operatorInterface.operatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(speedUp);
     }
 
 }
