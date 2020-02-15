@@ -9,7 +9,6 @@ import xbot.common.command.BaseSetpointSubsystem;
 import xbot.common.command.XScheduler;
 import xbot.common.controls.actuators.XCANTalon;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
-import xbot.common.math.ContiguousDouble;
 import xbot.common.math.MathUtils;
 import xbot.common.properties.BooleanProperty;
 import xbot.common.properties.DoubleProperty;
