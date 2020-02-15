@@ -17,10 +17,12 @@ import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import competition.subsystems.turret.TurretSubsystem;
+import competition.subsystems.turret.commands.TurretRotateToVisionTargetCommand;
 import competition.subsystems.turret.commands.TurretRotateViaJoysticksCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import xbot.common.controls.sensors.XXboxController.XboxButton;
 import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
 
 /**
@@ -68,7 +70,7 @@ public class OperatorCommandMap {
 
     @Inject
     public void setupShootercommands(OperatorInterface operatorInterface, ShooterWheelSubsystem shooter,
-            SpinningShooterWheelCommand singleWheel, BangBangCommand bangBang) {
+            SpinningShooterWheelCommand singleWheel, BangBangCommand bangBang, TurretRotateToVisionTargetCommand rotateToTarget) {
 
         Command speedUp = new InstantCommand(() -> shooter.changeTargetRPM(500));
         Command slowDown = new InstantCommand(() -> shooter.changeTargetRPM(-500));
@@ -79,6 +81,7 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(4).whenPressed(bangBang);
         operatorInterface.operatorGamepad.getifAvailable(5).whenPressed(slowDown);
         operatorInterface.operatorGamepad.getifAvailable(6).whenPressed(speedUp);
+        operatorInterface.operatorGamepad.getifAvailable(XboxButton.Start).whenPressed(rotateToTarget);
     }
 
 }
