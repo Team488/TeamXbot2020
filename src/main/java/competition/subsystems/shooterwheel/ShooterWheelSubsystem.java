@@ -12,6 +12,8 @@ import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.properties.BooleanProperty;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
+import xbot.common.math.PIDManager; // maybe using PID in subsystem
+
 
 @Singleton
 public class ShooterWheelSubsystem extends BaseSubsystem {
@@ -40,6 +42,13 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
             follower.follow(leader, true);
         }
     }
+
+    public void enableVoltCompenstation(){ // not done here
+        double nomialVolt = leader.getVoltageCompensationNominalVoltage();
+        leader.enableVoltageCompensation(nomialVolt);
+
+
+    }   
 
     public void setTargetRPM(double speed) {
         targetRpmProp.set(speed);
