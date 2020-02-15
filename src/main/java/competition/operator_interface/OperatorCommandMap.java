@@ -11,8 +11,6 @@ import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 import competition.subsystems.hood.commands.ExtendHoodCommand;
 import competition.subsystems.hood.commands.RetractHoodCommand;
-import competition.subsystems.internalconveyor.commands.IntakeCommand;
-import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +43,7 @@ public class OperatorCommandMap {
     RetractHoodCommand retractHood, TurnLeftCarouselCommand carouselLeft, TurnRightCarouselCommand carouselRight,
     FrontGrabbingBallsCommand frontIntake, CollectorArmLiftingCommand liftArm, SpinningShooterWheelCommand spinShooterWheel)
     {
+        /*
         operatorInterface.operatorGamepad.getifAvailable(1).whileHeld(carouselLeft);
         operatorInterface.operatorGamepad.getifAvailable(2).whileHeld(carouselRight);
         operatorInterface.operatorGamepad.getifAvailable(3).whileHeld(extendHood);
@@ -52,8 +51,11 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(5).whileHeld(frontIntake);
         operatorInterface.operatorGamepad.getifAvailable(6).whileHeld(liftArm);
         operatorInterface.operatorGamepad.getifAvailable(7).whileHeld(spinShooterWheel);
+        */
         //TODO: add hang command
     }
+
+    @Inject
     public void setupShootercommands(
         OperatorInterface operatorInterface,
         ShooterWheelSubsystem shooter,
