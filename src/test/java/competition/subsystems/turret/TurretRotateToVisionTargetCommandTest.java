@@ -40,7 +40,8 @@ public class TurretRotateToVisionTargetCommandTest extends BaseCompetitionTest {
         return Arrays.asList(new Object[][] {     
             { false, false, 10, 100, 10 },
             { true, false, 10, 100, 10 },
-            { true, true, 15, 180, -165 }
+            { true, true, 15, 180, -165 },
+            { true, true, -160, -25, 175 }
         });
     }
 
