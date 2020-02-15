@@ -41,25 +41,21 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         }
     }
 
-    public double getCurrentSpeed(){
-        return currentRpmProp.get();
-    }
-
     public void setTargetSpeed(double speed) {
         targetRpmProp.set(speed);
     }
 
-    public double getTargetSpeed() {
+    public double getTargetRPM() {
         return targetRpmProp.get();
     }
 
-    public void changeTargetSpeed(double amount) {
-        double speed = getTargetSpeed();
+    public void changeTargetRPM(double amount) {
+        double speed = getTargetRPM();
         speed += amount;
         setTargetSpeed(speed);
     }
 
-    public void setPidGoal(double speed) {
+    public void setPidSetpoint(double speed) {
         if(contract.isShooterWheelReady())
         {
             leader.setReference(speed, ControlType.kVelocity);
@@ -77,9 +73,13 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         setPower(0);
     }
 
+    public double getCurrentRPM() {
+        return leader.getVelocity();
+    }
+
     public void periodic() {
         leader.periodic();
-        currentRpmProp.set(leader.getVelocity());
+        currentRpmProp.set(getCurrentRPM());
         speedWithinToleranceProp.set(getShooterWheelAtTargetSpeed());
     }
 
