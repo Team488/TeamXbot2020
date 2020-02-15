@@ -1,6 +1,5 @@
 package competition.subsystems.turret;
 
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -15,33 +14,41 @@ import xbot.common.properties.PropertyFactory;
 @Singleton
 public class TurretSubsystem extends BaseSubsystem {
 
+    final IdealElectricalContract contract;
     public XCANTalon motor;
-    public double currentAngle;
-    public double storedAngle = 0.0;
+    private double calibrationOffset;
     final DoubleProperty maxAngleProp;
     final DoubleProperty minAngleProp;
     final DoubleProperty turnPowerProp;
+    final DoubleProperty defaultForwardHeadingProp;
+    final DoubleProperty ticksPerDegreeProp;
 
 
     @Inject
     public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating TurretSubsystem");
         pf.setPrefix(this);
-        currentAngle = 0;
+        this.contract = contract;
+        calibrationOffset = 0;
         maxAngleProp = pf.createPersistentProperty("Max Angle", 180);
         minAngleProp = pf.createPersistentProperty("Min Angle", -180);
         turnPowerProp = pf.createPersistentProperty("Turn Speed", .03);
+        defaultForwardHeadingProp = pf.createPersistentProperty("Default Forward Heading", 90);
+        ticksPerDegreeProp = pf.createPersistentProperty("Ticks Per Degree", 1);
 
         if (contract.isTurretReady()) {
             this.motor = factory.createCANTalon(contract.turretMotor().channel);
-            motor.setInverted(contract.turretMotor().inverted);
+            motor.configureAsMasterMotor(
+                this.getPrefix(), 
+                "TurretMotor", 
+                contract.turretMotor().inverted, 
+                contract.turretEncoder().inverted);
         }
     }
 
     public void calibrateTurret(){ //here
-        currentAngle = currentAngle - storedAngle;
-        storedAngle = getCurrentAngle();
-        log.info("Angle set as facing forward");
+        calibrationOffset = getCurrentRawAngle();
+        log.info("Angle set to the default of" + defaultForwardHeadingProp.get());
     }
 
     public void turnLeft() {
@@ -63,7 +70,9 @@ public class TurretSubsystem extends BaseSubsystem {
             power = MathUtils.constrainDouble(power, 0, 1);
         }
 
-        motor.simpleSet(power);
+        if (contract.isTurretReady()) {
+            motor.simpleSet(power);
+        }
     }
 
     public boolean aboveMaximumAngle() {
@@ -75,7 +84,15 @@ public class TurretSubsystem extends BaseSubsystem {
     }
 
     public double getCurrentAngle() {
-        return motor.getSelectedSensorPosition(0);
+        double ticks = getCurrentRawAngle() - calibrationOffset;
+        return (ticks / ticksPerDegreeProp.get()) + defaultForwardHeadingProp.get();
+    }
+
+    private double getCurrentRawAngle() {
+        if (contract.isTurretReady()) {
+            return motor.getSelectedSensorPosition(0); 
+        }
+        return 0;
     }
 
     public double getDefaultTurretPower() {
@@ -84,5 +101,9 @@ public class TurretSubsystem extends BaseSubsystem {
 
     public void stop() {
         setPower(0);
+    }
+
+    public double getTicksPerDegree() {
+        return ticksPerDegreeProp.get();
     }
 }
