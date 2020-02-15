@@ -11,16 +11,17 @@ import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 import competition.subsystems.hood.commands.ExtendHoodCommand;
 import competition.subsystems.hood.commands.RetractHoodCommand;
-import competition.subsystems.internalconveyor.commands.IntakeCommand;
+import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.BangBangCommand;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
-import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
-import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import competition.subsystems.turret.TurretSubsystem;
+import competition.subsystems.turret.commands.PointTurretToFieldOrientedHeadingCommand;
+import competition.subsystems.turret.commands.TurretMaintainerCommand;
 import competition.subsystems.turret.commands.TurretRotateViaJoysticksCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import xbot.common.command.SmartDashboardCommandPutter;
 import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
 
 /**
@@ -37,15 +38,20 @@ public class OperatorCommandMap {
         operatorInterface.driverGamepad.getifAvailable(1).whenPressed(arcade);
         operatorInterface.driverGamepad.getifAvailable(2).whenPressed(tank);
         operatorInterface.driverGamepad.getifAvailable(8).whenPressed(resetHeading);
+
+        operatorInterface.operatorGamepad.getifAvailable(7).whenPressed(resetHeading);
     }
 
     @Inject
     public void setupTurretCommands(OperatorInterface oi, TurretSubsystem turret,
-            TurretRotateViaJoysticksCommand rotateTurret) {
+            TurretRotateViaJoysticksCommand rotateTurret,
+            PointTurretToFieldOrientedHeadingCommand pointDownrange,
+            TurretMaintainerCommand maintain) {
         Command calibrate = new InstantCommand(() -> turret.calibrateTurret());
-
+        pointDownrange.setFieldOrientedGoal(90);
+        
+        oi.operatorGamepad.getifAvailable(8).whileHeld(pointDownrange);
         oi.operatorGamepad.getifAvailable(10).whenPressed(calibrate);
-        oi.operatorGamepad.getifAvailable(3).whenPressed(rotateTurret);
     }
 
     @Inject

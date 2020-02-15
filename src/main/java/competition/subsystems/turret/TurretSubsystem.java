@@ -9,6 +9,7 @@ import xbot.common.command.BaseSetpointSubsystem;
 import xbot.common.command.XScheduler;
 import xbot.common.controls.actuators.XCANTalon;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
+import xbot.common.math.ContiguousDouble;
 import xbot.common.math.MathUtils;
 import xbot.common.properties.BooleanProperty;
 import xbot.common.properties.DoubleProperty;
@@ -161,6 +162,10 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     }
 
     public void setFieldOrientedGoalAngle(double angle) {
-        
+        // Take the current robot heading, recast it into turret units
+        double robotHeading = pose.getCurrentHeading().shiftBounds(90).getValue();
+        // Formula is: Robot Oriented Turret Heading = Desired FO Turret Heading - Robot FO Heading + 90
+        double turretGoalHeading = angle - robotHeading + 90;
+        setGoalAngle(turretGoalHeading);
     }
 }
