@@ -105,8 +105,19 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         leader.setSmartCurrentLimit(40);
         leader.setClosedLoopRampRate(0.01);
     }
-
+    
     public void configurePID() {
         leader.setIMaxAccum(1, 0);
     }
+
+    public static double rpmToInPSec(double rpm)
+    {
+        return rpm * 6 * (Math.PI);
+    }
+
+    public static double inPSecToRpm(double inPerSecond)
+    {
+        return inPerSecond / (6*Math.PI);
+    }
+
 }
