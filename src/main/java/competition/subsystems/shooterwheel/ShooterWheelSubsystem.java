@@ -41,7 +41,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         }
     }
 
-    public void setTargetSpeed(double speed) {
+    public void setTargetRPM(double speed) {
         targetRpmProp.set(speed);
     }
 
@@ -52,7 +52,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     public void changeTargetRPM(double amount) {
         double speed = getTargetRPM();
         speed += amount;
-        setTargetSpeed(speed);
+        setTargetRPM(speed);
     }
 
     public void setPidSetpoint(double speed) {
@@ -88,5 +88,15 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
             return true;
         }
         return false;
+    }
+
+    public void resetPID() {
+        leader.setIAccum(0);
+    }
+
+    public void resetWheel() {
+        setPower(0);
+        setTargetRPM(0);
+        resetPID();
     }
 }

@@ -8,14 +8,14 @@ import xbot.common.command.BaseCommand;
 
 public class SpinningShooterWheelCommand extends BaseCommand{
    
-    final ShooterWheelSubsystem shooterWheelSubsystem;
+    final ShooterWheelSubsystem wheel;
     final OperatorInterface oi;
 
     @Inject
     public SpinningShooterWheelCommand(OperatorInterface oi, ShooterWheelSubsystem shooterWheelSubsystem){
         this.oi = oi;
-        this.shooterWheelSubsystem = shooterWheelSubsystem;
-        this.addRequirements(this.shooterWheelSubsystem);
+        this.wheel = shooterWheelSubsystem;
+        this.addRequirements(this.wheel);
     }
 
     @Override
@@ -24,14 +24,12 @@ public class SpinningShooterWheelCommand extends BaseCommand{
     }
 
     public void execute(){
-        double speed = shooterWheelSubsystem.getTargetRPM();
-        shooterWheelSubsystem.setPidSetpoint(speed);
+        double speed = wheel.getTargetRPM();
+        wheel.setPidSetpoint(speed);
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooterWheelSubsystem.resetPID();
-        shooterWheelSubsystem.setPower(0);
-        shooterWheelSubsystem.setTargetSpeed(0);
+        wheel.resetWheel();
     }
 }

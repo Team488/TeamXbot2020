@@ -10,7 +10,7 @@ import xbot.common.properties.PropertyFactory;
 
 public class BangBangCommand extends BaseCommand{
 
-    final ShooterWheelSubsystem shooterWheelSubsystem;
+    final ShooterWheelSubsystem wheel;
     final OperatorInterface oi;
     final DoubleProperty maxPowerProp;
 
@@ -21,8 +21,8 @@ public class BangBangCommand extends BaseCommand{
 
         maxPowerProp = pf.createEphemeralProperty("Max Power", 0.5);
 
-        this.shooterWheelSubsystem = shooterWheelSubsystem;
-        this.addRequirements(this.shooterWheelSubsystem);
+        this.wheel = shooterWheelSubsystem;
+        this.addRequirements(this.wheel);
     }
 
 
@@ -32,10 +32,15 @@ public class BangBangCommand extends BaseCommand{
     }
 
     public void execute(){
-        if(shooterWheelSubsystem.getCurrentRPM() < shooterWheelSubsystem.getTargetRPM()){
-            shooterWheelSubsystem.setPower(1);
-        } else if (shooterWheelSubsystem.getCurrentRPM() > shooterWheelSubsystem.getTargetRPM()){
-            shooterWheelSubsystem.setPower(0);
+        if(wheel.getCurrentRPM() < wheel.getTargetRPM()){
+            wheel.setPower(1);
+        } else if (wheel.getCurrentRPM() > wheel.getTargetRPM()){
+            wheel.setPower(0);
         }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        wheel.resetWheel();
     }
 } 
