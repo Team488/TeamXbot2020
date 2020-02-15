@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import competition.operator_interface.OperatorInterface;
 import competition.subsystems.turret.TurretSubsystem;
 import xbot.common.command.BaseCommand;
+import xbot.common.math.MathUtils;
 
 public class TurretRotateViaJoysticksCommand extends BaseCommand
 {
@@ -21,13 +22,12 @@ public class TurretRotateViaJoysticksCommand extends BaseCommand
     @Override
     public void execute() {
         double yAxis = oi.operatorGamepad.getRightStickX();
-        turretSubsystem.setPower(yAxis);
+        turretSubsystem.setPower(MathUtils.deadband(yAxis, oi.getJoystickDeadband()));
     }
 
     @Override
     public void initialize() {
         log.info("Initializing");
-
     }
     
 }

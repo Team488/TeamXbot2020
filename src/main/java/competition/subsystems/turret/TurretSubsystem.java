@@ -4,7 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import competition.IdealElectricalContract;
-import xbot.common.command.BaseSubsystem;
+import competition.subsystems.pose.PoseSubsystem;
+import xbot.common.command.BaseSetpointSubsystem;
+import xbot.common.command.XScheduler;
 import xbot.common.controls.actuators.XCANTalon;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.math.MathUtils;
@@ -13,7 +15,7 @@ import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
 @Singleton
-public class TurretSubsystem extends BaseSubsystem {
+public class TurretSubsystem extends BaseSetpointSubsystem {
 
     private final IdealElectricalContract contract;
     public XCANTalon motor;
@@ -24,13 +26,20 @@ public class TurretSubsystem extends BaseSubsystem {
     private final DoubleProperty defaultForwardHeadingProp;
     private final DoubleProperty ticksPerDegreeProp;
     private final BooleanProperty calibratedProp;
+    private final DoubleProperty currentAngleProp;
+    private double goalAngle;
+
+    final PoseSubsystem pose;
 
 
     @Inject
-    public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
+    public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract,
+    XScheduler scheduler, PoseSubsystem pose) {
         log.info("Creating TurretSubsystem");
         pf.setPrefix(this);
         this.contract = contract;
+        this.pose = pose;
+
         calibrationOffset = 0;
         maxAngleProp = pf.createPersistentProperty("Max Angle", 180);
         minAngleProp = pf.createPersistentProperty("Min Angle", -180);
@@ -38,6 +47,7 @@ public class TurretSubsystem extends BaseSubsystem {
         defaultForwardHeadingProp = pf.createPersistentProperty("Default Forward Heading", 90);
         ticksPerDegreeProp = pf.createPersistentProperty("Ticks Per Degree", 1);
         calibratedProp = pf.createEphemeralProperty("Calibrated", false);
+        currentAngleProp = pf.createEphemeralProperty("Current Angle", 0);
 
         if (contract.isTurretReady()) {
             this.motor = factory.createCANTalon(contract.turretMotor().channel);
@@ -47,6 +57,8 @@ public class TurretSubsystem extends BaseSubsystem {
                 contract.turretMotor().inverted, 
                 contract.turretEncoder().inverted);
         }
+
+        scheduler.registerSubsystem(this);
     }
 
     public void calibrateTurret(){ //here
@@ -63,7 +75,7 @@ public class TurretSubsystem extends BaseSubsystem {
         calibratedProp.set(value);
     }
 
-    public boolean getIsCalibrated() {
+    public boolean isCalibrated() {
         return calibratedProp.get();
     }
 
@@ -76,7 +88,7 @@ public class TurretSubsystem extends BaseSubsystem {
     }
 
     public void setPower(double power) {
-        if (getIsCalibrated()) {
+        if (isCalibrated()) {
             // No sense running the protection code if we don't know where we are.
             
             // Check for any reason power should be constrained.
@@ -133,5 +145,22 @@ public class TurretSubsystem extends BaseSubsystem {
 
     public double getMinAngle() {
         return minAngleProp.get();
+    }
+
+    @Override
+    public void periodic() {
+        currentAngleProp.set(getCurrentAngle());
+    }
+
+    public void setGoalAngle(double angle) {
+        goalAngle = angle;
+    }
+
+    public double getGoalAngle() {
+        return goalAngle;
+    }
+
+    public void setFieldOrientedGoalAngle(double angle) {
+        
     }
 }
