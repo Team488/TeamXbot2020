@@ -4,19 +4,14 @@ import com.google.inject.Inject;
 import competition.subsystems.turret.TurretSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class TurretStop extends BaseCommand
+public class TurretStopCommand extends BaseCommand
 {
     final TurretSubsystem turretSubsystem;
 
     @Inject
-    public TurretStop(TurretSubsystem tSubsystem) {
+    public TurretStopCommand(TurretSubsystem tSubsystem) {
         this.turretSubsystem = tSubsystem;
         this.addRequirements(this.turretSubsystem);
-    }
-
-    @Override
-    public void execute() {
-        turretSubsystem.stop();
     }
 
     @Override
@@ -24,4 +19,8 @@ public class TurretStop extends BaseCommand
         log.info("Initializing");
     }
     
+    @Override
+    public void execute() {
+        turretSubsystem.stop();
+    }    
 }

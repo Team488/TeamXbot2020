@@ -1,6 +1,8 @@
 package competition.subsystems.turret;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -28,6 +30,9 @@ public class TurretSubsystemTest extends BaseCompetitionTest {
     public void testStop() {
         TurretSubsystem turret = this.injector.getInstance(TurretSubsystem.class);
         turret.turnRight();
+        assertTrue(turret.getDefaultTurretPower() > 0.01);
+        assertEquals(-turret.getDefaultTurretPower(), turret.motor.getMotorOutputPercent(), 0.001);
+
         turret.stop();
 
         assertEquals(0 , turret.motor.getMotorOutputPercent(), 0.001);

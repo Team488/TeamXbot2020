@@ -1,5 +1,6 @@
 package competition.subsystems.turret;
 
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -7,6 +8,7 @@ import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANTalon;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
+import xbot.common.math.MathUtils;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
@@ -30,8 +32,8 @@ public class TurretSubsystem extends BaseSubsystem {
         turnPowerProp = pf.createPersistentProperty("Turn Speed", .03);
 
         if (contract.isTurretReady()) {
-            this.motor = factory.createCANTalon(contract.rotationMotor().channel);
-            motor.setInverted(contract.rotationMotor().inverted);
+            this.motor = factory.createCANTalon(contract.turretMotor().channel);
+            motor.setInverted(contract.turretMotor().inverted);
         }
     }
 
@@ -44,25 +46,33 @@ public class TurretSubsystem extends BaseSubsystem {
     }
 
     public void setPower(double power) {
-        if (canTurnLeft(power)) {
-            motor.simpleSet(power);
-        } else if (canTurnRight(power)) {
-            motor.simpleSet(power);
-        } else if (power == 0) {
-            motor.simpleSet(power);
+        // Check for any reason power should be constrained.
+        if (aboveMaximumAngle()) {
+            // Turned too far left. Only allow right/negative rotation.
+            power = MathUtils.constrainDouble(power, -1, 0);
         }
+        if (belowMinimumAngle()) {
+            // Turned too far right. Only allow left/positive rotation.
+            power = MathUtils.constrainDouble(power, 0, 1);
+        }
+
+        motor.simpleSet(power);
     }
 
-    public boolean canTurnRight(double power) {
-        return (getCurrentAngle() >= maxAngleProp.get()) && (power < 0);
+    public boolean aboveMaximumAngle() {
+        return getCurrentAngle() >= maxAngleProp.get();
     }
 
-    public boolean canTurnLeft(double power) {
-        return (getCurrentAngle() <= minAngleProp.get()) && (power > 0);
+    public boolean belowMinimumAngle() {
+        return getCurrentAngle() <= minAngleProp.get();
     }
 
     public double getCurrentAngle() {
-        return currentAngle;
+        return motor.getSelectedSensorPosition(0);
+    }
+
+    public double getDefaultTurretPower() {
+        return turnPowerProp.get();
     }
 
     public void stop() {

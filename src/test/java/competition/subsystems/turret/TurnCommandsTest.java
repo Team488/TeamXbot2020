@@ -7,7 +7,7 @@ import org.junit.Test;
 import competition.BaseCompetitionTest;
 import competition.subsystems.turret.commands.TurnLeft;
 import competition.subsystems.turret.commands.TurnRight;
-import competition.subsystems.turret.commands.TurretStop;
+import competition.subsystems.turret.commands.TurretStopCommand;
 
 public class TurnCommandsTest extends BaseCompetitionTest {
 
@@ -34,7 +34,11 @@ public class TurnCommandsTest extends BaseCompetitionTest {
     @Test
     public void testStop() {
         TurretSubsystem turret = this.injector.getInstance(TurretSubsystem.class);
-        TurretStop stopTurret = new TurretStop(turret);
+        TurretStopCommand stopTurret = new TurretStopCommand(turret);
+
+        turret.setPower(0.5);
+        assertEquals(0.5 , turret.motor.getMotorOutputPercent(), 0.001);
+
         stopTurret.initialize();
         stopTurret.execute();
 
