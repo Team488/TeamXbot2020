@@ -19,7 +19,7 @@ public class ShooterWheelSubsystemTest extends BaseCompetitionTest {
     @Test
     public void testStop() {
         ShooterWheelSubsystem shooterWheel = this.injector.getInstance(ShooterWheelSubsystem.class);
-        shooterWheel.changeTargetSpeed(100);
+        shooterWheel.changeTargetRPM(100);
         shooterWheel.stop();
 
         assertEquals(0, shooterWheel.leader.get(), 0.001);

@@ -11,6 +11,9 @@ import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 import competition.subsystems.hood.commands.ExtendHoodCommand;
 import competition.subsystems.hood.commands.RetractHoodCommand;
+import competition.subsystems.internalconveyor.commands.IntakeCommand;
+import competition.subsystems.shooterwheel.commands.BangBangCommand;
+import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 import competition.subsystems.turret.TurretSubsystem;
@@ -65,14 +68,15 @@ public class OperatorCommandMap {
 
     @Inject
     public void setupShootercommands(OperatorInterface operatorInterface, ShooterWheelSubsystem shooter,
-            SpinningShooterWheelCommand singleWheel) {
+            SpinningShooterWheelCommand singleWheel, BangBangCommand bangBang) {
 
-        Command speedUp = new InstantCommand(() -> shooter.changeTargetSpeed(100));
-        Command slowDown = new InstantCommand(() -> shooter.changeTargetSpeed(-100));
+        Command speedUp = new InstantCommand(() -> shooter.changeTargetRPM(100));
+        Command slowDown = new InstantCommand(() -> shooter.changeTargetRPM(-100));
         Command stop = new RunCommand(() -> shooter.stop(), shooter);
 
         operatorInterface.operatorGamepad.getifAvailable(1).whenPressed(singleWheel);
         operatorInterface.operatorGamepad.getifAvailable(2).whenPressed(stop);
+        operatorInterface.operatorGamepad.getifAvailable(4).whenPressed(bangBang);
         operatorInterface.operatorGamepad.getifAvailable(5).whenPressed(speedUp);
         operatorInterface.operatorGamepad.getifAvailable(6).whenPressed(slowDown);
     }
