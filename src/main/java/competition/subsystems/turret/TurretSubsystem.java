@@ -8,20 +8,22 @@ import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANTalon;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.math.MathUtils;
+import xbot.common.properties.BooleanProperty;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
 @Singleton
 public class TurretSubsystem extends BaseSubsystem {
 
-    final IdealElectricalContract contract;
+    private final IdealElectricalContract contract;
     public XCANTalon motor;
     private double calibrationOffset;
-    final DoubleProperty maxAngleProp;
-    final DoubleProperty minAngleProp;
-    final DoubleProperty turnPowerProp;
-    final DoubleProperty defaultForwardHeadingProp;
-    final DoubleProperty ticksPerDegreeProp;
+    private final DoubleProperty maxAngleProp;
+    private final DoubleProperty minAngleProp;
+    private final DoubleProperty turnPowerProp;
+    private final DoubleProperty defaultForwardHeadingProp;
+    private final DoubleProperty ticksPerDegreeProp;
+    private final BooleanProperty calibratedProp;
 
 
     @Inject
@@ -35,6 +37,7 @@ public class TurretSubsystem extends BaseSubsystem {
         turnPowerProp = pf.createPersistentProperty("Turn Speed", .03);
         defaultForwardHeadingProp = pf.createPersistentProperty("Default Forward Heading", 90);
         ticksPerDegreeProp = pf.createPersistentProperty("Ticks Per Degree", 1);
+        calibratedProp = pf.createEphemeralProperty("Calibrated", false);
 
         if (contract.isTurretReady()) {
             this.motor = factory.createCANTalon(contract.turretMotor().channel);
@@ -49,6 +52,19 @@ public class TurretSubsystem extends BaseSubsystem {
     public void calibrateTurret(){ //here
         calibrationOffset = getCurrentRawAngle();
         log.info("Angle set to the default of" + defaultForwardHeadingProp.get());
+        setIsCalibrated(true);
+    }
+
+    public void uncalibrate() {
+        setIsCalibrated(false);
+    }
+
+    private void setIsCalibrated(boolean value) {
+        calibratedProp.set(value);
+    }
+
+    public boolean getIsCalibrated() {
+        return calibratedProp.get();
     }
 
     public void turnLeft() {
@@ -60,14 +76,18 @@ public class TurretSubsystem extends BaseSubsystem {
     }
 
     public void setPower(double power) {
-        // Check for any reason power should be constrained.
-        if (aboveMaximumAngle()) {
-            // Turned too far left. Only allow right/negative rotation.
-            power = MathUtils.constrainDouble(power, -1, 0);
-        }
-        if (belowMinimumAngle()) {
-            // Turned too far right. Only allow left/positive rotation.
-            power = MathUtils.constrainDouble(power, 0, 1);
+        if (getIsCalibrated()) {
+            // No sense running the protection code if we don't know where we are.
+            
+            // Check for any reason power should be constrained.
+            if (aboveMaximumAngle()) {
+                // Turned too far left. Only allow right/negative rotation.
+                power = MathUtils.constrainDouble(power, -1, 0);
+            }
+            if (belowMinimumAngle()) {
+                // Turned too far right. Only allow left/positive rotation.
+                power = MathUtils.constrainDouble(power, 0, 1);
+            }
         }
 
         if (contract.isTurretReady()) {
@@ -105,5 +125,13 @@ public class TurretSubsystem extends BaseSubsystem {
 
     public double getTicksPerDegree() {
         return ticksPerDegreeProp.get();
+    }
+
+    public double getMaxAngle() {
+        return maxAngleProp.get();
+    }
+
+    public double getMinAngle() {
+        return minAngleProp.get();
     }
 }

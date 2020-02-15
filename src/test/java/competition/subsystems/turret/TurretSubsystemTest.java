@@ -56,8 +56,53 @@ public class TurretSubsystemTest extends BaseCompetitionTest {
         assertEquals(90, turret.getCurrentAngle(), 0.001);
     }
 
+    @Test
+    public void testUpperLimit() {
+        turret.calibrateTurret();
+        setRawTurretAngle(turret.getMaxAngle() - 90 + 1);
+        verifyTurretAngle(turret.getMaxAngle() + 1);
+
+        turret.setPower(1);
+        verifyTurretPower(0);
+        turret.setPower(-1);
+        verifyTurretPower(-1);
+    }
+
+    @Test
+    public void testLowerLimit() {
+        turret.calibrateTurret();
+        setRawTurretAngle(turret.getMinAngle() - 90 - 1);
+        verifyTurretAngle(turret.getMinAngle() - 1);
+
+        turret.setPower(1);
+        verifyTurretPower(1);
+        turret.setPower(-1);
+        verifyTurretPower(0);
+    }
+
+    @Test
+    public void testUncalibration() {
+        turret.calibrateTurret();
+        setRawTurretAngle(turret.getMaxAngle() - 90 + 1);
+        verifyTurretAngle(turret.getMaxAngle() + 1);
+
+        turret.setPower(1);
+        verifyTurretPower(0);
+        turret.uncalibrate();
+        turret.setPower(1);
+        verifyTurretPower(1);
+    }
+
     private void setRawTurretAngle(double angle) {
         double ticks = angle / turret.getTicksPerDegree();
         ((MockCANTalon)(turret.motor)).setPosition((int)ticks);
+    }
+
+    private void verifyTurretAngle(double angle) {
+        assertEquals(angle, turret.getCurrentAngle(), 0.1);
+    }
+
+    private void verifyTurretPower(double power) {
+        assertEquals(power , turret.motor.getMotorOutputPercent(), 0.001);
     }
 }
