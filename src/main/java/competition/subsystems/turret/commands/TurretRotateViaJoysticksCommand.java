@@ -7,13 +7,13 @@ import competition.subsystems.turret.TurretSubsystem;
 import xbot.common.command.BaseCommand;
 import xbot.common.math.MathUtils;
 
-public class TurretRotationCommand extends BaseCommand
+public class TurretRotateViaJoysticksCommand extends BaseCommand
 {
     final OperatorInterface oi;
     final TurretSubsystem turretSubsystem;
 
     @Inject
-    public TurretRotationCommand(OperatorInterface oi , TurretSubsystem tSubsystem) {
+    public TurretRotateViaJoysticksCommand(OperatorInterface oi , TurretSubsystem tSubsystem) {
         this.oi = oi;
         this.turretSubsystem = tSubsystem;
         this.addRequirements(this.turretSubsystem);

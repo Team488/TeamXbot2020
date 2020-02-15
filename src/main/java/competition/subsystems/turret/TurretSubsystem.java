@@ -1,59 +1,74 @@
 package competition.subsystems.turret;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
-import xbot.common.command.XScheduler;
 import xbot.common.controls.actuators.XCANTalon;
-import xbot.common.controls.sensors.XAS5600;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
+import xbot.common.math.MathUtils;
+import xbot.common.properties.BooleanProperty;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
 @Singleton
 public class TurretSubsystem extends BaseSubsystem {
 
+    private final IdealElectricalContract contract;
     public XCANTalon motor;
-    public double currentAngle;
-    final DoubleProperty maxAngleProp;
-    final DoubleProperty minAngleProp;
-    final DoubleProperty turnPowerProp;
-    final DoubleProperty currentAngleProp;
-    final DoubleProperty offsetProp;
-    final XAS5600 turretSensor;
+    private double calibrationOffset;
+    private final DoubleProperty maxAngleProp;
+    private final DoubleProperty minAngleProp;
+    private final DoubleProperty turnPowerProp;
+    private final DoubleProperty defaultForwardHeadingProp;
+    private final DoubleProperty ticksPerDegreeProp;
+    private final BooleanProperty calibratedProp;
+
 
     @Inject
-    public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract, XScheduler scheduler) {
+    public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating TurretSubsystem");
         pf.setPrefix(this);
-
-        currentAngle = 0;
+        this.contract = contract;
+        calibrationOffset = 0;
         maxAngleProp = pf.createPersistentProperty("Max Angle", 180);
         minAngleProp = pf.createPersistentProperty("Min Angle", -180);
         turnPowerProp = pf.createPersistentProperty("Turn Speed", .03);
-        currentAngleProp = pf.createEphemeralProperty("TurretAngle", 0);
-        offsetProp = pf.createEphemeralProperty("Offset", 0);
+        defaultForwardHeadingProp = pf.createPersistentProperty("Default Forward Heading", 90);
+        ticksPerDegreeProp = pf.createPersistentProperty("Ticks Per Degree", 1);
+        calibratedProp = pf.createEphemeralProperty("Calibrated", false);
 
         if (contract.isTurretReady()) {
-            this.motor = factory.createCANTalon(contract.rotationMotor().channel);
-            motor.configureAsMasterMotor(this.getPrefix(), "TurretMotor", contract.rotationMotor().inverted, false);
-            motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+            this.motor = factory.createCANTalon(contract.turretMotor().channel);
+            motor.configureAsMasterMotor(
+                this.getPrefix(), 
+                "TurretMotor", 
+                contract.turretMotor().inverted, 
+                contract.turretEncoder().inverted);
         }
+    }
 
-        turretSensor = factory.createXAS5600(motor);
+    public void calibrateTurret(){ //here
+        calibrationOffset = getCurrentRawAngle();
+        log.info("Angle set to the default of" + defaultForwardHeadingProp.get());
+        setIsCalibrated(true);
+    }
 
-        scheduler.registerSubsystem(this);
+    public void uncalibrate() {
+        setIsCalibrated(false);
+    }
+
+    private void setIsCalibrated(boolean value) {
+        calibratedProp.set(value);
+    }
+
+    public boolean getIsCalibrated() {
+        return calibratedProp.get();
     }
 
     public void turnLeft() {
         motor.simpleSet(turnPowerProp.get());
-    }
-
-    public void calibrateHere() {
-        
     }
 
     public void turnRight() {
@@ -61,32 +76,62 @@ public class TurretSubsystem extends BaseSubsystem {
     }
 
     public void setPower(double power) {
-        // if ((power < 0 && canTurnLeft()) || (power > 0 && canTurnRight())) {
-        //     motor.simpleSet(power);
-        // } else {
+        if (getIsCalibrated()) {
+            // No sense running the protection code if we don't know where we are.
+            
+            // Check for any reason power should be constrained.
+            if (aboveMaximumAngle()) {
+                // Turned too far left. Only allow right/negative rotation.
+                power = MathUtils.constrainDouble(power, -1, 0);
+            }
+            if (belowMinimumAngle()) {
+                // Turned too far right. Only allow left/positive rotation.
+                power = MathUtils.constrainDouble(power, 0, 1);
+            }
+        }
+
+        if (contract.isTurretReady()) {
             motor.simpleSet(power);
-        //}
-
+        }
     }
 
-    public boolean canTurnRight() {
-        return getCurrentAngle() <= maxAngleProp.get();
+    public boolean aboveMaximumAngle() {
+        return getCurrentAngle() >= maxAngleProp.get();
     }
 
-    public boolean canTurnLeft() {
-        return getCurrentAngle() >= minAngleProp.get();
+    public boolean belowMinimumAngle() {
+        return getCurrentAngle() <= minAngleProp.get();
     }
 
     public double getCurrentAngle() {
-        return motor.getSelectedSensorPosition(0);
+        double ticks = getCurrentRawAngle() - calibrationOffset;
+        return (ticks / ticksPerDegreeProp.get()) + defaultForwardHeadingProp.get();
+    }
+
+    private double getCurrentRawAngle() {
+        if (contract.isTurretReady()) {
+            return motor.getSelectedSensorPosition(0); 
+        }
+        return 0;
+    }
+
+    public double getDefaultTurretPower() {
+        return turnPowerProp.get();
     }
 
     public void stop() {
         setPower(0);
     }
 
-    @Override
-    public void periodic() {
-        currentAngleProp.set(getCurrentAngle());
+    public double getTicksPerDegree() {
+        return ticksPerDegreeProp.get();
+    }
+
+    public double getMaxAngle() {
+        return maxAngleProp.get();
+    }
+
+    public double getMinAngle() {
+        return minAngleProp.get();
     }
 }
