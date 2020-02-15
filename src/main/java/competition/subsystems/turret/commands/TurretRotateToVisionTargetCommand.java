@@ -20,8 +20,8 @@ public class TurretRotateToVisionTargetCommand extends BaseCommand
         this.turretSubsystem = tSubsystem;
         this.addRequirements(this.turretSubsystem);
         this.ambanNetworkTable = networkTableInstance.getTable("amban");
-        this.fixAquiredLogLatch = new LoggingLatch("AmbanFixAquired", "Amban fix acquired", EdgeType.RisingEdge);
-        this.fixLostLogLatch = new LoggingLatch("AmbanFixLost", "Amban fix lost", EdgeType.FallingEdge);
+        this.fixAquiredLogLatch = new LoggingLatch(this.getName(), "Amban fix acquired", EdgeType.RisingEdge);
+        this.fixLostLogLatch = new LoggingLatch(this.getName(), "Amban fix lost", EdgeType.FallingEdge);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class TurretRotateToVisionTargetCommand extends BaseCommand
         } else {
             this.fixAquiredLogLatch.checkValue(false);
             this.fixLostLogLatch.checkValue(false);
-            
+
             this.turretSubsystem.setGoalAngle(this.turretSubsystem.getCurrentAngle());
         }
     }
