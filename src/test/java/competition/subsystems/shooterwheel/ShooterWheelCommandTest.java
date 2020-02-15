@@ -1,11 +1,6 @@
 package competition.subsystems.shooterwheel;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
 import competition.BaseCompetitionTest;
-import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
 
 public class ShooterWheelCommandTest extends BaseCompetitionTest {
     

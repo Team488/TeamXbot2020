@@ -11,14 +11,14 @@ import competition.subsystems.carousel.CarouselSubsystem;
 import competition.subsystems.carousel.commands.StopCarouselCommand;
 import competition.subsystems.drive.DriveSubsystem;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
-import competition.subsystems.turret.TurretSubsystem;
-import competition.subsystems.turret.commands.TurretStopCommand;
 import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.hood.commands.StopHoodCommand;
 import competition.subsystems.internalconveyor.IndexerSubsystem;
 import competition.subsystems.internalconveyor.commands.StopIndexerCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.StopShooterWheelCommand;
+import competition.subsystems.turret.TurretSubsystem;
+import competition.subsystems.turret.commands.TurretMaintainerCommand;
 import xbot.common.command.XScheduler;
 
 @Singleton
@@ -31,9 +31,9 @@ public class SubsystemDefaultCommandMap {
 
     @Inject
 
-    public void setupTurretSubsystem(XScheduler scheduler, TurretSubsystem tSub, TurretStopCommand stop)
+    public void setupTurretSubsystem(XScheduler scheduler, TurretSubsystem tSub, TurretMaintainerCommand maintain)
     {
-        scheduler.setDefaultCommand(tSub, stop);
+        scheduler.setDefaultCommand(tSub, maintain);
     }
 
     public void setupCarouselSubsystem(XScheduler scheduler, CarouselSubsystem carousel, StopCarouselCommand command) {
