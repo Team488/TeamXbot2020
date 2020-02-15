@@ -21,7 +21,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     final DoubleProperty speedToleranceProp;
     final DoubleProperty currentRpmProp;
     public XCANSparkMax leader;
-    public XCANSparkMax follower;
+    private XCANSparkMax follower;
     IdealElectricalContract contract;
     
     @Inject
@@ -29,7 +29,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         log.info("Creating ShooterWheelSubsystem");
         pf.setPrefix(this);
         this.contract = contract;
-        speedToleranceProp = pf.createEphemeralProperty("speedTolerance", 0);
+        speedToleranceProp = pf.createPersistentProperty("speedTolerance", 100);
         speedWithinToleranceProp = pf.createEphemeralProperty("speedWithinTolerance", false);
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
@@ -79,6 +79,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
 
     public void periodic() {
         leader.periodic();
+        follower.periodic();
         currentRpmProp.set(getCurrentRPM());
         speedWithinToleranceProp.set(getShooterWheelAtTargetSpeed());
     }
@@ -98,5 +99,14 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         setPower(0);
         setTargetRPM(0);
         resetPID();
+    }
+
+    public void setCurrentLimits() {
+        leader.setSmartCurrentLimit(40);
+        leader.setClosedLoopRampRate(0.01);
+    }
+
+    public void configurePID() {
+        leader.setIMaxAccum(1, 0);
     }
 }

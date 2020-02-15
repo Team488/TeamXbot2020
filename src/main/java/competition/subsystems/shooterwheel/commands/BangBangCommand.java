@@ -33,7 +33,7 @@ public class BangBangCommand extends BaseCommand{
 
     public void execute(){
         if(wheel.getCurrentRPM() < wheel.getTargetRPM()){
-            wheel.setPower(1);
+            wheel.setPower(maxPowerProp.get());
         } else if (wheel.getCurrentRPM() > wheel.getTargetRPM()){
             wheel.setPower(0);
         }

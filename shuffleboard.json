@@ -664,17 +664,6 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "tiles": {
-          "3,2": {
-            "size": [
-              6,
-              2
-            ],
-            "content": {
-              "_type": "Network Table Tree",
-              "_source0": "network_table:///SmartDashboard/Scheduler",
-              "_title": "SmartDashboard/Scheduler"
-            }
-          },
           "9,0": {
             "size": [
               1,
@@ -794,6 +783,187 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/CurrentRPM",
               "_title": "SmartDashboard/ShooterWheelSubsystem/CurrentRPM"
+            }
+          },
+          "9,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/BangBangCommand/Max Power",
+              "_title": "/SmartDashboard/BangBangCommand/Max Power"
+            }
+          },
+          "9,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/speedTolerance",
+              "_title": "/SmartDashboard/ShooterWheelSubsystem/speedTolerance"
+            }
+          },
+          "9,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/speedWithinTolerance",
+              "_title": "SmartDashboard/ShooterWheelSubsystem/speedWithinTolerance",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "3,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Voltage",
+              "_title": "SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Voltage"
+            }
+          },
+          "3,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent",
+              "_title": "SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent"
+            }
+          },
+          "3,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Current",
+              "_title": "SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Current"
+            }
+          },
+          "4,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/ShooterFollower/Voltage",
+              "_title": "SmartDashboard/ShooterWheelSubsystem/ShooterFollower/Voltage"
+            }
+          },
+          "0,0": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Graph",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent",
+              "_title": "SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent",
+              "Graph/Visible time": 30.0,
+              "Y-axis/Automatic bounds": true,
+              "Y-axis/Upper bound": 1.0,
+              "Y-axis/Lower bound": -1.0,
+              "Visible data/SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent": true
+            }
+          },
+          "5,2": {
+            "size": [
+              4,
+              3
+            ],
+            "content": {
+              "_type": "Graph",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent",
+              "_title": "SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent",
+              "Graph/Visible time": 30.0,
+              "Y-axis/Automatic bounds": true,
+              "Y-axis/Upper bound": 1.0,
+              "Y-axis/Lower bound": -1.0,
+              "Visible data/SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Turret",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "4,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/TurretSubsystem/Calibrated",
+              "_title": "SmartDashboard/TurretSubsystem/Calibrated",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "6,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/TurretSubsystem/Max Angle",
+              "_title": "/SmartDashboard/TurretSubsystem/Max Angle"
+            }
+          },
+          "6,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/TurretSubsystem/Min Angle",
+              "_title": "/SmartDashboard/TurretSubsystem/Min Angle"
+            }
+          },
+          "7,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/TurretSubsystem/Ticks Per Degree",
+              "_title": "/SmartDashboard/TurretSubsystem/Ticks Per Degree"
+            }
+          },
+          "8,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/TurretSubsystem/Current Angle",
+              "_title": "SmartDashboard/TurretSubsystem/Current Angle"
             }
           }
         }

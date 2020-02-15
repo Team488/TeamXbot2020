@@ -21,6 +21,8 @@ public class SpinningShooterWheelCommand extends BaseCommand{
     @Override
     public void initialize() {
         log.info("Initializing");
+        wheel.setCurrentLimits();
+        wheel.configurePID();
     }
 
     public void execute(){

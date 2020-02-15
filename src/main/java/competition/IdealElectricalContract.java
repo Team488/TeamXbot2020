@@ -52,7 +52,7 @@ public class IdealElectricalContract extends ElectricalContract {
 
     public DeviceInfo shooterMotorMaster()
     {
-        return new DeviceInfo(21, false);
+        return new DeviceInfo(21, true);
     }
     
     public DeviceInfo shooterMotorFollower()
@@ -75,7 +75,7 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo turretEncoder() {
-        return new DeviceInfo(0, false);
+        return new DeviceInfo(0, true);
     }
 
     public DeviceInfo carouselMotor()
