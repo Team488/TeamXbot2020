@@ -15,13 +15,13 @@ public class BangBangCommand extends BaseCommand{
     final DoubleProperty maxPowerProp;
 
     @Inject
-    public BangBangCommand(OperatorInterface oi, ShooterWheelSubsystem shooterWheelSubsystem, PropertyFactory pf) {
+    public BangBangCommand(OperatorInterface oi, ShooterWheelSubsystem wheel, PropertyFactory pf) {
         this.oi = oi;
         pf.setPrefix(this);
 
         maxPowerProp = pf.createEphemeralProperty("Max Power", 0.5);
 
-        this.wheel = shooterWheelSubsystem;
+        this.wheel = wheel;
         this.addRequirements(this.wheel);
     }
 

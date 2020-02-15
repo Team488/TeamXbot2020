@@ -8,24 +8,23 @@ import xbot.common.command.BaseCommand;
 
 public class StopShooterWheelCommand extends BaseCommand{
 
-    final ShooterWheelSubsystem shooterWheelSubsystem;
+    final ShooterWheelSubsystem wheel;
     final OperatorInterface oi;
 
     @Inject
-    public StopShooterWheelCommand(OperatorInterface oi, ShooterWheelSubsystem shooterWheelSubsystem){
+    public StopShooterWheelCommand(OperatorInterface oi, ShooterWheelSubsystem wheel){
         this.oi = oi;
-        this.shooterWheelSubsystem = shooterWheelSubsystem;
-        this.addRequirements(this.shooterWheelSubsystem);
+        this.wheel = wheel;
+        this.addRequirements(this.wheel);
     }
 
     @Override
     public void initialize(){
         log.info("Initializing");
-        shooterWheelSubsystem.resetPID();
-        shooterWheelSubsystem.setTargetSpeed(0);
+        wheel.resetWheel();
     }
 
     public void execute(){
-        shooterWheelSubsystem.stop();
+        wheel.stop();
     }
 }

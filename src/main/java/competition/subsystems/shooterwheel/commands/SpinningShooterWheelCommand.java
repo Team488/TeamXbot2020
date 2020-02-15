@@ -12,9 +12,9 @@ public class SpinningShooterWheelCommand extends BaseCommand{
     final OperatorInterface oi;
 
     @Inject
-    public SpinningShooterWheelCommand(OperatorInterface oi, ShooterWheelSubsystem shooterWheelSubsystem){
+    public SpinningShooterWheelCommand(OperatorInterface oi, ShooterWheelSubsystem wheel){
         this.oi = oi;
-        this.wheel = shooterWheelSubsystem;
+        this.wheel = wheel;
         this.addRequirements(this.wheel);
     }
 
