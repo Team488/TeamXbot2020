@@ -8,7 +8,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
     }
 
     @Override
-    public boolean isConveyorReady() {
+    public boolean isIndexerReady() {
         return false;
     }
 
