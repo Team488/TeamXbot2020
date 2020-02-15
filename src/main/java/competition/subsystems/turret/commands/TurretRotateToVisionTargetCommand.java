@@ -5,35 +5,42 @@ import competition.subsystems.turret.TurretSubsystem;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import xbot.common.command.BaseCommand;
+import xbot.common.logging.LoggingLatch;
+import xbot.common.logic.Latch.EdgeType;
 
 public class TurretRotateToVisionTargetCommand extends BaseCommand
 {
     final TurretSubsystem turretSubsystem;
     final NetworkTable ambanNetworkTable;
+    final LoggingLatch fixAquiredLogLatch;
 
     @Inject
     public TurretRotateToVisionTargetCommand(TurretSubsystem tSubsystem, NetworkTableInstance networkTableInstance) {
         this.turretSubsystem = tSubsystem;
         this.addRequirements(this.turretSubsystem);
         this.ambanNetworkTable = networkTableInstance.getTable("amban");
-    }
-
-    @Override
-    public void execute() {
-        // Check if vision subsystem is active and our turret is calibrated
-        if (isAmbanActive() && isTargetLocked())
-        {
-            // yawToTarget may ask us to go beyond our rotation limit so we need to correct for this
-            double yawToTarget = getYawToTarget();
-            this.turretSubsystem.setGoalAngle(calculateTargetAngle(yawToTarget));
-        }
-        this.cancel();
+        this.fixAquiredLogLatch = new LoggingLatch("AmbanFixAquired", "Amban fix acquired", EdgeType.Both);
     }
 
     @Override
     public void initialize()
     {
         log.info("Initializing");
+    }
+
+    @Override
+    public void execute() {
+        // Check if vision subsystem is active and our turret is calibrated
+        if (isAmbanActive() && isTargetLocked()) {
+            this.fixAquiredLogLatch.checkValue(true);
+
+            // yawToTarget may ask us to go beyond our rotation limit so we need to correct for this
+            double yawToTarget = getYawToTarget();
+            this.turretSubsystem.setGoalAngle(calculateTargetAngle(yawToTarget));
+        } else {
+            this.fixAquiredLogLatch.checkValue(false);
+            this.turretSubsystem.setGoalAngle(this.turretSubsystem.getCurrentAngle());
+        }
     }
     
     public double calculateTargetAngle(double yawToTarget) {
