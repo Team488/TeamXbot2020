@@ -15,6 +15,8 @@ import competition.subsystems.turret.TurretSubsystem;
 import competition.subsystems.turret.commands.TurretStopCommand;
 import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.hood.commands.StopHoodCommand;
+import competition.subsystems.internalconveyor.IndexerSubsystem;
+import competition.subsystems.internalconveyor.commands.StopIndexerCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.StopShooterWheelCommand;
 import xbot.common.command.XScheduler;
@@ -56,5 +58,9 @@ public class SubsystemDefaultCommandMap {
     @Inject
     public void setupShooterWheelSubsystem(XScheduler scheduler, ShooterWheelSubsystem shooterWheel, StopShooterWheelCommand command) {
         scheduler.setDefaultCommand(shooterWheel, command);
+    }
+
+    public void setupIndexer(XScheduler scheduler, IndexerSubsystem indexer, StopIndexerCommand stop) {
+        scheduler.setDefaultCommand(indexer, stop);
     }
 }
