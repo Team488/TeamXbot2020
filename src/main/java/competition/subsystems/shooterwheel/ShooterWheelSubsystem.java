@@ -18,6 +18,8 @@ import xbot.common.math.PIDManager; // maybe using PID in subsystem
 @Singleton
 public class ShooterWheelSubsystem extends BaseSubsystem {
     
+    PIDManager pid; // maybe using PID in subystem for voltage tuning/compensation
+    public double neededVolt; // might be needed
     final DoubleProperty targetRpmProp;
     final BooleanProperty speedWithinToleranceProp;
     final DoubleProperty speedToleranceProp;
@@ -46,8 +48,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     public void enableVoltCompenstation(){ // not done here
         double nomialVolt = leader.getVoltageCompensationNominalVoltage();
         leader.enableVoltageCompensation(nomialVolt);
-
-
+        // neededVolt = RPM
     }   
 
     public void setTargetRPM(double speed) {
