@@ -36,8 +36,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
             leader.restoreFactoryDefaults();
             follower.restoreFactoryDefaults();
 
-            //follower.follow(leader, false);
-            this.follower.set(0);
+            follower.follow(leader, true);
         }
 
         leader.setIMaxAccum(1, 0);

@@ -39,7 +39,8 @@ public class TurretSubsystem extends BaseSubsystem {
 
         if (contract.isTurretReady()) {
             this.motor = factory.createCANTalon(contract.rotationMotor().channel);
-            motor.setInverted(contract.rotationMotor().inverted);
+            motor.configureAsMasterMotor(this.getPrefix(), "TurretMotor", contract.rotationMotor().inverted, false);
+            motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
         }
 
         turretSensor = factory.createXAS5600(motor);
@@ -77,7 +78,7 @@ public class TurretSubsystem extends BaseSubsystem {
     }
 
     public double getCurrentAngle() {
-        return turretSensor.getPosition();
+        return motor.getSelectedSensorPosition(0);
     }
 
     public void stop() {
