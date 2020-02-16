@@ -74,7 +74,7 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo indexerMotor() {
-        return new DeviceInfo(100, false);
+        return new DeviceInfo(24, false);
     }
 
     public DeviceInfo turretEncoder() {

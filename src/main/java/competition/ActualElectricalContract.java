@@ -9,7 +9,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isIndexerReady() {
-        return false;
+        return true;
     }
 
     @Override

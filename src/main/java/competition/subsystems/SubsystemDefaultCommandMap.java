@@ -61,6 +61,7 @@ public class SubsystemDefaultCommandMap {
         scheduler.setDefaultCommand(shooterWheel, command);
     }
 
+    @Inject
     public void setupIndexer(XScheduler scheduler, IndexerSubsystem indexer, IndexerViaTriggerCommand trigger) {
         scheduler.setDefaultCommand(indexer, trigger);
     }
