@@ -66,13 +66,6 @@ public class VisionSubsystem extends BaseSubsystem {
         return fixAcquiredValue;
     }
 
-    public void clearAmbanState() {
-        NetworkTable netTable = getAmbanNetworkTable();
-        netTable.getEntry("active").delete();
-        netTable.getEntry("fixAcquired").delete();
-        netTable.getEntry("yawToTarget").delete();
-    }
-
     private NetworkTable getAmbanNetworkTable() {
         return this.netTableInstance.getTable("amban");
     }
