@@ -15,7 +15,6 @@ import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.hood.commands.StopHoodCommand;
 import competition.subsystems.internalconveyor.IndexerSubsystem;
 import competition.subsystems.internalconveyor.commands.IndexerViaTriggerCommand;
-import competition.subsystems.internalconveyor.commands.StopIndexerCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.StopShooterWheelCommand;
 import competition.subsystems.turret.TurretSubsystem;
