@@ -3,6 +3,7 @@ package competition.operator_interface;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import competition.commandgroups.PassTowardsTargetCommand;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
@@ -56,6 +57,12 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.B).whenPressed(stop);
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(slowDown);
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(speedUp);
+    }
+
+    @Inject
+    public void setupOperatorCommandGroups(OperatorInterface operatorInterface, PassTowardsTargetCommand passCommand) {
+
+        operatorInterface.operatorGamepad.getifAvailable(XboxButton.Y).whenActive(passCommand, false);
     }
 
 }
