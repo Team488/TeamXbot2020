@@ -62,7 +62,7 @@ public class OperatorCommandMap {
     @Inject
     public void setupOperatorCommandGroups(OperatorInterface operatorInterface, PassTowardsTargetCommand passCommand) {
 
-        operatorInterface.operatorGamepad.getifAvailable(XboxButton.Y).whenActive(passCommand, false);
+        operatorInterface.operatorGamepad.getifAvailable(XboxButton.Y).whenPressed(passCommand, false);
     }
 
 }

@@ -35,6 +35,12 @@ public class TurretRotateToVisionTargetCommand extends BaseCommand
             this.turretSubsystem.setGoalAngle(this.turretSubsystem.getCurrentAngle());
         }
     }
+
+    @Override
+    public boolean isFinished() {
+        // complete after one execution
+        return true;
+    }
     
     public double calculateTargetAngle(double yawToTarget) {
         double targetAngle = this.turretSubsystem.getCurrentAngle() + yawToTarget;
