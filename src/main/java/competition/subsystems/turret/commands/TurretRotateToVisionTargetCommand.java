@@ -2,26 +2,20 @@ package competition.subsystems.turret.commands;
 
 import com.google.inject.Inject;
 import competition.subsystems.turret.TurretSubsystem;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import competition.subsystems.vision.VisionSubsystem;
 import xbot.common.command.BaseCommand;
-import xbot.common.logging.LoggingLatch;
-import xbot.common.logic.Latch.EdgeType;
 
 public class TurretRotateToVisionTargetCommand extends BaseCommand
 {
     final TurretSubsystem turretSubsystem;
-    final NetworkTable ambanNetworkTable;
-    final LoggingLatch fixAquiredLogLatch;
-    final LoggingLatch fixLostLogLatch;
+    final VisionSubsystem visionSubsystem;
 
     @Inject
-    public TurretRotateToVisionTargetCommand(TurretSubsystem tSubsystem, NetworkTableInstance networkTableInstance) {
+    public TurretRotateToVisionTargetCommand(TurretSubsystem tSubsystem, VisionSubsystem vSubsystem) {
         this.turretSubsystem = tSubsystem;
+        this.visionSubsystem = vSubsystem;
         this.addRequirements(this.turretSubsystem);
-        this.ambanNetworkTable = networkTableInstance.getTable("amban");
-        this.fixAquiredLogLatch = new LoggingLatch(this.getName(), "Amban fix acquired", EdgeType.RisingEdge);
-        this.fixLostLogLatch = new LoggingLatch(this.getName(), "Amban fix lost", EdgeType.FallingEdge);
+        this.addRequirements(this.visionSubsystem);
     }
 
     @Override
@@ -33,17 +27,11 @@ public class TurretRotateToVisionTargetCommand extends BaseCommand
     @Override
     public void execute() {
         // Check if vision subsystem is active and our turret is calibrated
-        if (isAmbanActive() && isTargetLocked()) {
-            this.fixAquiredLogLatch.checkValue(true);
-            this.fixLostLogLatch.checkValue(true);
-
+        if (this.visionSubsystem.isAmbanActive() && this.visionSubsystem.isAmbanFixAcquired()) {
             // yawToTarget may ask us to go beyond our rotation limit so we need to correct for this
-            double yawToTarget = getYawToTarget();
+            double yawToTarget = this.visionSubsystem.getAmbanYawToTarget();
             this.turretSubsystem.setGoalAngle(calculateTargetAngle(yawToTarget));
         } else {
-            this.fixAquiredLogLatch.checkValue(false);
-            this.fixLostLogLatch.checkValue(false);
-
             this.turretSubsystem.setGoalAngle(this.turretSubsystem.getCurrentAngle());
         }
     }
@@ -60,17 +48,5 @@ public class TurretRotateToVisionTargetCommand extends BaseCommand
         }
 
         return targetAngle;
-    }
-
-    public double getYawToTarget() {
-        return this.ambanNetworkTable.getEntry("yawToTarget").getNumber(0).doubleValue();
-    }
-
-    public boolean isAmbanActive() {
-        return this.ambanNetworkTable.getEntry("active").getBoolean(false);
-    }
-
-    public boolean isTargetLocked() {
-        return this.ambanNetworkTable.getEntry("fixAcquired").getBoolean(false);
     }
 }
