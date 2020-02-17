@@ -887,13 +887,13 @@
             ],
             "content": {
               "_type": "Graph",
-              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent",
-              "_title": "SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/CurrentRPM",
+              "_title": "SmartDashboard/ShooterWheelSubsystem/CurrentRPM",
               "Graph/Visible time": 30.0,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
               "Y-axis/Lower bound": -1.0,
-              "Visible data/SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent": true
+              "Visible data/SmartDashboard/ShooterWheelSubsystem/CurrentRPM": true
             }
           }
         }
@@ -998,6 +998,18 @@
             }
           }
         }
+      }
+    },
+    {
+      "title": "Tab 5",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {}
       }
     }
   ],

@@ -13,6 +13,8 @@ import competition.subsystems.drive.DriveSubsystem;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.hood.commands.StopHoodCommand;
+import competition.subsystems.internalconveyor.IndexerSubsystem;
+import competition.subsystems.internalconveyor.commands.IndexerViaTriggerCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.StopShooterWheelCommand;
 import competition.subsystems.turret.TurretSubsystem;
@@ -56,5 +58,10 @@ public class SubsystemDefaultCommandMap {
     @Inject
     public void setupShooterWheelSubsystem(XScheduler scheduler, ShooterWheelSubsystem shooterWheel, StopShooterWheelCommand command) {
         scheduler.setDefaultCommand(shooterWheel, command);
+    }
+
+    @Inject
+    public void setupIndexer(XScheduler scheduler, IndexerSubsystem indexer, IndexerViaTriggerCommand trigger) {
+        scheduler.setDefaultCommand(indexer, trigger);
     }
 }
