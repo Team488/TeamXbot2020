@@ -27,18 +27,7 @@ public class ShooterWheelMaintainerCommand extends BaseMaintainerCommand {
         wheel.setCurrentLimits();
         wheel.configurePID();
     }
-
-    @Override
-    protected void maintain() {
-        double speed = wheel.getTargetRPM();
-        wheel.setPidSetpoint(speed);
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        wheel.resetWheel();
-    }
-
+    
     @Override
     protected void calibratedMachineControlAction() {
         double speed = wheel.getTargetRPM();
@@ -46,7 +35,19 @@ public class ShooterWheelMaintainerCommand extends BaseMaintainerCommand {
     }
 
     @Override
+    protected void initializeMachineControlAction() {
+        wheel.resetPID();
+        super.initializeMachineControlAction();
+    }
+
+    @Override
     protected double getHumanInput() {
+        // Currently, never hooked into human input. This may change.
         return 0;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        wheel.resetWheel();
     }
 }
