@@ -3,7 +3,6 @@ package competition.subsystems.turret.commands;
 import com.google.inject.Inject;
 import competition.subsystems.turret.TurretSubsystem;
 import competition.subsystems.vision.VisionSubsystem;
-import xbot.common.command.BaseCommand;
 import xbot.common.command.BaseSetpointCommand;
 
 public class TurretRotateToVisionTargetCommand extends BaseSetpointCommand
