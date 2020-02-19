@@ -18,6 +18,7 @@ public class BestShotAdjustment extends BaseCommand{
     final DoubleProperty minAngle;
     final DoubleProperty maxAngle;
     final DoubleProperty maxVelosityProperty;
+    final DoubleProperty heightToGoal;
     public double tvelosity;
 
 
@@ -29,6 +30,7 @@ public class BestShotAdjustment extends BaseCommand{
         minAngle = pf.createPersistentProperty("MinAngle", 0);
         maxAngle = pf.createPersistentProperty("MaxAngle", 60);
         maxVelosityProperty = pf.createPersistentProperty("MaxVelosity", 20);
+        heightToGoal = pf.createPersistentProperty("Height of goal", 6.5);
         tvelosity = 300;
         this.addRequirements(this.wheel);
     }
@@ -41,16 +43,20 @@ public class BestShotAdjustment extends BaseCommand{
     public void execute(){
         double distance = 10; //TODO: implement vision to find distance away from the goal
         if(angleIsPossible(findAngleWVelosity(tvelosity, distance), distance)){
-            wheel.setPidSetpoint(tvelocity);
+            wheel.setPidSetpoint(tvelosity);
         }
         else{
-            
+            tvelosity+=200;
         }
     }
 
     public double findAngleWVelosity(double velosity, double distance)
     {
         return 0.5*Math.asin((32*distance)/(velosity * velosity));
+    }
+
+    public double findVelosityWAngle(double theta, double distance, double initHeight){
+        return Math.sqrt(1/(Math.pow(Math.cos(theta), 2)*(initHeight + (distance * Math.tan(theta)-heightToGoal.get()))));
     }
 
     public boolean angleIsPossible(double angle, double distance)
