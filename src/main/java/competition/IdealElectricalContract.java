@@ -29,8 +29,7 @@ public class IdealElectricalContract extends ElectricalContract {
         return true;
     }
     
-
-    public boolean isConveyorReady(){
+    public boolean isIndexerReady(){
         return true;
     }
 
@@ -52,7 +51,7 @@ public class IdealElectricalContract extends ElectricalContract {
 
     public DeviceInfo shooterMotorMaster()
     {
-        return new DeviceInfo(21, false);
+        return new DeviceInfo(21, true);
     }
     
     public DeviceInfo shooterMotorFollower()
@@ -69,9 +68,17 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(20, false);
     }
 
-    public DeviceInfo rotationMotor()
+    public DeviceInfo turretMotor()
     {
         return new DeviceInfo(31, false);
+    }
+
+    public DeviceInfo indexerMotor() {
+        return new DeviceInfo(24, false);
+    }
+
+    public DeviceInfo turretEncoder() {
+        return new DeviceInfo(0, true);
     }
 
     public DeviceInfo carouselMotor()

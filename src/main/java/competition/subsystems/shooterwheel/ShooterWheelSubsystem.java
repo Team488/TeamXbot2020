@@ -5,20 +5,20 @@ import com.google.inject.Singleton;
 import com.revrobotics.ControlType;
 
 import competition.IdealElectricalContract;
-import xbot.common.command.BaseSubsystem;
+import xbot.common.command.BaseSetpointSubsystem;
 import xbot.common.controls.actuators.XCANSparkMax;
-
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
 @Singleton
-public class ShooterWheelSubsystem extends BaseSubsystem {
+public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     
     final DoubleProperty targetRpmProp;
+    
     final DoubleProperty currentRpmProp;
     public XCANSparkMax leader;
-    public XCANSparkMax follower;
+    private XCANSparkMax follower;
     IdealElectricalContract contract;
     
     @Inject
@@ -26,6 +26,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         log.info("Creating ShooterWheelSubsystem");
         pf.setPrefix(this);
         this.contract = contract;
+        
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
 
@@ -36,27 +37,26 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         }
     }
 
-    public void setTargetSpeed(double speed) {
+    public void setTargetRPM(double speed) {
         targetRpmProp.set(speed);
     }
 
-    public double getTargetSpeed() {
+    public double getTargetRPM() {
         return targetRpmProp.get();
     }
 
-    public void changeTargetSpeed(double amount) {
-        double speed = getTargetSpeed();
+    public void changeTargetRPM(double amount) {
+        double speed = getTargetRPM();
         speed += amount;
-        setTargetSpeed(speed);
+        setTargetRPM(speed);
     }
 
-    public void setPidGoal(double speed) {
+    public void setPidSetpoint(double speed) {
         if(contract.isShooterWheelReady())
         {
             leader.setReference(speed, ControlType.kVelocity);
         }
     }
-
 
     public void setPower(double power) {
         if(contract.isShooterWheelReady())
@@ -69,8 +69,52 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         setPower(0);
     }
 
+    public double getCurrentRPM() {
+        return leader.getVelocity();
+    }
+
     public void periodic() {
         leader.periodic();
-        currentRpmProp.set(leader.getVelocity());
+        follower.periodic();
+        currentRpmProp.set(getCurrentRPM());
+    }
+
+    public void resetPID() {
+        leader.setIAccum(0);
+    }
+
+    public void resetWheel() {
+        setPower(0);
+        setTargetRPM(0);
+        resetPID();
+    }
+
+    public void setCurrentLimits() {
+        leader.setSmartCurrentLimit(40);
+        leader.setClosedLoopRampRate(0.01);
+    }
+
+    public void configurePID() {
+        leader.setIMaxAccum(1, 0);
+    }
+
+    @Override
+    public double getCurrentValue() {
+        return getCurrentRPM();
+    }
+
+    @Override
+    public double getTargetValue() {
+        return getTargetRPM();
+    }
+
+    @Override
+    public boolean isCalibrated() {
+        return true;
+    }
+
+    @Override
+    public void setTargetValue(double value) {
+        setTargetRPM(value);
     }
 }

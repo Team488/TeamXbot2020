@@ -13,8 +13,12 @@ import competition.subsystems.drive.DriveSubsystem;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.hood.commands.StopHoodCommand;
+import competition.subsystems.internalconveyor.IndexerSubsystem;
+import competition.subsystems.internalconveyor.commands.IndexerViaTriggerCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.StopShooterWheelCommand;
+import competition.subsystems.turret.TurretSubsystem;
+import competition.subsystems.turret.commands.TurretMaintainerCommand;
 import xbot.common.command.XScheduler;
 
 @Singleton
@@ -22,10 +26,16 @@ public class SubsystemDefaultCommandMap {
     // For setting the default commands on subsystems
     @Inject
     public void setupDriveSubsystem(XScheduler scheduler, DriveSubsystem drive, ArcadeDriveCommand command) {
-        scheduler.setDefaultCommand(drive, command);
+        //scheduler.setDefaultCommand(drive, command);
     }
 
     @Inject
+
+    public void setupTurretSubsystem(XScheduler scheduler, TurretSubsystem tSub, TurretMaintainerCommand maintain)
+    {
+        scheduler.setDefaultCommand(tSub, maintain);
+    }
+
     public void setupCarouselSubsystem(XScheduler scheduler, CarouselSubsystem carousel, StopCarouselCommand command) {
         scheduler.setDefaultCommand(carousel, command);
     }
@@ -48,5 +58,10 @@ public class SubsystemDefaultCommandMap {
     @Inject
     public void setupShooterWheelSubsystem(XScheduler scheduler, ShooterWheelSubsystem shooterWheel, StopShooterWheelCommand command) {
         scheduler.setDefaultCommand(shooterWheel, command);
+    }
+
+    @Inject
+    public void setupIndexer(XScheduler scheduler, IndexerSubsystem indexer, IndexerViaTriggerCommand trigger) {
+        scheduler.setDefaultCommand(indexer, trigger);
     }
 }
