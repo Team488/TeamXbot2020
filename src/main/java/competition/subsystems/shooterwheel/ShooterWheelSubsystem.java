@@ -20,6 +20,11 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     
     PIDManager pid; // maybe using PID in subystem for voltage tuning/compensation
     public double neededVolt; // might be needed
+    public double D;
+    public double FF; // Feed Forward
+    public double speed;
+    public double currentV;
+    //-------------Fields above are subject to change----------------------------
     final DoubleProperty targetRpmProp;
     final BooleanProperty speedWithinToleranceProp;
     final DoubleProperty speedToleranceProp;
