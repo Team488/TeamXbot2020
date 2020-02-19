@@ -92,7 +92,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         return leader.getVelocity();
     }
 
-    public void periodic() {
+    public void periodic() { // runs multiple times
         leader.periodic();
         follower.periodic();
         currentRpmProp.set(getCurrentRPM());
