@@ -39,11 +39,7 @@ public class TurretWaitForRotationToGoalCommand extends BaseCommand {
 
     @Override
     public boolean isFinished() {
-        double currentAngle = this.turretSubsystem.getCurrentAngle();
-        double goalAngle = this.turretSubsystem.getGoalAngle();
-        
-        return Math.abs(currentAngle - goalAngle) < this.errorProperty.get()
-            || XTimer.getFPGATimestamp() - this.startTime > this.timeoutProperty.get();
+        return this.turretSubsystem.isMaintainerAtGoal() || XTimer.getFPGATimestamp() - this.startTime > this.timeoutProperty.get();
     }
     
 }
