@@ -16,6 +16,16 @@ public class BangBangCommandTest extends BaseCompetitionTest {
         command.initialize();
         command.execute();
 
-        assertEquals(1, shooterWheelSubsystem.getPower());
+        assertEquals(1, shooterWheelSubsystem.getPower(), 0.001);
+    }
+    @Test
+    public void testZeroPower(){
+        ShooterWheelSubsystem shooterWheelSubsystem = this.injector.getInstance(ShooterWheelSubsystem.class);
+        BangBangCommand command = this.injector.getInstance(BangBangCommand.class);
+        shooterWheelSubsystem.setTargetRPM(-100);
+        command.initialize();
+        command.execute();
+
+        assertEquals(0, shooterWheelSubsystem.getPower(), 0.001);
     }
 }
