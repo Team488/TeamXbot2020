@@ -10,21 +10,11 @@ import xbot.common.controls.actuators.XCANSparkMax;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
-import xbot.common.math.PIDManager; // maybe using PID in subsystem
-
 
 @Singleton
 public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     
-    PIDManager pid; // maybe using PID in subystem for voltage tuning/compensation
-    public double neededVolt; // might be needed
-    public double D;
-    public double FF; // Feed Forward
-    public double speed;
-    public double currentV;
-    //-------------Fields above are subject to change----------------------------
     final DoubleProperty targetRpmProp;
-    
     final DoubleProperty currentRpmProp;
     public XCANSparkMax leader;
     private XCANSparkMax follower;
@@ -44,12 +34,11 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
             this.follower = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
             follower.follow(leader, true);
         }
-    }
+    }     
 
-    public void enableVoltCompenstation(){ // not done here
+    public void enableVoltCompenstation(){ 
         double nomialVolt = leader.getVoltageCompensationNominalVoltage();
         leader.enableVoltageCompensation(nomialVolt);
-        // neededVolt = RPM
     }   
 
     public void setTargetRPM(double speed) {

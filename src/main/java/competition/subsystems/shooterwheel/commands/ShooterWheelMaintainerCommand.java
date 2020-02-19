@@ -29,7 +29,7 @@ public class ShooterWheelMaintainerCommand extends BaseMaintainerCommand {
     }
     
     @Override
-    protected void calibratedMachineControlAction() {
+    protected void calibratedMachineControlAction() { // sets what speed the wheel is it
         double speed = wheel.getTargetRPM();
         wheel.setPidSetpoint(speed);
     }
