@@ -5,18 +5,16 @@ import com.google.inject.Singleton;
 import com.revrobotics.ControlType;
 
 import competition.IdealElectricalContract;
-import xbot.common.command.BaseSubsystem;
+import xbot.common.command.BaseSetpointSubsystem;
 import xbot.common.controls.actuators.XCANSparkMax;
-
 import xbot.common.injection.wpi_factories.CommonLibFactory;
-import xbot.common.properties.BooleanProperty;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 import xbot.common.math.PIDManager; // maybe using PID in subsystem
 
 
 @Singleton
-public class ShooterWheelSubsystem extends BaseSubsystem {
+public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     
     PIDManager pid; // maybe using PID in subystem for voltage tuning/compensation
     public double neededVolt; // might be needed
@@ -26,8 +24,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
     public double currentV;
     //-------------Fields above are subject to change----------------------------
     final DoubleProperty targetRpmProp;
-    final BooleanProperty speedWithinToleranceProp;
-    final DoubleProperty speedToleranceProp;
+    
     final DoubleProperty currentRpmProp;
     public XCANSparkMax leader;
     private XCANSparkMax follower;
@@ -38,8 +35,7 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         log.info("Creating ShooterWheelSubsystem");
         pf.setPrefix(this);
         this.contract = contract;
-        speedToleranceProp = pf.createPersistentProperty("speedTolerance", 100);
-        speedWithinToleranceProp = pf.createEphemeralProperty("speedWithinTolerance", false);
+        
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
 
@@ -96,14 +92,6 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
         leader.periodic();
         follower.periodic();
         currentRpmProp.set(getCurrentRPM());
-        speedWithinToleranceProp.set(getShooterWheelAtTargetSpeed());
-    }
-
-    public boolean getShooterWheelAtTargetSpeed() {
-        if (Math.abs(currentRpmProp.get() - targetRpmProp.get()) < speedToleranceProp.get()) {
-            return true;
-        }
-        return false;
     }
 
     public void resetPID() {
@@ -123,5 +111,25 @@ public class ShooterWheelSubsystem extends BaseSubsystem {
 
     public void configurePID() {
         leader.setIMaxAccum(1, 0);
+    }
+
+    @Override
+    public double getCurrentValue() {
+        return getCurrentRPM();
+    }
+
+    @Override
+    public double getTargetValue() {
+        return getTargetRPM();
+    }
+
+    @Override
+    public boolean isCalibrated() {
+        return true;
+    }
+
+    @Override
+    public void setTargetValue(double value) {
+        setTargetRPM(value);
     }
 }

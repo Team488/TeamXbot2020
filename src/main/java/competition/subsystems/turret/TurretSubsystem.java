@@ -161,6 +161,25 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     }
 
     public void setFieldOrientedGoalAngle(double angle) {
-        
+        // Take the current robot heading, recast it into turret units
+        double robotHeading = pose.getCurrentHeading().shiftBounds(90).getValue();
+        // Formula is: Robot Oriented Turret Heading = Desired FO Turret Heading - Robot FO Heading + 90
+        double turretGoalHeading = angle - robotHeading + 90;
+        setGoalAngle(turretGoalHeading);
+    }
+
+    @Override
+    public double getCurrentValue() {
+        return getCurrentAngle();
+    }
+
+    @Override
+    public double getTargetValue() {
+        return getGoalAngle();
+    }
+
+    @Override
+    public void setTargetValue(double value) {
+        setGoalAngle(value);
     }
 }
