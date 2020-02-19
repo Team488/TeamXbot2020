@@ -9,22 +9,26 @@ import competition.BaseCompetitionTest;
 import competition.subsystems.turret.TurretSubsystem;
 import competition.subsystems.turret.commands.PointTurretToFieldOrientedHeadingCommand;
 import competition.subsystems.turret.commands.TurretWaitForRotationToGoalCommand;
-import edu.wpi.first.wpilibj.MockTimer;
+import xbot.common.controls.actuators.mock_adapters.MockCANTalon;
 import xbot.common.properties.PropertyFactory;
 
 public class PassTowardsTargetCommandTest extends BaseCompetitionTest {
 
+    private TurretSubsystem turret;
+
     private PassTowardsTargetCommand command;
+    private PointTurretToFieldOrientedHeadingCommand rotateTurretCommand;
+    private TurretWaitForRotationToGoalCommand waitForRotateTurretCommand;
 
     @Override
     public void setUp() {
         super.setUp();
 
         PropertyFactory pf = this.injector.getInstance(PropertyFactory.class);
-        TurretSubsystem turret = this.injector.getInstance(TurretSubsystem.class);
+        this.turret = this.injector.getInstance(TurretSubsystem.class);
 
-        PointTurretToFieldOrientedHeadingCommand rotateTurretCommand = new PointTurretToFieldOrientedHeadingCommand(turret);
-        TurretWaitForRotationToGoalCommand waitForRotateTurretCommand = new TurretWaitForRotationToGoalCommand(pf, turret);
+        this.rotateTurretCommand = new PointTurretToFieldOrientedHeadingCommand(this.turret);
+        this.waitForRotateTurretCommand = new TurretWaitForRotationToGoalCommand(pf, this.turret);
 
         rotateTurretCommand.setFieldOrientedGoal(180);
 
@@ -32,19 +36,24 @@ public class PassTowardsTargetCommandTest extends BaseCompetitionTest {
     }
 
     @Test
-    public void testTimeout() {
-        MockTimer mockTimer = this.injector.getInstance(MockTimer.class);        
-        double startTime = mockTimer.getFPGATimestamp();
-
+    public void testCommand() {
         this.command.initialize();
 
         assertFalse(this.command.isFinished());
 
-        do {
-            this.command.execute();
-            mockTimer.advanceTimeInSecondsBy(0.1);
-        } while (!this.command.isFinished() && (mockTimer.getFPGATimestamp() - startTime < 10));
+        this.command.execute();
+        assertFalse(this.waitForRotateTurretCommand.isFinished());
+        
+        // rotate to the target angle
+        setRawTurretAngle(this.turret, this.turret.getGoalAngle() - 90 /* default forward angle */);
 
-        assertTrue(this.command.isFinished());
+        this.command.execute();
+        assertTrue(this.waitForRotateTurretCommand.isFinished());
+
+    }
+
+    private void setRawTurretAngle(TurretSubsystem turret, double angle) {
+        double ticks = angle / turret.getTicksPerDegree();
+        ((MockCANTalon)(turret.motor)).setPosition((int)ticks);
     }
 }

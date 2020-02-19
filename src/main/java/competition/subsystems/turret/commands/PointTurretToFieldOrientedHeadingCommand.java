@@ -30,10 +30,4 @@ public class PointTurretToFieldOrientedHeadingCommand extends BaseSetpointComman
         turret.setFieldOrientedGoalAngle(fieldOrientedHeadingGoal);
     }
 
-    @Override
-    public boolean isFinished() {
-        // complete after one execution
-        return true;
-    }
-
 }
