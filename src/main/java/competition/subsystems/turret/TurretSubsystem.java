@@ -167,4 +167,19 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
         double turretGoalHeading = angle - robotHeading + 90;
         setGoalAngle(turretGoalHeading);
     }
+
+    @Override
+    public double getCurrentValue() {
+        return getCurrentAngle();
+    }
+
+    @Override
+    public double getTargetValue() {
+        return getGoalAngle();
+    }
+
+    @Override
+    public void setTargetValue(double value) {
+        setGoalAngle(value);
+    }
 }

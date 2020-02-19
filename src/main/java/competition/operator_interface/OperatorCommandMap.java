@@ -8,7 +8,7 @@ import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.BangBangCommand;
-import competition.subsystems.shooterwheel.commands.SpinningShooterWheelCommand;
+import competition.subsystems.shooterwheel.commands.ShooterWheelMaintainerCommand;
 import competition.subsystems.turret.TurretSubsystem;
 import competition.subsystems.turret.commands.PointTurretToFieldOrientedHeadingCommand;
 import competition.subsystems.turret.commands.TurretRotateToVisionTargetCommand;
@@ -47,7 +47,7 @@ public class OperatorCommandMap {
 
     @Inject
     public void setupShootercommands(OperatorInterface operatorInterface, ShooterWheelSubsystem shooter,
-            SpinningShooterWheelCommand singleWheel, BangBangCommand bangBang) {
+            ShooterWheelMaintainerCommand singleWheel, BangBangCommand bangBang) {
 
         Command speedUp = new InstantCommand(() -> shooter.changeTargetRPM(500));
         Command slowDown = new InstantCommand(() -> shooter.changeTargetRPM(-500));
