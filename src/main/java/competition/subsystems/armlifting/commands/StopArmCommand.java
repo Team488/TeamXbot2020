@@ -24,6 +24,6 @@ public class StopArmCommand extends BaseCommand{
     }
 
     public void execute(){
-        armSubsystem.stop();
+        //armSubsystem.stop();
     }
 }

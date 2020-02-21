@@ -95,7 +95,7 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo liftingCollectorArmMotor() {
-        return new DeviceInfo(5, true);
+        return new DeviceInfo(4, true);
     }
 
     public boolean isFrontCollectingReady() {
@@ -103,7 +103,7 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo frontCollectingMotor() {
-        return new DeviceInfo(6, true);
+        return new DeviceInfo(5, true);
     }
 
     public boolean isHangingReady() {
@@ -111,8 +111,10 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo hangerMotor() {
-        return new DeviceInfo(7, true);
+        return new DeviceInfo(6, true);
     }
 
-
+    public DeviceInfo getArmSolenoid() {
+        return new DeviceInfo(7, true);
+    }
 }
