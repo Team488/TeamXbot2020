@@ -5,19 +5,23 @@ import xbot.common.injection.ElectricalContract;
 public class IdealElectricalContract extends ElectricalContract {
 
     public DeviceInfo leftFrontDriveNeo() {
-        return new DeviceInfo(32, false);
+        return new DeviceInfo(1, false);
     }
 
     public DeviceInfo leftRearDriveNeo() {
-        return new DeviceInfo(33, true);
+        return new DeviceInfo(2, true);
     }
 
     public DeviceInfo rightFrontDriveNeo() {
-        return new DeviceInfo(23, false);
+        return new DeviceInfo(3, false);
     }
 
     public DeviceInfo rightRearDriveNeo() {
-        return new DeviceInfo(22, false);
+        return new DeviceInfo(4, false);
+    }
+
+    public boolean isDriveReady() {
+        return true;
     }
 
 
@@ -70,11 +74,11 @@ public class IdealElectricalContract extends ElectricalContract {
 
     public DeviceInfo turretMotor()
     {
-        return new DeviceInfo(31, false);
+        return new DeviceInfo(32, false);
     }
 
     public DeviceInfo indexerMotor() {
-        return new DeviceInfo(24, false);
+        return new DeviceInfo(33, false);
     }
 
     public DeviceInfo turretEncoder() {
