@@ -1,4 +1,4 @@
-package competition.subsystems.armlifting;
+package competition.subsystems.arm;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

@@ -1,9 +1,9 @@
-package competition.subsystems.armlifting.commands;
+package competition.subsystems.arm.commands;
 
 import com.google.inject.Inject;
 
 import competition.operator_interface.OperatorInterface;
-import competition.subsystems.armlifting.FrontCollectingSubsystem;
+import competition.subsystems.arm.FrontCollectingSubsystem;
 import xbot.common.command.BaseCommand;
 
 public class StopFrontIntakeCommand extends BaseCommand{

@@ -1,4 +1,4 @@
-package competition.subsystems.armlifting;
+package competition.subsystems.arm;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -10,15 +10,15 @@ import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.properties.PropertyFactory;
  
 @Singleton
-public class CollectorArmLiftingSubsystem extends BaseSubsystem {
+public class ArmSubsystem extends BaseSubsystem {
 
     public final XSolenoid armSolenoid;
 
     @Inject
-    public CollectorArmLiftingSubsystem(CommonLibFactory clf, PropertyFactory pf, IdealElectricalContract contract) {
-        log.info("Creating LiftingSubsystem");
+    public ArmSubsystem(CommonLibFactory clf, PropertyFactory pf, IdealElectricalContract contract) {
+        log.info("Creating ArmSubsystem");
         pf.setPrefix(this);
-        if (contract.isCollectorArmLiftingReady()) {
+        if (contract.isArmReady()) {
             this.armSolenoid = clf.createSolenoid(contract.getArmSolenoid().channel);
         } else {
             this.armSolenoid = null;

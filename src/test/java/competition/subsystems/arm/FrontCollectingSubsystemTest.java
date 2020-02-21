@@ -1,11 +1,11 @@
-package competition.subsystems.armlifting;
+package competition.subsystems.arm;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import competition.BaseCompetitionTest;
-import competition.subsystems.armlifting.FrontCollectingSubsystem;
+import competition.subsystems.arm.FrontCollectingSubsystem;
 
 public class FrontCollectingSubsystemTest extends BaseCompetitionTest {
     @Test
