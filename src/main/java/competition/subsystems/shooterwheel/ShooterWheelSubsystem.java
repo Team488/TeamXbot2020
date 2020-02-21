@@ -36,9 +36,10 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
         }
     }     
 
-    public void enableVoltCompenstation(){ 
+    public void enableVoltCompenstation(){ //not done
         double nomialVolt = leader.getVoltageCompensationNominalVoltage();
         leader.enableVoltageCompensation(nomialVolt);
+            // maybe implement setPidSetpoint(speed)
     }   
 
     public void setTargetRPM(double speed) {
