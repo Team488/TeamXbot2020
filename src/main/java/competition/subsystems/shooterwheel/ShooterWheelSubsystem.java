@@ -34,9 +34,11 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
             this.follower = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
             follower.follow(leader, true);
         }
-    }     
+    }
 
     public void enableVoltCompenstation(){ //not done
+        // leader.getBusVoltage(); // bus = battery
+        leader.setVoltage(0.5);
         double nomialVolt = leader.getVoltageCompensationNominalVoltage();
         leader.enableVoltageCompensation(nomialVolt);
             // maybe implement setPidSetpoint(speed)
