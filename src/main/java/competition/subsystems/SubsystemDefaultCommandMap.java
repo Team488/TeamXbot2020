@@ -3,10 +3,10 @@ package competition.subsystems;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import competition.subsystems.armlifting.CollectorArmLiftingSubsystem;
-import competition.subsystems.armlifting.FrontCollectingSubsystem;
-import competition.subsystems.armlifting.commands.StopArmCommand;
-import competition.subsystems.armlifting.commands.StopFrontIntakeCommand;
+import competition.subsystems.arm.ArmSubsystem;
+import competition.subsystems.arm.FrontCollectingSubsystem;
+import competition.subsystems.arm.commands.RaiseArmCommand;
+import competition.subsystems.arm.commands.StopFrontIntakeCommand;
 import competition.subsystems.carousel.CarouselSubsystem;
 import competition.subsystems.carousel.commands.StopCarouselCommand;
 import competition.subsystems.drive.DriveSubsystem;
@@ -46,7 +46,7 @@ public class SubsystemDefaultCommandMap {
     }
 
     @Inject
-    public void setupCollectorArmLiftingSubsystem(XScheduler scheduler, CollectorArmLiftingSubsystem arm, StopArmCommand command) {
+    public void setupArmSubsystem(XScheduler scheduler, ArmSubsystem arm, RaiseArmCommand command) {
         scheduler.setDefaultCommand(arm, command);
     }
 

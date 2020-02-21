@@ -3,7 +3,7 @@ package competition;
 public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
-    public boolean isCollectorArmLiftingReady() {
+    public boolean isArmReady() {
         return false;
     }
 

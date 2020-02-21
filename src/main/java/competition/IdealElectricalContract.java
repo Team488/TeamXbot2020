@@ -90,11 +90,11 @@ public class IdealElectricalContract extends ElectricalContract {
         return true;
     }
 
-    public boolean isCollectorArmLiftingReady() {
+    public boolean isArmReady() {
         return true;
     }
 
-    public DeviceInfo liftingCollectorArmMotor() {
+    public DeviceInfo ArmMotor() {
         return new DeviceInfo(4, true);
     }
 
