@@ -69,6 +69,10 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
             leader.set(power);
         }
     }
+
+    public double getPower(){
+        return leader.get();
+    }
   
     public void stop () {
         setPower(0);

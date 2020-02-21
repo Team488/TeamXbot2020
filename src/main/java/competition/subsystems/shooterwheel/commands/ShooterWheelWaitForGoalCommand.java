@@ -1,22 +1,23 @@
-package competition.subsystems.turret.commands;
+package competition.subsystems.shooterwheel.commands;
 
 import com.google.inject.Inject;
-import competition.subsystems.turret.TurretSubsystem;
+
+import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import xbot.common.command.BaseCommand;
 import xbot.common.controls.sensors.XTimer;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
-public class TurretWaitForRotationToGoalCommand extends BaseCommand {
+public class ShooterWheelWaitForGoalCommand extends BaseCommand {
 
-    private final TurretSubsystem turretSubsystem;
+    private final ShooterWheelSubsystem shooterWheelSubsystem;
     private final DoubleProperty timeoutProperty;
 
     private double startTime = -1;
 
     @Inject
-    public TurretWaitForRotationToGoalCommand(PropertyFactory pf, TurretSubsystem tSubsystem) {
-        this.turretSubsystem = tSubsystem;
+    public ShooterWheelWaitForGoalCommand(PropertyFactory pf, ShooterWheelSubsystem subsystem) {
+        this.shooterWheelSubsystem = subsystem;
 
         pf.setPrefix(this);
 
@@ -36,7 +37,7 @@ public class TurretWaitForRotationToGoalCommand extends BaseCommand {
 
     @Override
     public boolean isFinished() {
-        return this.turretSubsystem.isMaintainerAtGoal() || XTimer.getFPGATimestamp() - this.startTime > this.timeoutProperty.get();
+        return this.shooterWheelSubsystem.isMaintainerAtGoal() || XTimer.getFPGATimestamp() - this.startTime > this.timeoutProperty.get();
     }
     
 }

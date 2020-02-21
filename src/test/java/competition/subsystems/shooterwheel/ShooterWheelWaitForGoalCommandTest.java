@@ -1,4 +1,4 @@
-package competition.subsystems.turret;
+package competition.subsystems.shooterwheel;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -6,29 +6,27 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import competition.BaseCompetitionTest;
-import competition.subsystems.turret.commands.TurretWaitForRotationToGoalCommand;
+import competition.subsystems.shooterwheel.commands.ShooterWheelWaitForGoalCommand;
 import edu.wpi.first.wpilibj.MockTimer;
 import xbot.common.properties.PropertyFactory;
 
-public class TurretWaitForRotationToGoalCommandTest extends BaseCompetitionTest {
+public class ShooterWheelWaitForGoalCommandTest extends BaseCompetitionTest {
 
     @Test
     public void testAtGoal() {
-        TurretSubsystem turret = this.injector.getInstance(TurretSubsystem.class);
+        ShooterWheelSubsystem shooter = this.injector.getInstance(ShooterWheelSubsystem.class);
         PropertyFactory pf = this.injector.getInstance(PropertyFactory.class);
 
-        TurretWaitForRotationToGoalCommand command = new TurretWaitForRotationToGoalCommand(pf, turret);
+        ShooterWheelWaitForGoalCommand command = new ShooterWheelWaitForGoalCommand(pf, shooter);
 
-        turret.setGoalAngle(turret.getCurrentAngle() + 90);
+        shooter.setTargetValue(9001);
 
         command.initialize();
         command.execute();
 
         assertFalse(command.isFinished());
-
-        turret.setGoalAngle(turret.getCurrentAngle());
-
-        turret.setMaintainerIsAtGoal(true);
+        
+        shooter.setMaintainerIsAtGoal(true);
 
         command.execute();
 
@@ -37,12 +35,12 @@ public class TurretWaitForRotationToGoalCommandTest extends BaseCompetitionTest 
 
     @Test
     public void testTimeout() {
-        TurretSubsystem turret = this.injector.getInstance(TurretSubsystem.class);
+        ShooterWheelSubsystem shooter = this.injector.getInstance(ShooterWheelSubsystem.class);
         PropertyFactory pf = this.injector.getInstance(PropertyFactory.class);
 
-        TurretWaitForRotationToGoalCommand command = new TurretWaitForRotationToGoalCommand(pf, turret);
+        ShooterWheelWaitForGoalCommand command = new ShooterWheelWaitForGoalCommand(pf, shooter);
 
-        turret.setGoalAngle(turret.getCurrentAngle() + 90);
+        shooter.setTargetRPM(9001);
 
         command.initialize();
         command.execute();
