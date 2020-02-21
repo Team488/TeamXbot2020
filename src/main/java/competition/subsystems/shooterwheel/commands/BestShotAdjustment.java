@@ -3,6 +3,7 @@ package competition.subsystems.shooterwheel.commands;
 
 import com.google.inject.Inject;
 
+import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.pose.PoseSubsystem;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.turret.TurretSubsystem;
@@ -20,11 +21,16 @@ public class BestShotAdjustment extends BaseCommand{
     final DoubleProperty maxVelosityProperty;
     final DoubleProperty heightToGoal;
     final DoubleProperty incrementShotAdjustment;
+    final DoubleProperty initialHeight;
+    final HoodSubsystem hood;
     public double tvelosity;
 
 
     @Inject
-    public BestShotAdjustment( final PropertyFactory pf,  final ShooterWheelSubsystem wheel, final PoseSubsystem pose, final TurretSubsystem turret){
+    public BestShotAdjustment( final PropertyFactory pf,  final ShooterWheelSubsystem wheel, 
+                               final PoseSubsystem pose, final TurretSubsystem turret,
+                               final HoodSubsystem hood){
+        this.hood = hood;
         this.wheel = wheel;
         this.pose = pose;
         this.turret = turret;
@@ -34,6 +40,7 @@ public class BestShotAdjustment extends BaseCommand{
         maxVelosityProperty = pf.createPersistentProperty("MaxVelosity", 20);
         heightToGoal = pf.createPersistentProperty("Height of goal", 6.5);
         tvelosity = 300;
+        initialHeight = pf.createPersistentProperty("Initial Height", 2.5);
         this.addRequirements(this.wheel);
     }
 
@@ -44,8 +51,10 @@ public class BestShotAdjustment extends BaseCommand{
 
     public void execute(){
         final double distance = 10; //TODO: implement vision to find distance away from the goal
-        if(angleIsPossible(findAngleWVelosity(tvelosity, distance), distance)){
-            wheel.setPidSetpoint(tvelosity);
+        double angle = (findAngleWVelosity(tvelosity, distance)/Math.PI) * 180;
+        if(angleIsPossible(angle*Math.PI/180, distance)){
+            hood.setAngle(angle);
+            wheel.setPidSetpoint(ShooterWheelSubsystem.velosityToRPM(findVelosityWAngle(angle*Math.PI/180, distance, initialHeight.get())));
         }
         else{
             tvelosity+= incrementShotAdjustment.get();
@@ -66,7 +75,7 @@ public class BestShotAdjustment extends BaseCommand{
         final double heightOfGoal = heightToGoal.get();
         final double heightAtPeak = distance * Math.tan(angle) - (32)*(distance*distance)*(1/((maxVelosityProperty.get()*maxVelosityProperty.get())));
 
-        return (heightOfGoal-heightAtPeak) < -.3;
+        return (heightOfGoal-heightAtPeak) < -.2;
     }
 
 

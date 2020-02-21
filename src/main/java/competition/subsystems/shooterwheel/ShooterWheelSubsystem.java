@@ -117,4 +117,8 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     public void setTargetValue(double value) {
         setTargetRPM(value);
     }
+
+    public static double velosityToRPM(double velosity){
+        return -1; //TODO: turn velosity to rpm
+    }
 }
