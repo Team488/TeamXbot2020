@@ -28,6 +28,8 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     private final BooleanProperty calibratedProp;
     private final DoubleProperty currentAngleProp;
     private double goalAngle;
+    private final BooleanProperty rightLimitProp;
+    private final BooleanProperty leftLimitProp;
 
     final PoseSubsystem pose;
 
@@ -48,6 +50,8 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
         ticksPerDegreeProp = pf.createPersistentProperty("Ticks Per Degree", 1);
         calibratedProp = pf.createEphemeralProperty("Calibrated", false);
         currentAngleProp = pf.createEphemeralProperty("Current Angle", 0);
+        rightLimitProp = pf.createEphemeralProperty("Over Right Limit", false);
+        leftLimitProp = pf.createEphemeralProperty("Over Left Limit", false);
 
         if (contract.isTurretReady()) {
             this.motor = factory.createCANTalon(contract.turretMotor().channel);
@@ -86,7 +90,7 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     public void turnRight() {
         motor.simpleSet(-turnPowerProp.get());
     }
-
+    
     public void setPower(double power) {
         if (isCalibrated()) {
             // No sense running the protection code if we don't know where we are.
@@ -113,6 +117,14 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
 
     public boolean belowMinimumAngle() {
         return getCurrentAngle() <= minAngleProp.get();
+    }
+
+    public boolean LeftLimitStop(){
+        return false;
+    }
+
+    public boolean rightLimitStop(){
+        return false;
     }
 
     public double getCurrentAngle() {
@@ -150,6 +162,8 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     @Override
     public void periodic() {
         currentAngleProp.set(getCurrentAngle());
+        leftLimitProp.set(LeftLimitStop());
+        rightLimitProp.set(rightLimitStop());
     }
 
     public void setGoalAngle(double angle) {
