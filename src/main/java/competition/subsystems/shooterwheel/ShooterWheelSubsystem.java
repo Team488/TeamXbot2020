@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import com.revrobotics.ControlType;
 
 import competition.IdealElectricalContract;
+import edu.wpi.first.wpilibj.Timer;
 import xbot.common.command.BaseSetpointSubsystem;
 import xbot.common.controls.actuators.XCANSparkMax;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
@@ -16,6 +17,7 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     
     private final DoubleProperty targetRpmProp;
     private final DoubleProperty currentRpmProp;
+    private final DoubleProperty timerProp;
 
     public XCANSparkMax leader;
     private XCANSparkMax follower;
@@ -29,6 +31,7 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
         
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
+        timerProp = pf.createPersistentProperty("Timer", 3);
 
         if(contract.isShooterWheelReady()){
             this.leader = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterMaster");
@@ -121,4 +124,12 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     public void setTargetValue(double value) {
         setTargetRPM(value);
     }
+
+    public void timedShooting() {
+        setPower(1);
+        Timer.delay(timerProp.get());
+    }
+
+    
+
 }
