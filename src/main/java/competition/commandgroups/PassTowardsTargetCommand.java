@@ -2,6 +2,8 @@ package competition.commandgroups;
 
 import com.google.inject.Inject;
 
+import competition.subsystems.carousel.commands.TurnRightCarouselCommand;
+import competition.subsystems.internalconveyor.commands.LiftCellsCommand;
 import competition.subsystems.shooterwheel.commands.ShooterWheelSetPassPowerCommand;
 import competition.subsystems.shooterwheel.commands.ShooterWheelWaitForGoalCommand;
 import competition.subsystems.turret.commands.PointTurretToFieldOrientedHeadingCommand;
@@ -15,20 +17,24 @@ public class PassTowardsTargetCommand extends ParallelCommandGroup {
     public PassTowardsTargetCommand(PointTurretToFieldOrientedHeadingCommand rotateTurretCommand,
         ShooterWheelSetPassPowerCommand shooterWheelPowerCommand,
         TurretWaitForRotationToGoalCommand waitForRotateTurretCommand,
-        ShooterWheelWaitForGoalCommand waitForShooterWheelSpeedCommand) {
+        ShooterWheelWaitForGoalCommand waitForShooterWheelSpeedCommand,
+        TurnRightCarouselCommand carouselCommand,
+        LiftCellsCommand kickerCommand) {
 
         this.addCommands(
             rotateTurretCommand,
             shooterWheelPowerCommand,
-            // carousel
             // hood
             new SequentialCommandGroup(
                 new ParallelCommandGroup(
                     waitForRotateTurretCommand,
                     waitForShooterWheelSpeedCommand
                     // wait for hood
+                ),
+                new ParallelCommandGroup(
+                    carouselCommand,
+                    kickerCommand
                 )
-                // kicker
             )
         );
     }
