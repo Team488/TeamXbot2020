@@ -7,12 +7,14 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import competition.BaseCompetitionTest;
+import competition.subsystems.pose.PoseSubsystem;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.MockTimer;
 
 public class VisionSubsystemTest extends BaseCompetitionTest {
 
     private VisionSubsystem vision;
+    private PoseSubsystem pose;
     private NetworkTableInstance netTableInstance;
     protected MockTimer mockTimer;
 
@@ -20,10 +22,23 @@ public class VisionSubsystemTest extends BaseCompetitionTest {
     public void setUp() {
         super.setUp();
         this.vision = this.injector.getInstance(VisionSubsystem.class);
+        this.pose = this.injector.getInstance(PoseSubsystem.class);
         this.netTableInstance = this.injector.getInstance(NetworkTableInstance.class);
 
         this.mockTimer = this.injector.getInstance(MockTimer.class);        
         this.mockTimer.advanceTimeInSecondsBy(10);
+    }
+
+    @Test
+    public void testPosePublished() {
+
+        while (!this.pose.getNavXReady()) {
+            this.pose.periodic();
+            this.vision.periodic();
+            this.timer.advanceTimeInSecondsBy(0.1);
+        }
+
+        assertTrue(this.netTableInstance.getTable("pose").getEntry("navReady").getBoolean(false));
     }
 
     @Test
