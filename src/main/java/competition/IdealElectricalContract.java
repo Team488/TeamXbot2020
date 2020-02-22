@@ -44,9 +44,13 @@ public class IdealElectricalContract extends ElectricalContract {
 
     //Everything above sure about inversion
     //Everything below not sure about the inversion
-    public DeviceInfo intakeMotor()
+    public DeviceInfo leftIntakeMotor()
     {
-        return new DeviceInfo(24, false);
+        return new DeviceInfo(29, false);
+    }
+
+    public DeviceInfo rightIntakeMotor() {
+        return new DeviceInfo(26, true);
     }
 
     public DeviceInfo shooterMotorMaster()
@@ -65,16 +69,16 @@ public class IdealElectricalContract extends ElectricalContract {
     }
     public DeviceInfo climberMotorfollower()
     {
-        return new DeviceInfo(20, false);
+        return new DeviceInfo(20, true);
     }
 
     public DeviceInfo turretMotor()
     {
-        return new DeviceInfo(31, false);
+        return new DeviceInfo(30, false);
     }
 
     public DeviceInfo kickerMotor() {
-        return new DeviceInfo(24, false);
+        return new DeviceInfo(31, false);
     }
 
     public DeviceInfo turretEncoder() {
@@ -83,7 +87,7 @@ public class IdealElectricalContract extends ElectricalContract {
 
     public DeviceInfo carouselMotor()
     {
-        return new DeviceInfo(35, false);
+        return new DeviceInfo(25, false);
     }
 
     public boolean isCarouselReady(){
