@@ -14,20 +14,17 @@ import xbot.common.properties.PropertyFactory;
 @Singleton
 public class HoodSubsystem extends BaseSetpointSubsystem{
 
-    private double calibrationOffset;
+    private DoubleProperty calibrationOffset;
     final DoubleProperty extendPowerProp;
     final DoubleProperty retractPowerProp;
     final DoubleProperty maxAngleProp;
     final DoubleProperty minAngleProp;
-    final DoubleProperty defaultForwardHeadingProp;
     final DoubleProperty ticksPerDegreeProp;
     final BooleanProperty calibratedProp;
     final DoubleProperty currentAngleProp;
     private IdealElectricalContract contract;
     public XCANTalon hoodMotor;
     double goalAngle;
-    double angle;
-    double currentAngle;
 
     @Inject
     public HoodSubsystem (CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract,
@@ -36,12 +33,11 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         pf.setPrefix(this);
         this.contract = contract;
 
-        calibrationOffset = 0;
+        calibrationOffset = pf.createPersistentProperty("Calibration Offset", 0);
         extendPowerProp = pf.createPersistentProperty("Extend Power", 1);
         retractPowerProp = pf.createPersistentProperty("Retract Power", -1);
         maxAngleProp = pf.createPersistentProperty("Max Angle", 5);
         minAngleProp = pf.createPersistentProperty("Min Angle", -5);
-        defaultForwardHeadingProp = pf.createPersistentProperty("Default Forward Heading", 0);
         ticksPerDegreeProp = pf.createPersistentProperty("Ticks Per Degree", 1);
         currentAngleProp = pf.createEphemeralProperty("Current Angle", 0);
         calibratedProp = pf.createEphemeralProperty("Calibrated", false);
@@ -54,21 +50,16 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     }
 
     public void setAngle(double angle){
-        currentAngle = angle;
+        currentAngleProp.set(angle);
     }
 
     public void calibrateHood(){
-        calibrationOffset = getCurrentRawAngle();
-        log.info("Angle set to the default of" + defaultForwardHeadingProp.get());
+        calibrationOffset.set(getCurrentRawAngle());
         setIsCalibrated(true);
     }
     
     public void setIsCalibrated(boolean value){
         calibratedProp.set(value);
-    }
-
-    public void uncalibrate(){
-        setIsCalibrated(false);
     }
 
     public boolean isCalibrated(){
@@ -96,11 +87,11 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     }
 
     public boolean isFullyExtended(){
-        return (currentAngle >= maxAngleProp.get());
+        return (currentAngleProp.get() >= maxAngleProp.get());
     }
 
     public boolean isFullyRetracted(){
-        return (currentAngle <= minAngleProp.get());
+        return (currentAngleProp.get() <= minAngleProp.get());
     }
 
     public void setPower(double power){
@@ -124,8 +115,8 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     }
 
     public double getCurrentAngle(){
-        double ticks = getCurrentRawAngle() - calibrationOffset;
-        return (ticks / ticksPerDegreeProp.get()) + defaultForwardHeadingProp.get();
+        double ticks = getCurrentRawAngle() - calibrationOffset.get();
+        return (ticks / ticksPerDegreeProp.get());
     }
 
     public double getCurrentRawAngle(){
