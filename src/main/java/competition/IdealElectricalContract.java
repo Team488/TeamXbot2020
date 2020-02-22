@@ -45,7 +45,7 @@ public class IdealElectricalContract extends ElectricalContract {
     //Everything above sure about inversion
     //Everything below not sure about the inversion
     public DeviceInfo intakeMotor() {
-        return new DeviceInfo(24, false);
+        return new DeviceInfo(29, false);
     }
 
     public DeviceInfo shooterMotorMaster() {
@@ -68,13 +68,10 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(31, false);
     }
 
-<<<<<<< HEAD
-=======
     public DeviceInfo kickerMotor() {
         return new DeviceInfo(24, false);
     }
 
->>>>>>> master
     public DeviceInfo turretEncoder() {
         return new DeviceInfo(0, true);
     }
@@ -98,13 +95,14 @@ public class IdealElectricalContract extends ElectricalContract {
     public DeviceInfo frontCollectingMotor() {
         return new DeviceInfo(6, true);
     }
+    //i think this might be the same as intakeMotor but im not sure
 
-    public boolean isHangingReady() {
+    public boolean isHangingReady() { //same as climber
         return true;
     }
 
-    public DeviceInfo hangerMotor() {
-        return new DeviceInfo(7, true);
+    public DeviceInfo hangerMotor() { //same as climber
+        return new DeviceInfo(35, true);
     }
 
     public DeviceInfo getArmSolenoid() {
