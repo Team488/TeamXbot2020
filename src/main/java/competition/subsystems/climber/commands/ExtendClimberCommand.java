@@ -1,17 +1,17 @@
-package competition.subsystems.hanger.commands;
+package competition.subsystems.climber.commands;
 import com.google.inject.Inject;
 
 import competition.operator_interface.OperatorInterface;
-import competition.subsystems.hanger.HangerSubsystem;
+import competition.subsystems.climber.ClimberSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class ExtendHangerCommand extends BaseCommand{
+public class ExtendClimberCommand extends BaseCommand{
 
     final OperatorInterface oi;
-    final HangerSubsystem hangerSubsystem;
+    final ClimberSubsystem hangerSubsystem;
 
     @Inject
-    public ExtendHangerCommand(OperatorInterface oi, HangerSubsystem hangerSubsystem){
+    public ExtendClimberCommand(OperatorInterface oi, ClimberSubsystem hangerSubsystem){
         this.oi = oi;
         this.hangerSubsystem = hangerSubsystem;
         this.addRequirements(this.hangerSubsystem);
@@ -23,6 +23,6 @@ public class ExtendHangerCommand extends BaseCommand{
     }
 
     public void execute(){
-        hangerSubsystem.extendHanger();
+        hangerSubsystem.extendClimber();
     }
 }
