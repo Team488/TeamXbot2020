@@ -2,19 +2,19 @@ package competition.subsystems.internalconveyor.commands;
 import com.google.inject.Inject;
 
 import competition.operator_interface.OperatorInterface;
-import competition.subsystems.internalconveyor.IndexerSubsystem;
+import competition.subsystems.internalconveyor.KickerSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class ReverseIndexerCommand extends BaseCommand{
+public class StopKickerCommand extends BaseCommand{
 
     final OperatorInterface oi;
-    final IndexerSubsystem indexer;
+    final KickerSubsystem kicker;
 
     @Inject
-    public ReverseIndexerCommand (OperatorInterface oi, IndexerSubsystem indexer){
+    public StopKickerCommand(OperatorInterface oi, KickerSubsystem kicker){
         this.oi = oi;
-        this.indexer = indexer;
-        this.addRequirements(indexer);
+        this.kicker = kicker;
+        this.addRequirements(kicker);
     }
 
     @Override
@@ -23,6 +23,6 @@ public class ReverseIndexerCommand extends BaseCommand{
     }
 
     public void execute(){
-        indexer.reverse();
+        kicker.stop();
     }
 }
