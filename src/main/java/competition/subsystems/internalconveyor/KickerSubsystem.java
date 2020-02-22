@@ -11,7 +11,7 @@ import xbot.common.properties.PropertyFactory;
 
 
 @Singleton
-public class IndexerSubsystem extends BaseSubsystem { //makes conveyer transport balls to shooter
+public class KickerSubsystem extends BaseSubsystem { //makes conveyer transport balls to shooter
 
     final DoubleProperty liftPowerProp;
     final DoubleProperty reversePowerProp;
@@ -19,15 +19,15 @@ public class IndexerSubsystem extends BaseSubsystem { //makes conveyer transport
     public XCANTalon motor;
 
     @Inject
-    public IndexerSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
+    public KickerSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
         pf.setPrefix(this);
         this.contract = contract;
         liftPowerProp = pf.createPersistentProperty("LiftPower", 1);
         reversePowerProp = pf.createPersistentProperty("ReversePower", -0.25);
 
-        if(contract.isIndexerReady()){
-          this.motor = factory.createCANTalon(contract.indexerMotor().channel);
-          motor.setInverted(contract.indexerMotor().inverted);
+        if(contract.isKickerReady()){
+          this.motor = factory.createCANTalon(contract.kickerMotor().channel);
+          motor.setInverted(contract.kickerMotor().inverted);
         }
 
     }
@@ -45,7 +45,7 @@ public class IndexerSubsystem extends BaseSubsystem { //makes conveyer transport
     }
 
     public void setPower(double power){
-        if(contract.isIndexerReady()){
+        if(contract.isKickerReady()){
             motor.simpleSet(power);
         }
     }

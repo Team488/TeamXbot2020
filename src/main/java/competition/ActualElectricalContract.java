@@ -8,7 +8,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
     }
 
     @Override
-    public boolean isIndexerReady() {
+    public boolean isKickerReady() {
         return true;
     }
 

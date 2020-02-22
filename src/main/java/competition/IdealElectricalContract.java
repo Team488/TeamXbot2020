@@ -29,7 +29,7 @@ public class IdealElectricalContract extends ElectricalContract {
         return true;
     }
     
-    public boolean isIndexerReady(){
+    public boolean isKickerReady(){
         return true;
     }
 
@@ -68,6 +68,13 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(31, false);
     }
 
+<<<<<<< HEAD
+=======
+    public DeviceInfo kickerMotor() {
+        return new DeviceInfo(24, false);
+    }
+
+>>>>>>> master
     public DeviceInfo turretEncoder() {
         return new DeviceInfo(0, true);
     }
