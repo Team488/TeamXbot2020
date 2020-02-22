@@ -48,6 +48,10 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(29, false);
     }
 
+    public boolean isIntakeReady() {
+        return true;
+    }
+
     public DeviceInfo shooterMotorMaster() {
         return new DeviceInfo(21, true);
     }
@@ -87,15 +91,6 @@ public class IdealElectricalContract extends ElectricalContract {
     public boolean isArmReady() {
         return true;
     }
-
-    public boolean isFrontCollectingReady() {
-        return true;
-    }
-
-    public DeviceInfo frontCollectingMotor() {
-        return new DeviceInfo(6, true);
-    }
-    //i think this might be the same as intakeMotor but im not sure
 
     public boolean isHangingReady() { //same as climber
         return true;

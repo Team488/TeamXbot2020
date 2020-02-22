@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import competition.subsystems.arm.ArmSubsystem;
-import competition.subsystems.arm.FrontCollectingSubsystem;
+import competition.subsystems.intake.IntakeSubsystem;
 import competition.subsystems.arm.commands.RaiseArmCommand;
-import competition.subsystems.arm.commands.StopFrontIntakeCommand;
+import competition.subsystems.intake.commands.StopIntakeCommand;
 import competition.subsystems.carousel.CarouselSubsystem;
 import competition.subsystems.carousel.commands.StopCarouselCommand;
 import competition.subsystems.drive.DriveSubsystem;
@@ -51,8 +51,8 @@ public class SubsystemDefaultCommandMap {
     }
 
     @Inject
-    public void setupFrontCollectingSubsystem(XScheduler scheduler, FrontCollectingSubsystem frontIntake, StopFrontIntakeCommand command) {
-        scheduler.setDefaultCommand(frontIntake, command);
+    public void setupIntakeSubsystem(XScheduler scheduler, IntakeSubsystem intake, StopIntakeCommand command) {
+        scheduler.setDefaultCommand(intake, command);
     }
 
     @Inject

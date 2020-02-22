@@ -13,7 +13,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
     }
 
     @Override
-    public boolean isFrontCollectingReady() {
+    public boolean isIntakeReady() {
         return false;
     }
 
