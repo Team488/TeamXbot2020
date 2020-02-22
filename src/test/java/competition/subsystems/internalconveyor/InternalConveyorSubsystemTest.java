@@ -10,7 +10,7 @@ public class InternalConveyorSubsystemTest extends BaseCompetitionTest {
     
     @Test
     public void testIntake() {
-        IndexerSubsystem internalConveyor = this.injector.getInstance(IndexerSubsystem.class);
+        KickerSubsystem internalConveyor = this.injector.getInstance(KickerSubsystem.class);
         internalConveyor.lift();
 
         assertEquals(1, internalConveyor.motor.getMotorOutputPercent(), 0.001);
@@ -18,7 +18,7 @@ public class InternalConveyorSubsystemTest extends BaseCompetitionTest {
 
     @Test
     public void testOuttake(){
-        IndexerSubsystem internalConveyor = this.injector.getInstance(IndexerSubsystem.class);
+        KickerSubsystem internalConveyor = this.injector.getInstance(KickerSubsystem.class);
         internalConveyor.reverse();
         
         assertEquals(-0.25, internalConveyor.motor.getMotorOutputPercent(), 0.001);
@@ -26,7 +26,7 @@ public class InternalConveyorSubsystemTest extends BaseCompetitionTest {
 
     @Test
     public void testStop(){
-        IndexerSubsystem internalConveyor = this.injector.getInstance(IndexerSubsystem.class);
+        KickerSubsystem internalConveyor = this.injector.getInstance(KickerSubsystem.class);
         internalConveyor.stop();
         
         assertEquals(0, internalConveyor.motor.getMotorOutputPercent(), 0.001);
