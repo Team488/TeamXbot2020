@@ -21,11 +21,11 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
 
-    public DeviceInfo hoodMotor(){
+    public DeviceInfo hoodMotor() {
         return new DeviceInfo(90, false); //Motor not real
     }
 
-    public boolean isHoodReady(){
+    public boolean isHoodReady() {
         return true;
     }
     
@@ -33,43 +33,37 @@ public class IdealElectricalContract extends ElectricalContract {
         return true;
     }
 
-    public boolean isTurretReady(){
+    public boolean isTurretReady() {
         return true;
     }
 
-    public boolean isShooterWheelReady(){
+    public boolean isShooterWheelReady() {
         return true;
     }
 
 
     //Everything above sure about inversion
     //Everything below not sure about the inversion
-    public DeviceInfo intakeMotor()
-    {
+    public DeviceInfo intakeMotor() {
         return new DeviceInfo(24, false);
     }
 
-    public DeviceInfo shooterMotorMaster()
-    {
+    public DeviceInfo shooterMotorMaster() {
         return new DeviceInfo(21, true);
     }
     
-    public DeviceInfo shooterMotorFollower()
-    {
+    public DeviceInfo shooterMotorFollower() {
         return new DeviceInfo(34, false);
     }
 
-    public DeviceInfo climberMotorMaster()
-    {
+    public DeviceInfo climberMotorMaster() {
         return new DeviceInfo(35, false);
     }
-    public DeviceInfo climberMotorfollower()
-    {
+    public DeviceInfo climberMotorfollower() {
         return new DeviceInfo(20, false);
     }
 
-    public DeviceInfo turretMotor()
-    {
+    public DeviceInfo turretMotor() {
         return new DeviceInfo(31, false);
     }
 
@@ -81,12 +75,11 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(0, true);
     }
 
-    public DeviceInfo carouselMotor()
-    {
+    public DeviceInfo carouselMotor() {
         return new DeviceInfo(35, false);
     }
 
-    public boolean isCarouselReady(){
+    public boolean isCarouselReady() {
         return true;
     }
 
@@ -94,7 +87,7 @@ public class IdealElectricalContract extends ElectricalContract {
         return true;
     }
 
-    public DeviceInfo ArmMotor() {
+    public DeviceInfo armMotor() {
         return new DeviceInfo(4, true);
     }
 

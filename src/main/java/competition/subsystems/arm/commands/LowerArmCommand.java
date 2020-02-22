@@ -8,14 +8,14 @@ import xbot.common.command.BaseCommand;
 
 public class LowerArmCommand extends BaseCommand {
 
-    final ArmSubsystem ArmSubsystem;
+    final ArmSubsystem armSubsystem;
     final OperatorInterface oi;
 
     @Inject
-    public LowerArmCommand(OperatorInterface oi, ArmSubsystem ArmSubsystem) {
+    public LowerArmCommand(OperatorInterface oi, ArmSubsystem armSubsystem) {
         this.oi = oi;
-        this.ArmSubsystem = ArmSubsystem;
-        this.addRequirements(this.ArmSubsystem);
+        this.armSubsystem = armSubsystem;
+        this.addRequirements(this.armSubsystem);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class LowerArmCommand extends BaseCommand {
 
     @Override
     public void execute() {
-        ArmSubsystem.down();
+        armSubsystem.down();
     }
     
 }
