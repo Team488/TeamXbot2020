@@ -59,16 +59,13 @@ public class IdealElectricalContract extends ElectricalContract {
     public DeviceInfo climberMotorMaster() {
         return new DeviceInfo(35, false);
     }
+
     public DeviceInfo climberMotorfollower() {
         return new DeviceInfo(20, false);
     }
 
     public DeviceInfo turretMotor() {
         return new DeviceInfo(31, false);
-    }
-
-    public DeviceInfo indexerMotor() {
-        return new DeviceInfo(24, false);
     }
 
     public DeviceInfo turretEncoder() {
@@ -87,16 +84,12 @@ public class IdealElectricalContract extends ElectricalContract {
         return true;
     }
 
-    public DeviceInfo armMotor() {
-        return new DeviceInfo(4, true);
-    }
-
     public boolean isFrontCollectingReady() {
         return true;
     }
 
     public DeviceInfo frontCollectingMotor() {
-        return new DeviceInfo(5, true);
+        return new DeviceInfo(6, true);
     }
 
     public boolean isHangingReady() {
@@ -104,10 +97,10 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo hangerMotor() {
-        return new DeviceInfo(6, true);
+        return new DeviceInfo(7, true);
     }
 
     public DeviceInfo getArmSolenoid() {
-        return new DeviceInfo(7, true);
+        return new DeviceInfo(1, true);
     }
 }
