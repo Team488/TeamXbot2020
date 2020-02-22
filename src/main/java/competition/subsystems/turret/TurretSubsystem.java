@@ -96,11 +96,11 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
             // No sense running the protection code if we don't know where we are.
             
             // Check for any reason power should be constrained.
-            if (aboveMaximumAngle()) {
+            if (aboveMaximumAngle() || rightLimitStop()) {
                 // Turned too far left. Only allow right/negative rotation.
                 power = MathUtils.constrainDouble(power, -1, 0);
             }
-            if (belowMinimumAngle()) {
+            if (belowMinimumAngle() || LeftLimitStop()) {
                 // Turned too far right. Only allow left/positive rotation.
                 power = MathUtils.constrainDouble(power, 0, 1);
             }
