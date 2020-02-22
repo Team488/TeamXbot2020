@@ -100,7 +100,7 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
                 // Turned too far left. Only allow right/negative rotation.
                 power = MathUtils.constrainDouble(power, -1, 0);
             }
-            if (belowMinimumAngle() || LeftLimitStop()) {
+            if (belowMinimumAngle() || leftLimitStop()) {
                 // Turned too far right. Only allow left/positive rotation.
                 power = MathUtils.constrainDouble(power, 0, 1);
             }
@@ -119,7 +119,7 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
         return getCurrentAngle() <= minAngleProp.get();
     }
 
-    public boolean LeftLimitStop(){
+    public boolean leftLimitStop(){
         return motor.isRevLimitSwitchClosed();
     }
 
@@ -162,7 +162,7 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     @Override
     public void periodic() {
         currentAngleProp.set(getCurrentAngle());
-        leftLimitProp.set(LeftLimitStop());
+        leftLimitProp.set(leftLimitStop());
         rightLimitProp.set(rightLimitStop());
     }
 
