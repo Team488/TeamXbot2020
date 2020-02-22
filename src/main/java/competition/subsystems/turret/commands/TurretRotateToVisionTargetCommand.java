@@ -3,19 +3,19 @@ package competition.subsystems.turret.commands;
 import com.google.inject.Inject;
 import competition.subsystems.turret.TurretSubsystem;
 import competition.subsystems.vision.VisionSubsystem;
-import xbot.common.command.BaseCommand;
+import xbot.common.command.BaseSetpointCommand;
 
-public class TurretRotateToVisionTargetCommand extends BaseCommand
+public class TurretRotateToVisionTargetCommand extends BaseSetpointCommand
 {
-    final TurretSubsystem turretSubsystem;
-    final VisionSubsystem visionSubsystem;
+    private final TurretSubsystem turretSubsystem;
+    private final VisionSubsystem visionSubsystem;
 
     @Inject
     public TurretRotateToVisionTargetCommand(TurretSubsystem tSubsystem, VisionSubsystem vSubsystem) {
+        super(tSubsystem);
+
         this.turretSubsystem = tSubsystem;
         this.visionSubsystem = vSubsystem;
-        this.addRequirements(this.turretSubsystem);
-        this.addRequirements(this.visionSubsystem);
     }
 
     @Override

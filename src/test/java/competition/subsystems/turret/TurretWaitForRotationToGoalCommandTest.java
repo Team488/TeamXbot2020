@@ -7,17 +7,14 @@ import org.junit.Test;
 
 import competition.BaseCompetitionTest;
 import competition.subsystems.turret.commands.TurretWaitForRotationToGoalCommand;
-import edu.wpi.first.wpilibj.MockTimer;
-import xbot.common.properties.PropertyFactory;
 
 public class TurretWaitForRotationToGoalCommandTest extends BaseCompetitionTest {
 
     @Test
     public void testAtGoal() {
         TurretSubsystem turret = this.injector.getInstance(TurretSubsystem.class);
-        PropertyFactory pf = this.injector.getInstance(PropertyFactory.class);
 
-        TurretWaitForRotationToGoalCommand command = new TurretWaitForRotationToGoalCommand(pf, turret);
+        TurretWaitForRotationToGoalCommand command = this.injector.getInstance(TurretWaitForRotationToGoalCommand.class);
 
         turret.setGoalAngle(turret.getCurrentAngle() + 90);
 
@@ -28,15 +25,18 @@ public class TurretWaitForRotationToGoalCommandTest extends BaseCompetitionTest 
 
         turret.setGoalAngle(turret.getCurrentAngle());
 
+        turret.setMaintainerIsAtGoal(true);
+
+        command.execute();
+
         assertTrue(command.isFinished());
     }
 
     @Test
     public void testTimeout() {
         TurretSubsystem turret = this.injector.getInstance(TurretSubsystem.class);
-        PropertyFactory pf = this.injector.getInstance(PropertyFactory.class);
 
-        TurretWaitForRotationToGoalCommand command = new TurretWaitForRotationToGoalCommand(pf, turret);
+        TurretWaitForRotationToGoalCommand command = this.injector.getInstance(TurretWaitForRotationToGoalCommand.class);
 
         turret.setGoalAngle(turret.getCurrentAngle() + 90);
 
@@ -45,8 +45,7 @@ public class TurretWaitForRotationToGoalCommandTest extends BaseCompetitionTest 
 
         assertFalse(command.isFinished());
 
-        MockTimer mockTimer = injector.getInstance(MockTimer.class);        
-        mockTimer.advanceTimeInSecondsBy(10);
+        this.timer.advanceTimeInSecondsBy(10);
 
         assertTrue(command.isFinished());
     }
