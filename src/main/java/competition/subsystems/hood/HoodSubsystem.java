@@ -27,6 +27,7 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     public XCANTalon hoodMotor;
     double goalAngle;
     double angle;
+    double currentAngle;
 
     @Inject
     public HoodSubsystem (CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract,
@@ -52,6 +53,10 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         scheduler.registerSubsystem(this);
     }
 
+    public void setAngle(double angle){
+        currentAngle = angle;
+    }
+
     public void calibrateHood(){
         calibrationOffset = getCurrentRawAngle();
         log.info("Angle set to the default of" + defaultForwardHeadingProp.get());
@@ -60,10 +65,6 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     
     public void setIsCalibrated(boolean value){
         calibratedProp.set(value);
-    }
-
-    public void setAngle(double angle){
-        currentAngleProp.set(angle);
     }
 
     public void uncalibrate(){
@@ -95,11 +96,11 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     }
 
     public boolean isFullyExtended(){
-        return (getCurrentAngle() >= maxAngleProp.get());
+        return (currentAngle >= maxAngleProp.get());
     }
 
     public boolean isFullyRetracted(){
-        return (getCurrentAngle() <= minAngleProp.get());
+        return (currentAngle <= minAngleProp.get());
     }
 
     public void setPower(double power){
