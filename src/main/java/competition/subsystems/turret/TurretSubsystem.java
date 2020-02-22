@@ -120,11 +120,11 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     }
 
     public boolean LeftLimitStop(){
-        return false;
+        return motor.isRevLimitSwitchClosed();
     }
 
     public boolean rightLimitStop(){
-        return false;
+        return motor.isFwdLimitSwitchClosed();
     }
 
     public double getCurrentAngle() {
