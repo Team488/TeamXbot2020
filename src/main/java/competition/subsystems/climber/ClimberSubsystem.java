@@ -32,8 +32,8 @@ public class ClimberSubsystem extends BaseSubsystem {
         log.info("Creating ClimberSubsystem");
         pf.setPrefix(this);
 
-        this.climbSolenoid = factory.createSolenoid(contract.getClimbSolenoid().channel);;
-
+        this.climbSolenoid = factory.createSolenoid(contract.getClimbSolenoid().channel);
+        climbSolenoid.setOn(true);
         
         climberPowerProp = pf.createPersistentProperty("Climber Power", 1);
         extendClimberHeightProp = pf.createPersistentProperty("Extend Climber Height", 1);    
@@ -82,7 +82,7 @@ public class ClimberSubsystem extends BaseSubsystem {
     / and intervene
     */
     public void autoBrake(){
-        climbSolenoid.setOn(true);
+        // climbSolenoid.setOn(true);
         if(climbSolenoid.setOn(false)){
 
         }
