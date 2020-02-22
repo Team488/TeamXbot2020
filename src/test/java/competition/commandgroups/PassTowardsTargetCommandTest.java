@@ -13,7 +13,6 @@ import competition.subsystems.turret.TurretSubsystem;
 import competition.subsystems.turret.commands.PointTurretToFieldOrientedHeadingCommand;
 import competition.subsystems.turret.commands.TurretWaitForRotationToGoalCommand;
 import xbot.common.controls.actuators.mock_adapters.MockCANTalon;
-import xbot.common.properties.PropertyFactory;
 
 public class PassTowardsTargetCommandTest extends BaseCompetitionTest {
 
@@ -30,15 +29,13 @@ public class PassTowardsTargetCommandTest extends BaseCompetitionTest {
     public void setUp() {
         super.setUp();
 
-        PropertyFactory pf = this.injector.getInstance(PropertyFactory.class);
-
         this.turret = this.injector.getInstance(TurretSubsystem.class);
         this.shooter = this.injector.getInstance(ShooterWheelSubsystem.class);
 
-        this.rotateTurretCommand = new PointTurretToFieldOrientedHeadingCommand(this.turret);
-        this.waitForRotateTurretCommand = new TurretWaitForRotationToGoalCommand(pf, this.turret);
-        this.shooterPowerCommand = new ShooterWheelSetPassPowerCommand(pf, this.shooter);
-        this.shooterWaitCommand = new ShooterWheelWaitForGoalCommand(pf, this.shooter);
+        this.rotateTurretCommand = this.injector.getInstance(PointTurretToFieldOrientedHeadingCommand.class);
+        this.waitForRotateTurretCommand = this.injector.getInstance(TurretWaitForRotationToGoalCommand.class);
+        this.shooterPowerCommand = this.injector.getInstance(ShooterWheelSetPassPowerCommand.class);
+        this.shooterWaitCommand = this.injector.getInstance(ShooterWheelWaitForGoalCommand.class);
 
         rotateTurretCommand.setFieldOrientedGoal(180);
 

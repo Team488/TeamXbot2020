@@ -7,17 +7,14 @@ import org.junit.Test;
 
 import competition.BaseCompetitionTest;
 import competition.subsystems.shooterwheel.commands.ShooterWheelWaitForGoalCommand;
-import edu.wpi.first.wpilibj.MockTimer;
-import xbot.common.properties.PropertyFactory;
 
 public class ShooterWheelWaitForGoalCommandTest extends BaseCompetitionTest {
 
     @Test
     public void testAtGoal() {
         ShooterWheelSubsystem shooter = this.injector.getInstance(ShooterWheelSubsystem.class);
-        PropertyFactory pf = this.injector.getInstance(PropertyFactory.class);
 
-        ShooterWheelWaitForGoalCommand command = new ShooterWheelWaitForGoalCommand(pf, shooter);
+        ShooterWheelWaitForGoalCommand command = this.injector.getInstance(ShooterWheelWaitForGoalCommand.class);
 
         shooter.setTargetValue(9001);
 
@@ -36,9 +33,8 @@ public class ShooterWheelWaitForGoalCommandTest extends BaseCompetitionTest {
     @Test
     public void testTimeout() {
         ShooterWheelSubsystem shooter = this.injector.getInstance(ShooterWheelSubsystem.class);
-        PropertyFactory pf = this.injector.getInstance(PropertyFactory.class);
 
-        ShooterWheelWaitForGoalCommand command = new ShooterWheelWaitForGoalCommand(pf, shooter);
+        ShooterWheelWaitForGoalCommand command = this.injector.getInstance(ShooterWheelWaitForGoalCommand.class);
 
         shooter.setTargetRPM(9001);
 
@@ -46,9 +42,8 @@ public class ShooterWheelWaitForGoalCommandTest extends BaseCompetitionTest {
         command.execute();
 
         assertFalse(command.isFinished());
-
-        MockTimer mockTimer = injector.getInstance(MockTimer.class);        
-        mockTimer.advanceTimeInSecondsBy(10);
+ 
+        this.timer.advanceTimeInSecondsBy(10);
 
         assertTrue(command.isFinished());
     }
