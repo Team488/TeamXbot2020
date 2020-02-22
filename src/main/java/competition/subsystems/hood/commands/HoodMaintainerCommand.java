@@ -5,7 +5,6 @@ import competition.operator_interface.OperatorInterface;
 import competition.subsystems.hood.HoodSubsystem;
 import xbot.common.command.BaseMaintainerCommand;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
-import xbot.common.logic.HumanVsMachineDecider;
 import xbot.common.math.MathUtils;
 import xbot.common.math.PIDFactory;
 import xbot.common.math.PIDManager;
@@ -15,7 +14,6 @@ public class HoodMaintainerCommand extends BaseMaintainerCommand{
 
     final HoodSubsystem hood;
     final PIDManager pid;
-    final HumanVsMachineDecider decider;
     final OperatorInterface oi;
 
     @Inject
@@ -24,7 +22,6 @@ public class HoodMaintainerCommand extends BaseMaintainerCommand{
         super(hood, pf, clf, 1, 0.33);
         this.hood = hood;
         this.oi = oi;
-        decider = clf.createHumanVsMachineDecider(this.getPrefix());
         pid = pidf.createPIDManager("HoodPID", 0.04, 0, 0);
 
     }
@@ -36,7 +33,7 @@ public class HoodMaintainerCommand extends BaseMaintainerCommand{
 
     @Override
     protected void calibratedMachineControlAction(){
-        double power = pid.calculate(hood.getGoalAngle(), hood.getCurrentAngle());
+        double power = pid.calculate(hood.getGoalAngle(), hood.getPercentExtended());
         hood.setPower(power);
     }
 

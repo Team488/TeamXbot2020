@@ -5,12 +5,20 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import competition.BaseCompetitionTest;
+import xbot.common.controls.actuators.mock_adapters.MockCANTalon;
 
 public class HoodSubsystemTest extends BaseCompetitionTest {
     
+    HoodSubsystem hood;
+
+    @Override
+    public void setUp() {
+        super.setUp();
+        hood = injector.getInstance(HoodSubsystem.class);
+    }
+
     @Test
     public void testExtendHood() {
-        HoodSubsystem hood = this.injector.getInstance(HoodSubsystem.class);
         hood.extend();
 
         assertEquals(1, hood.hoodMotor.getMotorOutputPercent(), 0.001);
@@ -18,7 +26,6 @@ public class HoodSubsystemTest extends BaseCompetitionTest {
 
     @Test
     public void testRetractHood(){
-        HoodSubsystem hood = this.injector.getInstance(HoodSubsystem.class);
         hood.retract();
         
         assertEquals(-1, hood.hoodMotor.getMotorOutputPercent(), 0.001);
@@ -26,24 +33,47 @@ public class HoodSubsystemTest extends BaseCompetitionTest {
 
     @Test
     public void testIsFullyExtended(){
-        HoodSubsystem hood = this.injector.getInstance(HoodSubsystem.class);
-        //Max Angle is 5 currrently
-        hood.setAngle(5);
+        hood.currentPercentExtendedProp.set(1); //hood is set to 1% aka max
         hood.setIsCalibrated(true);
-        hood.setPower(1); //tries to extend it past max
+        hood.setPower(1); //tries to extend past max
         
         assertEquals(0, hood.hoodMotor.getMotorOutputPercent(), 0.001);
     }
 
     @Test
     public void testIsFullyExtracted(){
-        HoodSubsystem hood = this.injector.getInstance(HoodSubsystem.class);
-        //Min Angle is -5 currently
-        hood.setAngle(-5);
+        hood.currentPercentExtendedProp.set(0); //hood is set to 0% aka min
         hood.setIsCalibrated(true);
         hood.setPower(-1); //tries to retract it past min
         
         assertEquals(0, hood.hoodMotor.getMotorOutputPercent(), 0.001);
     }
     
+    @Test
+    public void testAngleExtended(){
+        changeTicks(0);
+        hood.calibrateHood();
+        changeTicks(500);
+        assertEquals(.5, hood.getPercentExtended(), 0.001);
+    }
+
+    @Test
+    public void testAngleExtended2(){
+        changeTicks(500);
+        hood.calibrateHood();
+        changeTicks(1000);
+        assertEquals(.5, hood.getPercentExtended(), 0.001);
+    }
+
+    @Test
+    public void testAngleExtended3(){
+        changeTicks(238);
+        hood.calibrateHood();
+        changeTicks(496);
+        assertEquals(.258, hood.getPercentExtended(), 0.001);
+    }
+
+    private void changeTicks(int ticks) {
+        ((MockCANTalon)(hood.hoodMotor)).setPosition(ticks);
+    }
 }

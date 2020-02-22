@@ -14,17 +14,17 @@ import xbot.common.properties.PropertyFactory;
 @Singleton
 public class HoodSubsystem extends BaseSetpointSubsystem{
 
-    private DoubleProperty calibrationOffset;
+    final DoubleProperty calibrationOffsetProp;
     final DoubleProperty extendPowerProp;
     final DoubleProperty retractPowerProp;
-    final DoubleProperty maxAngleProp;
-    final DoubleProperty minAngleProp;
-    final DoubleProperty ticksPerDegreeProp;
+    final DoubleProperty rangeProp;
     final BooleanProperty calibratedProp;
-    final DoubleProperty currentAngleProp;
+    final DoubleProperty currentPercentExtendedProp;
     private IdealElectricalContract contract;
     public XCANTalon hoodMotor;
     final DoubleProperty goalAngleProp;
+
+    double rawPosition; //for testing
 
     @Inject
     public HoodSubsystem (CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract,
@@ -33,29 +33,28 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         pf.setPrefix(this);
         this.contract = contract;
 
-        calibrationOffset = pf.createPersistentProperty("Calibration Offset", 0);
+        calibrationOffsetProp = pf.createPersistentProperty("Calibration Offset", 0);
         extendPowerProp = pf.createPersistentProperty("Extend Power", 1);
         retractPowerProp = pf.createPersistentProperty("Retract Power", -1);
-        maxAngleProp = pf.createPersistentProperty("Max Angle", 5);
-        minAngleProp = pf.createPersistentProperty("Min Angle", -5);
-        ticksPerDegreeProp = pf.createPersistentProperty("Ticks Per Degree", 1);
-        currentAngleProp = pf.createEphemeralProperty("Current Angle", 0);
+        rangeProp = pf.createPersistentProperty("Range", 1000);
+        currentPercentExtendedProp = pf.createEphemeralProperty("Current Percent Extended", 0);
         calibratedProp = pf.createEphemeralProperty("Calibrated", false);
         goalAngleProp = pf.createEphemeralProperty("Goal Angle", 0);
 
         if (contract.isHoodReady()) {
              this.hoodMotor = factory.createCANTalon(contract.hoodMotor().channel);
+             hoodMotor.configureAsMasterMotor(this.getPrefix(), "Hood", contract.hoodMotor().inverted, false);
         }
 
         scheduler.registerSubsystem(this);
     }
 
     public void setAngle(double angle){
-        currentAngleProp.set(angle);
+        currentPercentExtendedProp.set(angle);
     }
 
     public void calibrateHood(){
-        calibrationOffset.set(getCurrentRawAngle());
+        calibrationOffsetProp.set(getCurrentRawPosition());
         setIsCalibrated(true);
     }
     
@@ -68,7 +67,7 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     }
 
     public void setGoalAngle(double angle){
-        goalAngleProp.set(angle);;
+        goalAngleProp.set(angle);
     }
 
     public double getGoalAngle(){
@@ -88,11 +87,11 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     }
 
     public boolean isFullyExtended(){
-        return (currentAngleProp.get() >= maxAngleProp.get());
+        return (currentPercentExtendedProp.get() >= 1);
     }
 
     public boolean isFullyRetracted(){
-        return (currentAngleProp.get() <= minAngleProp.get());
+        return (currentPercentExtendedProp.get() <= 0);
     }
 
     public void setPower(double power){
@@ -112,15 +111,15 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     }
 
     public void periodic(){
-        currentAngleProp.set(getCurrentAngle());
+        currentPercentExtendedProp.set(getPercentExtended());
     }
 
-    public double getCurrentAngle(){
-        double ticks = getCurrentRawAngle() - calibrationOffset.get();
-        return (ticks / ticksPerDegreeProp.get());
+    public double getPercentExtended(){
+        double ticks = (getCurrentRawPosition() - calibrationOffsetProp.get());
+        return (ticks / rangeProp.get());
     }
 
-    public double getCurrentRawAngle(){
+    public double getCurrentRawPosition(){
         if(contract.isHoodReady()){
             return hoodMotor.getSelectedSensorPosition(0);
         }
@@ -129,7 +128,7 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
 
     @Override
     public double getCurrentValue(){
-        return getCurrentAngle();
+        return getPercentExtended();
     }
 
     @Override
