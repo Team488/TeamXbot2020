@@ -13,10 +13,17 @@ import xbot.common.properties.PropertyFactory;
 
 @Singleton
 public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
+<<<<<<< HEAD
 
     final DoubleProperty targetRpmProp;
 
     final DoubleProperty currentRpmProp;
+=======
+    
+    private final DoubleProperty targetRpmProp;
+    private final DoubleProperty currentRpmProp;
+
+>>>>>>> origin/master
     public XCANSparkMax leader;
     private XCANSparkMax follower;
     IdealElectricalContract contract;

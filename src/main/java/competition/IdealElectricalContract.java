@@ -21,11 +21,11 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
 
-    public DeviceInfo hoodMotor(){
+    public DeviceInfo hoodMotor() {
         return new DeviceInfo(90, false); //Motor not real
     }
 
-    public boolean isHoodReady(){
+    public boolean isHoodReady() {
         return true;
     }
     
@@ -33,17 +33,18 @@ public class IdealElectricalContract extends ElectricalContract {
         return true;
     }
 
-    public boolean isTurretReady(){
+    public boolean isTurretReady() {
         return true;
     }
 
-    public boolean isShooterWheelReady(){
+    public boolean isShooterWheelReady() {
         return true;
     }
 
 
     //Everything above sure about inversion
     //Everything below not sure about the inversion
+<<<<<<< HEAD
     public DeviceInfo leftIntakeMotor()
     {
         return new DeviceInfo(29, false);
@@ -51,22 +52,28 @@ public class IdealElectricalContract extends ElectricalContract {
 
     public DeviceInfo rightIntakeMotor() {
         return new DeviceInfo(26, true);
+=======
+    public DeviceInfo intakeMotor() {
+        return new DeviceInfo(29, false);
+>>>>>>> origin/master
     }
 
-    public DeviceInfo shooterMotorMaster()
-    {
+    public boolean isIntakeReady() {
+        return true;
+    }
+
+    public DeviceInfo shooterMotorMaster() {
         return new DeviceInfo(21, true);
     }
     
-    public DeviceInfo shooterMotorFollower()
-    {
+    public DeviceInfo shooterMotorFollower() {
         return new DeviceInfo(34, false);
     }
 
-    public DeviceInfo climberMotorMaster()
-    {
+    public DeviceInfo climberMotorMaster() {
         return new DeviceInfo(35, false);
     }
+<<<<<<< HEAD
     public DeviceInfo climberMotorfollower()
     {
         return new DeviceInfo(20, true);
@@ -75,6 +82,19 @@ public class IdealElectricalContract extends ElectricalContract {
     public DeviceInfo turretMotor()
     {
         return new DeviceInfo(30, false);
+=======
+
+    public DeviceInfo climberMotorFollower() {
+        return new DeviceInfo(20, false);
+    }
+
+    public boolean isClimberReady() {
+        return true;
+    }
+
+    public DeviceInfo turretMotor() {
+        return new DeviceInfo(31, false);
+>>>>>>> origin/master
     }
 
     public DeviceInfo kickerMotor() {
@@ -85,38 +105,25 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(0, true);
     }
 
+<<<<<<< HEAD
     public DeviceInfo carouselMotor()
     {
         return new DeviceInfo(25, false);
+=======
+    public DeviceInfo carouselMotor() {
+        return new DeviceInfo(35, false);
+>>>>>>> origin/master
     }
 
-    public boolean isCarouselReady(){
+    public boolean isCarouselReady() {
         return true;
     }
 
-    public boolean isCollectorArmLiftingReady() {
+    public boolean isArmReady() {
         return true;
     }
 
-    public DeviceInfo liftingCollectorArmMotor() {
-        return new DeviceInfo(5, true);
+    public DeviceInfo getArmSolenoid() {
+        return new DeviceInfo(1, true);
     }
-
-    public boolean isFrontCollectingReady() {
-        return true;
-    }
-
-    public DeviceInfo frontCollectingMotor() {
-        return new DeviceInfo(6, true);
-    }
-
-    public boolean isHangingReady() {
-        return true;
-    }
-
-    public DeviceInfo hangerMotor() {
-        return new DeviceInfo(7, true);
-    }
-
-
 }
