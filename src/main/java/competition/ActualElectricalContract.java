@@ -28,7 +28,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
     }
 
     @Override
-    public boolean isHangingReady() {
+    public boolean isClimberReady() {
         return false;
     }
 

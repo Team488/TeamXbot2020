@@ -64,8 +64,12 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(35, false);
     }
 
-    public DeviceInfo climberMotorfollower() {
+    public DeviceInfo climberMotorFollower() {
         return new DeviceInfo(20, false);
+    }
+
+    public boolean isClimberReady() {
+        return true;
     }
 
     public DeviceInfo turretMotor() {
@@ -90,14 +94,6 @@ public class IdealElectricalContract extends ElectricalContract {
 
     public boolean isArmReady() {
         return true;
-    }
-
-    public boolean isHangingReady() { //same as climber
-        return true;
-    }
-
-    public DeviceInfo hangerMotor() { //same as climber
-        return new DeviceInfo(35, true);
     }
 
     public DeviceInfo getArmSolenoid() {
