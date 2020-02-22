@@ -24,7 +24,7 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     final DoubleProperty currentAngleProp;
     private IdealElectricalContract contract;
     public XCANTalon hoodMotor;
-    double goalAngle;
+    final DoubleProperty goalAngleProp;
 
     @Inject
     public HoodSubsystem (CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract,
@@ -41,6 +41,7 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         ticksPerDegreeProp = pf.createPersistentProperty("Ticks Per Degree", 1);
         currentAngleProp = pf.createEphemeralProperty("Current Angle", 0);
         calibratedProp = pf.createEphemeralProperty("Calibrated", false);
+        goalAngleProp = pf.createEphemeralProperty("Goal Angle", 0);
 
         if (contract.isHoodReady()) {
              this.hoodMotor = factory.createCANTalon(contract.hoodMotor().channel);
@@ -67,11 +68,11 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     }
 
     public void setGoalAngle(double angle){
-        goalAngle = angle;
+        goalAngleProp.set(angle);;
     }
 
     public double getGoalAngle(){
-        return goalAngle;
+        return goalAngleProp.get();
     }
 
     public void extend(){
