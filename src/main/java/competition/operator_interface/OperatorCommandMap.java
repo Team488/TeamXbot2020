@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import competition.commandgroups.PassTowardsTargetCommand;
+import competition.subsystems.climber.commands.DynamicClimbCommand;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 import competition.subsystems.intake.commands.EjectCommand;
@@ -69,8 +70,12 @@ public class OperatorCommandMap {
 
     @Inject
     public void setupOperatorCommandGroups(OperatorInterface operatorInterface, PassTowardsTargetCommand passCommand) {
-
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.Y).whenPressed(passCommand, false);
+    }
+
+    @Inject
+    public void setupClimbCommands(OperatorInterface oi, DynamicClimbCommand dynamicClimb) {
+        oi.operatorGamepad.getifAvailable(XboxButton.Back).whileHeld(dynamicClimb);
     }
 
 }
