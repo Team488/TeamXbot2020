@@ -20,19 +20,21 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     public XCANSparkMax leader;
     private XCANSparkMax follower;
     IdealElectricalContract contract;
-    
+
     @Inject
     public ShooterWheelSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating ShooterWheelSubsystem");
         pf.setPrefix(this);
         this.contract = contract;
-        
+
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
 
-        if(contract.isShooterWheelReady()){
-            this.leader = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterMaster");
-            this.follower = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
+        if (contract.isShooterWheelReady()) {
+            this.leader = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(),
+                    "ShooterMaster");
+            this.follower = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(),
+                    "ShooterFollower");
             follower.follow(leader, true);
         }
     }
@@ -52,39 +54,47 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     }
 
     public void setPidSetpoint(double speed) {
-        if(contract.isShooterWheelReady())
-        {
+        if (contract.isShooterWheelReady()) {
             leader.setReference(speed, ControlType.kVelocity);
         }
     }
 
     public void setPower(double power) {
-        if(contract.isShooterWheelReady())
-        {
+        if (contract.isShooterWheelReady()) {
             leader.set(power);
         }
     }
 
-    public double getPower(){
-        return leader.get();
+    public double getPower() {
+        if (contract.isShooterWheelReady()) {
+            return leader.get();
+        }
+        return 0;
     }
-  
-    public void stop () {
+
+    public void stop() {
         setPower(0);
     }
 
     public double getCurrentRPM() {
-        return leader.getVelocity();
+        if (contract.isShooterWheelReady()) {
+            return leader.getVelocity();
+        }
+        return 0;
     }
 
     public void periodic() {
-        leader.periodic();
-        follower.periodic();
-        currentRpmProp.set(getCurrentRPM());
+        if (contract.isShooterWheelReady()) {
+            leader.periodic();
+            follower.periodic();
+            currentRpmProp.set(getCurrentRPM());
+        }
     }
 
     public void resetPID() {
-        leader.setIAccum(0);
+        if (contract.isShooterWheelReady()) {
+            leader.setIAccum(0);
+        }
     }
 
     public void resetWheel() {
@@ -94,12 +104,16 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     }
 
     public void setCurrentLimits() {
-        leader.setSmartCurrentLimit(40);
-        leader.setClosedLoopRampRate(0.01);
+        if (contract.isShooterWheelReady()) {
+            leader.setSmartCurrentLimit(40);
+            leader.setClosedLoopRampRate(0.01);
+        }
     }
 
     public void configurePID() {
-        leader.setIMaxAccum(1, 0);
+        if (contract.isShooterWheelReady()) {
+            leader.setIMaxAccum(1, 0);
+        }
     }
 
     @Override
