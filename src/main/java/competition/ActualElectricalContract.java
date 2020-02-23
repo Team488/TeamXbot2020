@@ -34,6 +34,16 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isCarouselReady() {
+        return true;
+    }
+
+    @Override
+    public boolean isTurretReady() {
+        return false;
+    }
+
+    @Override
+    public boolean isDriveReady() {
         return false;
     }
 }

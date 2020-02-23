@@ -20,6 +20,9 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(22, false);
     }
 
+    public boolean isDriveReady() {
+        return true;
+    }
 
     public DeviceInfo hoodMotor() {
         return new DeviceInfo(90, false); //Motor not real
@@ -84,8 +87,8 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo kickerMotor() {
-        return new DeviceInfo(31, false);
-    }
+        return new DeviceInfo(24, true);
+    }// 24, 31
 
     public DeviceInfo turretEncoder() {
         return new DeviceInfo(0, true);
