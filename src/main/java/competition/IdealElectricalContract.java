@@ -88,7 +88,7 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo kickerRollerMotor() {
-        return new DeviceInfo(31, false);
+        return new DeviceInfo(24, false);
     }
 
     public DeviceInfo turretEncoder() {
