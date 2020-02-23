@@ -19,8 +19,8 @@ public class ClimberViaTriggerCommandTest extends BaseCompetitionTest {
         OperatorInterface oi = this.injector.getInstance(OperatorInterface.class);
         MockXboxControllerAdapter mock = ((MockXboxControllerAdapter)oi.operatorGamepad);
         
-        mock.setLeftTrigger(0.0); // 0.5
-        mock.setRightTrigger(0.5); // 0.6
+        mock.setLeftTrigger(0.0);
+        mock.setRightTrigger(0.5); 
 
         // Checking if trigger buttons are working        
         assertTrue("Should be pressing on right trigger", mock.getRightTrigger() >= 0.1);
@@ -29,7 +29,7 @@ public class ClimberViaTriggerCommandTest extends BaseCompetitionTest {
         command.execute();
 
         //Checks if leader motor is using the correct amount of power
-        assertEquals(-0.5, climber.leftMotor.get(), 0.001);
+        assertEquals(-0.5, climber.rightMotor.get(), 0.001);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class ClimberViaTriggerCommandTest extends BaseCompetitionTest {
         command.execute();
 
         //Checks if leader motor is using the correct amount of power
-        assertEquals(0.5, climber.rightMotor.get(), 0.001);
+        assertEquals(0.5, climber.leftMotor.get(), 0.001);
 
     }
 
@@ -70,6 +70,8 @@ public class ClimberViaTriggerCommandTest extends BaseCompetitionTest {
         command.execute();
 
         assertEquals(0.0, climber.leftMotor.get(), 0.001);
+        assertEquals(0.0, climber.rightMotor.get(), 0.001);
+
     }
 
 }
