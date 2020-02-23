@@ -1,5 +1,4 @@
-package competition.subsystems.armlifting;
-
+package competition.subsystems.intake;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -12,25 +11,25 @@ import xbot.common.properties.PropertyFactory;
 
 
 @Singleton
-public class FrontCollectingSubsystem extends BaseSubsystem { 
+public class IntakeSubsystem extends BaseSubsystem { 
     
     final DoubleProperty intakePowerProp;
     double power;
     int currentTotalBalls = 0;
-    public XCANTalon frontCollectingMotor;
+    public XCANTalon leftIntakeMotor;
     final IdealElectricalContract contract;
 
 
     @Inject
-    public FrontCollectingSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
-        log.info("Creating CollectingSubsystem");
+    public IntakeSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
+        log.info("Creating IntakeSubsystem");
         pf.setPrefix(this);
         intakePowerProp = pf.createPersistentProperty("Intake Power", 1);
         this.contract = contract;
 
-        if (contract.isFrontCollectingReady()) {
-            this.frontCollectingMotor = factory.createCANTalon(contract.frontCollectingMotor().channel);
-            frontCollectingMotor.setInverted(contract.frontCollectingMotor().inverted);
+        if (contract.isIntakeReady()) {
+            this.leftIntakeMotor = factory.createCANTalon(contract.leftIntakeMotor().channel);
+            leftIntakeMotor.setInverted(contract.leftIntakeMotor().inverted);
         }
     }
 
@@ -56,8 +55,8 @@ public class FrontCollectingSubsystem extends BaseSubsystem {
             power = 0;
         }
 
-        if(contract.isFrontCollectingReady()) {
-            frontCollectingMotor.simpleSet(power);
+        if(contract.isIntakeReady()) {
+            leftIntakeMotor.simpleSet(power);
         }
     }
 

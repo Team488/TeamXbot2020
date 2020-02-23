@@ -13,40 +13,56 @@ import xbot.common.properties.PropertyFactory;
 @Singleton
 public class KickerSubsystem extends BaseSubsystem { //makes conveyer transport balls to shooter
 
-    final DoubleProperty liftPowerProp;
-    final DoubleProperty reversePowerProp;
+    private final DoubleProperty wheelLiftPowerProp;
+    private final DoubleProperty wheelReversePowerProp;
+    private final DoubleProperty rollerLiftPowerProp;
+    private final DoubleProperty rollerReversePowerProp;
+
     private IdealElectricalContract contract;
-    public XCANTalon motor;
+    public XCANTalon wheelMotor;
+    public XCANTalon rollerMotor;
 
     @Inject
     public KickerSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract){
         pf.setPrefix(this);
         this.contract = contract;
-        liftPowerProp = pf.createPersistentProperty("LiftPower", 1);
-        reversePowerProp = pf.createPersistentProperty("ReversePower", -0.25);
+        wheelLiftPowerProp = pf.createPersistentProperty("Wheel Lift Power", 1);
+        wheelReversePowerProp = pf.createPersistentProperty("Wheel Reverse Power", -0.25);
+        rollerLiftPowerProp = pf.createPersistentProperty("Roller Lift Power", 1);
+        rollerReversePowerProp = pf.createPersistentProperty("Roller Reverse Power", -0.25);
 
         if(contract.isKickerReady()){
-          this.motor = factory.createCANTalon(contract.kickerMotor().channel);
-          motor.setInverted(contract.kickerMotor().inverted);
+            this.wheelMotor = factory.createCANTalon(contract.kickerMotor().channel);
+            this.rollerMotor = factory.createCANTalon(contract.kickerRollerMotor().channel);
+            this.wheelMotor.setInverted(contract.kickerMotor().inverted);
+            this.rollerMotor.setInverted(contract.kickerRollerMotor().inverted);
         }
-
     }
 
     public void lift(){
-        setPower(liftPowerProp.get());
+        setWheelPower(wheelLiftPowerProp.get());
+        setRollerPower(rollerLiftPowerProp.get());
     }
 
     public void reverse(){
-        setPower(reversePowerProp.get());
+        setWheelPower(wheelReversePowerProp.get());
+        setRollerPower(rollerReversePowerProp.get());
     }
 
     public void stop(){
-        setPower(0);
+        setWheelPower(0);
+        setRollerPower(0);
     }
 
-    public void setPower(double power){
+    public void setWheelPower(double power){
         if(contract.isKickerReady()){
-            motor.simpleSet(power);
+            wheelMotor.simpleSet(power);
+        }
+    }
+
+    public void setRollerPower(double power){
+        if(contract.isKickerReady()){
+            rollerMotor.simpleSet(power);
         }
     }
 }
