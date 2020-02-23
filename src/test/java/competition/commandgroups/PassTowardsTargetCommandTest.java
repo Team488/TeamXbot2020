@@ -69,7 +69,7 @@ public class PassTowardsTargetCommandTest extends BaseCompetitionTest {
 
         // check that the kicker and carousel started
         this.command.execute();
-        assertTrue(((MockCANTalon)(this.kicker.motor)).getSetpoint() != 0);
+        assertTrue(((MockCANTalon)(this.kicker.wheelMotor)).getSetpoint() != 0);
         assertTrue(((MockCANTalon)(this.carousel.carouselMotor)).getSetpoint() != 0);
     }
 
