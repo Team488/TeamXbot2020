@@ -9,6 +9,9 @@ import competition.subsystems.arm.commands.RaiseArmCommand;
 import competition.subsystems.intake.commands.StopIntakeCommand;
 import competition.subsystems.carousel.CarouselSubsystem;
 import competition.subsystems.carousel.commands.StopCarouselCommand;
+import competition.subsystems.climber.ClimberSubsystem;
+import competition.subsystems.climber.commands.ExtendClimberCommand;
+import competition.subsystems.climber.commands.RetractClimberCommand;
 import competition.subsystems.drive.DriveSubsystem;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.hood.HoodSubsystem;
@@ -63,5 +66,9 @@ public class SubsystemDefaultCommandMap {
     @Inject
     public void setupKicker(XScheduler scheduler, KickerSubsystem kicker, KickerViaTriggerCommand trigger) {
         scheduler.setDefaultCommand(kicker, trigger);
+    }
+
+    public void setupClimbSubsystem(XScheduler scheduler, ClimberSubsystem climber, ExtendClimberCommand extender){
+        scheduler.setDefaultCommand(climber, extender);
     }
 }
