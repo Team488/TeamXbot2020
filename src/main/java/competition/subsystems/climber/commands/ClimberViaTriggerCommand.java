@@ -6,13 +6,13 @@ import competition.subsystems.climber.ClimberSubsystem;
 import xbot.common.command.BaseCommand;
 import xbot.common.math.MathUtils;
 
-public class ClimberViaJoystickCommand extends BaseCommand{
+public class ClimberViaTriggerCommand extends BaseCommand{
 
     final OperatorInterface oi;
     final ClimberSubsystem climberSubsystem;
 
     @Inject
-    public  ClimberViaJoystickCommand(OperatorInterface oi, ClimberSubsystem climberSubsystem){
+    public ClimberViaTriggerCommand(OperatorInterface oi, ClimberSubsystem climberSubsystem){
         this.oi = oi;
         this.climberSubsystem = climberSubsystem;
         this.addRequirements(this.climberSubsystem);
@@ -25,9 +25,8 @@ public class ClimberViaJoystickCommand extends BaseCommand{
 
     public void execute(){
         double extend = MathUtils.deadband(oi.operatorGamepad.getLeftTrigger(), oi.getJoystickDeadband());
-        double retract = MathUtils.deadband(oi.operatorGamepad.getRightTrigger(), oi.getJoystickDeadband()) - 1;
+        double retract = MathUtils.deadband(oi.operatorGamepad.getRightTrigger(), oi.getJoystickDeadband()) * -1;
         double power = extend + retract;
         climberSubsystem.setPower(power);
-
     }
 }
