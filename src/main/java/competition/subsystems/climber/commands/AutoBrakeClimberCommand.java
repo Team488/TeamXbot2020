@@ -2,12 +2,9 @@ package competition.subsystems.climber.commands;
 
 import com.google.inject.Inject;
 
-import competition.IdealElectricalContract;
 import competition.operator_interface.OperatorInterface;
 import competition.subsystems.climber.ClimberSubsystem;
 import xbot.common.command.BaseCommand;
-// import xbot.common.controls.actuators.XSolenoid;
-import xbot.common.injection.wpi_factories.CommonLibFactory;
 
 public class AutoBrakeClimberCommand extends BaseCommand{
 
@@ -16,10 +13,9 @@ public class AutoBrakeClimberCommand extends BaseCommand{
     final OperatorInterface oi;
 
     @Inject
-    public AutoBrakeClimberCommand(OperatorInterface oi, ClimberSubsystem climbSubsystem){ // CommonLibFactory factory, IdealElectricalContract contract
+    public AutoBrakeClimberCommand(OperatorInterface oi, ClimberSubsystem climbSubsystem){
         this.oi = oi;
         this.climbSubsystem = climbSubsystem;
-        // this.climbSolenoid = factory.createSolenoid(contract.getClimbSolenoid().channel);
         this.addRequirements(this.climbSubsystem);
 
     }
@@ -30,7 +26,7 @@ public class AutoBrakeClimberCommand extends BaseCommand{
     }
 
     public void execute(){
-        climbSubsystem.autoBrake;
+        climbSubsystem.autoBrake();
     }
 
 }

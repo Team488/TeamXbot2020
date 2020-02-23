@@ -78,13 +78,10 @@ public class ClimberSubsystem extends BaseSubsystem {
         setPower(0);
     }
 
-    /* if climbSolenoid is setOn to false or climber is disabled, brake will activate
-    / and intervene
-    */
     public void autoBrake(){
-        // climbSolenoid.setOn(true);
-        if(climbSolenoid.setOn(false)){
-
+        if(getPower() <= 0){ // find a command where if it is disabled (disabled == true) then add it in this boolean statement
+            setPower(0.5); // temporary statement
+            //how would I add the brake in this statement?
         }
     }
 }
