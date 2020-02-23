@@ -35,7 +35,6 @@ public class SubsystemDefaultCommandMap {
     }
 
     @Inject
-
     public void setupTurretSubsystem(XScheduler scheduler, TurretSubsystem tSub, TurretMaintainerCommand maintain)
     {
         scheduler.setDefaultCommand(tSub, maintain);
@@ -71,6 +70,7 @@ public class SubsystemDefaultCommandMap {
         scheduler.setDefaultCommand(kicker, trigger);
     }
 
+    @Inject
     public void setupClimbSubsystem(XScheduler scheduler, ClimberSubsystem climber, ClimberViaJoystickCommand command){
         scheduler.setDefaultCommand(climber, command);
     }

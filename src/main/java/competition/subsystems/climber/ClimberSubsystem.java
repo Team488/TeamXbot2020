@@ -18,7 +18,7 @@ import xbot.common.properties.PropertyFactory;
 public class ClimberSubsystem extends BaseSubsystem {
 
     double power;
-    double minPower = 0.1;
+    final DoubleProperty minPower;
     final DoubleProperty climberPowerProp;
     final DoubleProperty extendClimberHeightProp;
     final DoubleProperty retractClimberHeightProp;
@@ -36,6 +36,8 @@ public class ClimberSubsystem extends BaseSubsystem {
         climberPowerProp = pf.createPersistentProperty("Climber Power", 1);
         extendClimberHeightProp = pf.createPersistentProperty("Extend Climber Height", 1);    
         retractClimberHeightProp = pf.createPersistentProperty("Retract Climber Height", -1); 
+        minPower = pf.createPersistentProperty("Minimium Power", 0.1); 
+
         
         this.climbSolenoid = factory.createSolenoid(contract.getClimbSolenoid().channel);
         this.contract = contract;
@@ -64,7 +66,7 @@ public class ClimberSubsystem extends BaseSubsystem {
     }
 
     public void setPower (double power) {
-        if(Math.abs(power) <= minPower){
+        if(Math.abs(power) <= minPower.get()){
             power = 0;
         }
         
@@ -83,7 +85,7 @@ public class ClimberSubsystem extends BaseSubsystem {
     }
 
     public void autoBrake(double power){
-        if(Math.abs(power) >= minPower){
+        if(Math.abs(power) >= minPower.get()){
             climbSolenoid.setOn(true);
         }
         else{
