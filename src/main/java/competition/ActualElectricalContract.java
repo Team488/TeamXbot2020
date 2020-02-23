@@ -39,11 +39,11 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isTurretReady() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isDriveReady() {
-        return false;
+        return true;
     }
 }
