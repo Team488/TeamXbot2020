@@ -8,16 +8,18 @@ import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XSolenoid;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.properties.PropertyFactory;
- 
+
 @Singleton
 public class ArmSubsystem extends BaseSubsystem {
 
     public final XSolenoid armSolenoid;
+    final IdealElectricalContract contract;
 
     @Inject
     public ArmSubsystem(CommonLibFactory clf, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating ArmSubsystem");
         pf.setPrefix(this);
+        this.contract = contract;
         if (contract.isArmReady()) {
             this.armSolenoid = clf.createSolenoid(contract.getArmSolenoid().channel);
         } else {
@@ -26,11 +28,15 @@ public class ArmSubsystem extends BaseSubsystem {
     }
 
     public void up() {
-        armSolenoid.setOn(true);
+        if (contract.isArmReady()) {
+            armSolenoid.setOn(true);
+        }
     }
 
     public void down() {
-        armSolenoid.setOn(false);
+        if (contract.isArmReady()) {
+            armSolenoid.setOn(false);
+        }
     }
 
 }
