@@ -78,10 +78,12 @@ public class ClimberSubsystem extends BaseSubsystem {
         setPower(0);
     }
 
+    // TODO: Read comments below to resolve the conflicts that I have trouble with
     public void autoBrake(){
         if(getPower() <= 0){ // find a command where if it is disabled (disabled == true) then add it in this boolean statement
-            setPower(0.5); // temporary statement
-            //how would I add the brake in this statement?
+            setPower(0.5); // temporary statement (not likely as XSolenoid is better fit for this task)
+            climbSolenoid.setOn(true); //temporary statement
+            //how would I add the brake in this statement? (maybe one of those 2 above)
         }
     }
 }
