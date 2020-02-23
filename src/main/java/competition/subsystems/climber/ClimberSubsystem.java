@@ -31,15 +31,14 @@ public class ClimberSubsystem extends BaseSubsystem {
     public ClimberSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating ClimberSubsystem");
         pf.setPrefix(this);
-
-        this.climbSolenoid = factory.createSolenoid(contract.getClimbSolenoid().channel);
         
         climberPowerProp = pf.createPersistentProperty("Climber Power", 1);
         extendClimberHeightProp = pf.createPersistentProperty("Extend Climber Height", 1);    
         retractClimberHeightProp = pf.createPersistentProperty("Retract Climber Height", -1); 
-
+        
+        this.climbSolenoid = factory.createSolenoid(contract.getClimbSolenoid().channel);
         this.contract = contract;
-
+        
         if (contract.isClimberReady()) {
             this.leader = factory.createCANSparkMax(contract.climberMotorMaster().channel, this.getPrefix(), "ClimberMaster");
             this.follower = factory.createCANSparkMax(contract.climberMotorFollower().channel, this.getPrefix(), "ClimberFollower");
@@ -66,6 +65,7 @@ public class ClimberSubsystem extends BaseSubsystem {
     public void setPower (double power) {
         if(contract.isClimberReady()) {
             leader.set(power);
+            autoBrake();
         }
     }
 
@@ -78,10 +78,10 @@ public class ClimberSubsystem extends BaseSubsystem {
     }
 
     public void autoBrake(){
-        if(getPower() >= 1){ // if extendClimber
+        if(getPower() >= 0.1){ // if extendClimber
             climbSolenoid.setOn(true);
         }
-        else if(getPower() <= -1){ // if retractClimber
+        else if(getPower() <= -0.1){ // if retractClimber
             climbSolenoid.setOn(true);
         }
         else{ // if climber is never used
