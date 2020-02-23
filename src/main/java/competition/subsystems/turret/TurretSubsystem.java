@@ -1,5 +1,7 @@
 package competition.subsystems.turret;
 
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -56,6 +58,10 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
                 "TurretMotor", 
                 contract.turretMotor().inverted, 
                 contract.turretEncoder().inverted);
+
+                motor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+                motor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+
         }
 
         scheduler.registerSubsystem(this);
@@ -92,11 +98,11 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
             // No sense running the protection code if we don't know where we are.
             
             // Check for any reason power should be constrained.
-            if (aboveMaximumAngle()) {
+            if (aboveMaximumAngle() || motor.isFwdLimitSwitchClosed()) {
                 // Turned too far left. Only allow right/negative rotation.
                 power = MathUtils.constrainDouble(power, -1, 0);
             }
-            if (belowMinimumAngle()) {
+            if (belowMinimumAngle() || motor.isRevLimitSwitchClosed()) {
                 // Turned too far right. Only allow left/positive rotation.
                 power = MathUtils.constrainDouble(power, 0, 1);
             }

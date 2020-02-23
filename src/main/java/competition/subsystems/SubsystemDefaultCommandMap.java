@@ -8,6 +8,7 @@ import competition.subsystems.intake.IntakeSubsystem;
 import competition.subsystems.arm.commands.RaiseArmCommand;
 import competition.subsystems.intake.commands.StopIntakeCommand;
 import competition.subsystems.carousel.CarouselSubsystem;
+import competition.subsystems.carousel.commands.CarouselViaJoystickCommand;
 import competition.subsystems.carousel.commands.StopCarouselCommand;
 import competition.subsystems.drive.DriveSubsystem;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
@@ -36,7 +37,8 @@ public class SubsystemDefaultCommandMap {
         scheduler.setDefaultCommand(tSub, maintain);
     }
 
-    public void setupCarouselSubsystem(XScheduler scheduler, CarouselSubsystem carousel, StopCarouselCommand command) {
+    @Inject
+    public void setupCarouselSubsystem(XScheduler scheduler, CarouselSubsystem carousel, CarouselViaJoystickCommand command) {
         scheduler.setDefaultCommand(carousel, command);
     }
 
