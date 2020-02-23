@@ -22,8 +22,7 @@ public class ClimberSubsystem extends BaseSubsystem {
     public enum ClimberSide {
         Left, Right
     }
-
-    double offest;
+    
     final DoubleProperty climberPowerProp;
     final DoubleProperty maxClimberTicksProp;
     public XCANSparkMax leftMotor;
@@ -34,6 +33,7 @@ public class ClimberSubsystem extends BaseSubsystem {
     final DoubleProperty slowZoneFactorProp;
     final DoubleProperty defaultPowerProp;
     final DoubleProperty unsafeExtensionProp;
+    final DoubleProperty catchUpFactorProp;
 
     @Inject
     public ClimberSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
@@ -47,6 +47,7 @@ public class ClimberSubsystem extends BaseSubsystem {
         slowZoneFactorProp = pf.createPersistentProperty("Slow Zone Factor", 0.35);
         defaultPowerProp = pf.createPersistentProperty("Default Power", 0.5);
         unsafeExtensionProp = pf.createPersistentProperty("Unsafe Extension Distance", 3);
+        catchUpFactorProp = pf.createPersistentProperty("Catch Up Factor", 0.333);
 
 
         
@@ -86,7 +87,26 @@ public class ClimberSubsystem extends BaseSubsystem {
             getMotorForSide(side).set(power);
         }
     }
-        
+
+    /**
+     * Designed to keep the two sides in sync when extending or retracting. If the sides get too far
+     * apart, it applies an extra speed differential in order to let them synchronize again.
+     * @param power Climb power to use.
+     */
+    public void dynamicClimb(double power) {
+        double leftPower = power;
+        double rightPower = power;
+
+        double delta = getPosition(ClimberSide.Left) - getPosition(ClimberSide.Right);
+        double catchUp = delta * catchUpFactorProp.get();
+
+        leftPower -= catchUp;
+        rightPower += catchUp;
+
+        setPower(leftPower, ClimberSide.Left);
+        setPower(rightPower, ClimberSide.Right);
+    }
+
     public void setPower(double power, ClimberSide side) {
         
         if (getPosition(side) < 0) {
@@ -158,5 +178,9 @@ public class ClimberSubsystem extends BaseSubsystem {
         else{
             climbSolenoid.setOn(false);
         }
+    }
+    
+    public double getCatchUpFactor() {
+        return catchUpFactorProp.get();
     }
 }

@@ -72,6 +72,26 @@ public class ClimberSubsystemTest extends BaseCompetitionTest {
             climber.getDefaultPower()*climber.getSlowZoneFactor());
     }
 
+    @Test
+    public void testDynamicClimb() {
+        climber.dynamicClimb(0);
+        verifyPower(0, 0);
+
+        climber.dynamicClimb(0.5);
+        verifyPower(0.5, 0.5);
+
+        climber.dynamicClimb(-0.5);
+        verifyPower(-0.5, -0.5);
+
+        setClimberPosition(getSafeRange()+5, getSafeRange()+8);
+        climber.dynamicClimb(0);
+        double delta = 3 * climber.getCatchUpFactor();
+        verifyPower(delta, -delta);
+
+        climber.dynamicClimb(0.2);
+        verifyPower(0.2 + delta, 0.2 - delta);
+    }
+
     private void verifyPower(double left, double right) {
         assertEquals(left, climber.leftMotor.get(), 0.001);
         assertEquals(right, climber.rightMotor.get(), 0.001);
