@@ -16,7 +16,7 @@ public class IntakeSubsystem extends BaseSubsystem {
     final DoubleProperty intakePowerProp;
     double power;
     int currentTotalBalls = 0;
-    public XCANTalon intakeMotor;
+    public XCANTalon leftIntakeMotor;
     final IdealElectricalContract contract;
 
 
@@ -28,8 +28,8 @@ public class IntakeSubsystem extends BaseSubsystem {
         this.contract = contract;
 
         if (contract.isIntakeReady()) {
-            this.intakeMotor = factory.createCANTalon(contract.intakeMotor().channel);
-            intakeMotor.setInverted(contract.intakeMotor().inverted);
+            this.leftIntakeMotor = factory.createCANTalon(contract.leftIntakeMotor().channel);
+            leftIntakeMotor.setInverted(contract.leftIntakeMotor().inverted);
         }
     }
 
@@ -56,7 +56,7 @@ public class IntakeSubsystem extends BaseSubsystem {
         }
 
         if(contract.isIntakeReady()) {
-            intakeMotor.simpleSet(power);
+            leftIntakeMotor.simpleSet(power);
         }
     }
 
