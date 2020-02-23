@@ -111,8 +111,8 @@ public class ClimberSubsystem extends BaseSubsystem {
 
     public boolean unsafeToLowerArm() {
         return 
-            getPosition(ClimberSide.Left) > unsafeExtensionProp.get() ||
-            getPosition(ClimberSide.Right) > unsafeExtensionProp.get();
+            getPosition(ClimberSide.Left) > unsafeExtensionProp.get() 
+            || getPosition(ClimberSide.Right) > unsafeExtensionProp.get();
     }
 
     public double getSlowZoneRange() {
