@@ -4,16 +4,15 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import competition.subsystems.arm.ArmSubsystem;
-import competition.subsystems.intake.IntakeSubsystem;
 import competition.subsystems.arm.commands.RaiseArmCommand;
-import competition.subsystems.intake.commands.StopIntakeCommand;
 import competition.subsystems.carousel.CarouselSubsystem;
 import competition.subsystems.carousel.commands.CarouselViaJoystickCommand;
-import competition.subsystems.carousel.commands.StopCarouselCommand;
 import competition.subsystems.drive.DriveSubsystem;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.hood.commands.StopHoodCommand;
+import competition.subsystems.intake.IntakeSubsystem;
+import competition.subsystems.intake.commands.StopIntakeCommand;
 import competition.subsystems.internalconveyor.KickerSubsystem;
 import competition.subsystems.internalconveyor.commands.KickerViaTriggerCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
