@@ -12,7 +12,7 @@ public class IntakeSubsystemTest extends BaseCompetitionTest {
     public void testIntake() {
         IntakeSubsystem intake = this.injector.getInstance(IntakeSubsystem.class);
         intake.intake();
-        assertEquals(1, intake.intakeMotor.getMotorOutputPercent(), 0.001);
+        assertEquals(1, intake.leftIntakeMotor.getMotorOutputPercent(), 0.001);
     }
 
     @Test
@@ -20,7 +20,7 @@ public class IntakeSubsystemTest extends BaseCompetitionTest {
         IntakeSubsystem intake = this.injector.getInstance(IntakeSubsystem.class);
         intake.setCurrentTotalBalls(6);
         intake.setPower(1);
-        assertEquals(0, intake.intakeMotor.getMotorOutputPercent(), 0.001);
+        assertEquals(0, intake.leftIntakeMotor.getMotorOutputPercent(), 0.001);
     }
 
     
@@ -28,12 +28,12 @@ public class IntakeSubsystemTest extends BaseCompetitionTest {
     public void testIntakeStop() {
         IntakeSubsystem intake = this.injector.getInstance(IntakeSubsystem.class);
         intake.intake();
-        assertEquals(1, intake.intakeMotor.getMotorOutputPercent(), 0.001);
-        if (intake.intakeMotor.getMotorOutputPercent() > 0) {
+        assertEquals(1, intake.leftIntakeMotor.getMotorOutputPercent(), 0.001);
+        if (intake.leftIntakeMotor.getMotorOutputPercent() > 0) {
             intake.stop();
         }
         
-        assertEquals(0, intake.intakeMotor.getMotorOutputPercent(), 0.001);
+        assertEquals(0, intake.leftIntakeMotor.getMotorOutputPercent(), 0.001);
     }
 
 }
