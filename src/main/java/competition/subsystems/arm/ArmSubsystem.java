@@ -29,14 +29,17 @@ public class ArmSubsystem extends BaseSubsystem {
 
     public void up() {
         if (contract.isArmReady()) {
-            armSolenoid.setOn(true);
+            armSolenoid.setOn(false);
         }
     }
 
     public void down() {
         if (contract.isArmReady()) {
-            armSolenoid.setOn(false);
+            armSolenoid.setOn(true);
         }
     }
 
+    public boolean unsafeToExtendHanger() {
+        return armSolenoid.getAdjusted();
+    }
 }

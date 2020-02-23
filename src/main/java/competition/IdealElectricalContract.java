@@ -25,14 +25,14 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo hoodMotor() {
-        return new DeviceInfo(90, false); //Motor not real
+        return new DeviceInfo(90, false); // Motor not real
     }
 
     public boolean isHoodReady() {
         return true;
     }
-    
-    public boolean isKickerReady(){
+
+    public boolean isKickerReady() {
         return true;
     }
 
@@ -44,18 +44,12 @@ public class IdealElectricalContract extends ElectricalContract {
         return true;
     }
 
-
-    //Everything above sure about inversion
-    //Everything below not sure about the inversion
-    public DeviceInfo leftIntakeMotor()
-    {
+    // Everything above sure about inversion
+    // Everything below not sure about the inversion
+    public DeviceInfo intakeMotor() {
         return new DeviceInfo(29, false);
     }
-
-    public DeviceInfo rightIntakeMotor() {
-        return new DeviceInfo(26, true);
-    }
-
+    
     public boolean isIntakeReady() {
         return true;
     }
@@ -63,17 +57,16 @@ public class IdealElectricalContract extends ElectricalContract {
     public DeviceInfo shooterMotorMaster() {
         return new DeviceInfo(21, true);
     }
-    
+
     public DeviceInfo shooterMotorFollower() {
         return new DeviceInfo(34, false);
     }
 
-    public DeviceInfo climberMotorMaster() {
+    public DeviceInfo leftClimberMotor() {
         return new DeviceInfo(35, false);
     }
 
-    public DeviceInfo climberMotorFollower()
-    {
+    public DeviceInfo rightClimberMotor() {
         return new DeviceInfo(20, true);
     }
 
@@ -81,8 +74,7 @@ public class IdealElectricalContract extends ElectricalContract {
         return true;
     }
 
-    public DeviceInfo turretMotor()
-    {
+    public DeviceInfo turretMotor() {
         return new DeviceInfo(30, false);
     }
 
@@ -98,8 +90,7 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(0, true);
     }
 
-    public DeviceInfo carouselMotor()
-    {
+    public DeviceInfo carouselMotor() {
         return new DeviceInfo(25, false);
     }
 

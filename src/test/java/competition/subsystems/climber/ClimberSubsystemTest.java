@@ -6,45 +6,83 @@ import org.junit.Test;
 
 import competition.BaseCompetitionTest;
 import competition.subsystems.climber.ClimberSubsystem;
+import xbot.common.controls.actuators.mock_adapters.MockCANSparkMax;
 
 public class ClimberSubsystemTest extends BaseCompetitionTest {
+    
+    ClimberSubsystem climber;
+
+    @Override
+    public void setUp() {
+        super.setUp();
+        climber = this.injector.getInstance(ClimberSubsystem.class);
+        double safeZone = climber.getSlowZoneRange() + 20;
+        setClimberPosition(safeZone, safeZone);
+    }
+    
     @Test
     public void testExtendClimber() {
-        ClimberSubsystem climber = this.injector.getInstance(ClimberSubsystem.class);
-        climber.extendClimber();
-        assertEquals(1, climber.leader.get(), 0.001);
+        climber.extend();
+        verifyPower(climber.getDefaultPower(), climber.getDefaultPower());
     }
 
     @Test
     public void testRetractClimber() {
-        ClimberSubsystem climber = this.injector.getInstance(ClimberSubsystem.class);
-        climber.retractClimber();
-        assertEquals(-1, climber.leader.get(), 0.001);
-    }
-
-    @Test
-    public void testClimberGrabClamp() {
-        ClimberSubsystem climber = this.injector.getInstance(ClimberSubsystem.class);
-        climber.grabClamp();
-        assertEquals(1, climber.leader.get(), 0.001);
-    }
-
-    @Test
-    public void testClimberReleaseClamp() {
-        ClimberSubsystem climber = this.injector.getInstance(ClimberSubsystem.class);
-        climber.releaseClamp();
-        assertEquals(-1, climber.leader.get(), 0.001);
+        climber.retract();
+        verifyPower(-climber.getDefaultPower(), -climber.getDefaultPower());
     }
 
     @Test
     public void testClimberStop() {
-        ClimberSubsystem climber = this.injector.getInstance(ClimberSubsystem.class);
-        climber.extendClimber();
-        assertEquals(1, climber.leader.get(), 0.001);
-        if (climber.leader.get() > 0) {
-            climber.stop();
-        }
-        
-        assertEquals(0, climber.leader.get(), 0.001);
+        climber.extend();
+        verifyPower(climber.getDefaultPower(), climber.getDefaultPower());
+
+        climber.stop();
+        verifyPower(0, 0);
+    }
+
+    @Test
+    public void testLowerLimit() {
+        setClimberPosition(-5, getSafeRange());
+        climber.retract();
+        verifyPower(0, -climber.getDefaultPower());
+
+        setClimberPosition(getSafeRange(), -5);
+        climber.retract();
+        verifyPower(-climber.getDefaultPower(), 0);
+    }
+
+    @Test
+    public void testUpperLimit() {
+        setClimberPosition(getSafeRange(), climber.getMaximumExtension() +1);
+        climber.extend();
+        verifyPower(climber.getDefaultPower(), 0);
+
+        setClimberPosition(climber.getMaximumExtension() +1, getSafeRange());
+        climber.extend();
+        verifyPower(0, climber.getDefaultPower());
+    }
+
+    @Test
+    public void testSlowZone() {
+        setClimberPosition(climber.getSlowZoneRange() -1, climber.getSlowZoneRange() -1);
+        climber.extend();
+        verifyPower(
+            climber.getDefaultPower()*climber.getSlowZoneFactor(),
+            climber.getDefaultPower()*climber.getSlowZoneFactor());
+    }
+
+    private void verifyPower(double left, double right) {
+        assertEquals(left, climber.leftMotor.get(), 0.001);
+        assertEquals(right, climber.rightMotor.get(), 0.001);
+    }
+
+    private void setClimberPosition(double left, double right) {
+        ((MockCANSparkMax)climber.leftMotor).setPosition(left);
+        ((MockCANSparkMax)climber.rightMotor).setPosition(right);
+    }
+
+    private double getSafeRange() {
+        return climber.getSlowZoneRange() + 10;
     }
 }
