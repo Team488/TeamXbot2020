@@ -46,14 +46,10 @@ public class IdealElectricalContract extends ElectricalContract {
 
     // Everything above sure about inversion
     // Everything below not sure about the inversion
-    public DeviceInfo leftIntakeMotor() {
+    public DeviceInfo intakeMotor() {
         return new DeviceInfo(29, false);
     }
-
-    public DeviceInfo rightIntakeMotor() {
-        return new DeviceInfo(26, true);
-    }
-
+    
     public boolean isIntakeReady() {
         return true;
     }

@@ -12,13 +12,13 @@ public class ArmSubsystemTest extends BaseCompetitionTest {
     public void testArmUp() {
         ArmSubsystem arm = this.injector.getInstance(ArmSubsystem.class);
         arm.up();
-        assertEquals(true, arm.armSolenoid.getAdjusted());
+        assertEquals(false, arm.armSolenoid.getAdjusted());
     }
 
     @Test
     public void testArmDown() {
         ArmSubsystem arm = this.injector.getInstance(ArmSubsystem.class);
         arm.down();
-        assertEquals(false, arm.armSolenoid.getAdjusted());
+        assertEquals(true, arm.armSolenoid.getAdjusted());
     }
 }

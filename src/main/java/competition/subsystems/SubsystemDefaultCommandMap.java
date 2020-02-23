@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import competition.subsystems.arm.ArmSubsystem;
-import competition.subsystems.arm.commands.RaiseArmCommand;
 import competition.subsystems.carousel.CarouselSubsystem;
 import competition.subsystems.carousel.commands.CarouselViaJoystickCommand;
 import competition.subsystems.drive.DriveSubsystem;
@@ -47,8 +46,8 @@ public class SubsystemDefaultCommandMap {
     }
 
     @Inject
-    public void setupArmSubsystem(XScheduler scheduler, ArmSubsystem arm, RaiseArmCommand command) {
-        scheduler.setDefaultCommand(arm, command);
+    public void setupArmSubsystem(XScheduler scheduler, ArmSubsystem arm) {
+        // NEVER SET A DEFAULT ARM COMMAND!!
     }
 
     @Inject
