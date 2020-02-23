@@ -11,6 +11,7 @@ import competition.subsystems.carousel.CarouselSubsystem;
 import competition.subsystems.carousel.commands.CarouselViaJoystickCommand;
 import competition.subsystems.carousel.commands.StopCarouselCommand;
 import competition.subsystems.climber.ClimberSubsystem;
+import competition.subsystems.climber.commands.ClimberViaJoystickCommand;
 import competition.subsystems.climber.commands.ExtendClimberCommand;
 import competition.subsystems.climber.commands.RetractClimberCommand;
 import competition.subsystems.drive.DriveSubsystem;
@@ -70,7 +71,7 @@ public class SubsystemDefaultCommandMap {
         scheduler.setDefaultCommand(kicker, trigger);
     }
 
-    public void setupClimbSubsystem(XScheduler scheduler, ClimberSubsystem climber, ExtendClimberCommand extender){
-        scheduler.setDefaultCommand(climber, extender);
+    public void setupClimbSubsystem(XScheduler scheduler, ClimberSubsystem climber, ClimberViaJoystickCommand command){
+        scheduler.setDefaultCommand(climber, command);
     }
 }
