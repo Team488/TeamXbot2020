@@ -1,7 +1,6 @@
 package competition.subsystems.climber;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -30,7 +29,7 @@ public class ClimberViaTriggerCommandTest extends BaseCompetitionTest {
         command.execute();
 
         //Checks if leader motor is using the correct amount of power
-        assertEquals(-0.5, climber.leader.get(), 0.001);
+        assertEquals(-0.5, climber.leftMotor.get(), 0.001);
     }
 
     @Test
@@ -50,7 +49,7 @@ public class ClimberViaTriggerCommandTest extends BaseCompetitionTest {
         command.execute();
 
         //Checks if leader motor is using the correct amount of power
-        assertEquals(0.5, climber.leader.get(), 0.001);
+        assertEquals(0.5, climber.rightMotor.get(), 0.001);
 
     }
 
@@ -70,7 +69,7 @@ public class ClimberViaTriggerCommandTest extends BaseCompetitionTest {
         command.initialize();
         command.execute();
 
-        assertEquals(0.0, climber.leader.get(), 0.001);
+        assertEquals(0.0, climber.leftMotor.get(), 0.001);
     }
 
 }

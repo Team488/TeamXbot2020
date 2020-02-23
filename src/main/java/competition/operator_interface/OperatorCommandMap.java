@@ -6,6 +6,8 @@ import com.google.inject.Singleton;
 import competition.commandgroups.PassTowardsTargetCommand;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
+import competition.subsystems.intake.commands.EjectCommand;
+import competition.subsystems.intake.commands.IntakeCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.BangBangCommand;
 import competition.subsystems.shooterwheel.commands.ShooterWheelMaintainerCommand;
@@ -32,6 +34,12 @@ public class OperatorCommandMap {
         operatorInterface.driverGamepad.getifAvailable(XboxButton.A).whenPressed(arcade);
         operatorInterface.driverGamepad.getifAvailable(XboxButton.B).whenPressed(tank);
         operatorInterface.driverGamepad.getifAvailable(XboxButton.Start).whenPressed(resetHeading);
+    }
+
+    @Inject
+    public void setupCollectionCommands(OperatorInterface oi, IntakeCommand intake, EjectCommand eject) {
+        oi.driverGamepad.getifAvailable(XboxButton.X).whileHeld(intake);
+        oi.driverGamepad.getifAvailable(XboxButton.Y).whileHeld(eject);
     }
 
     @Inject
