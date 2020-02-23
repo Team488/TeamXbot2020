@@ -35,7 +35,7 @@ public class ClimberSubsystem extends BaseSubsystem {
         log.info("Creating ClimberSubsystem");
         pf.setPrefix(this);
         climberPowerProp = pf.createPersistentProperty("Climber Power", 1);
-        maxClimberTicksProp = pf.createPersistentProperty("Extend Climber Height", 1);
+        maxClimberTicksProp = pf.createPersistentProperty("Maximum Extension", 100);
         slowZoneProp = pf.createPersistentProperty("Slow Zone Size", 10);
         slowZoneFactorProp = pf.createPersistentProperty("Slow Zone Factor", 0.35);
         defaultPowerProp = pf.createPersistentProperty("Default Power", 0.5);
@@ -87,6 +87,10 @@ public class ClimberSubsystem extends BaseSubsystem {
             power *= slowZoneFactorProp.get();
         }
 
+        if (getPosition(side) > maxClimberTicksProp.get()) {
+            power = MathUtils.constrainDouble(power, -1, 0);
+        }
+
         setRawPower(power, side);
     }
 
@@ -121,5 +125,9 @@ public class ClimberSubsystem extends BaseSubsystem {
 
     public double getDefaultPower() {
         return defaultPowerProp.get();
+    }
+
+    public double getMaximumExtension() {
+        return maxClimberTicksProp.get();
     }
 }

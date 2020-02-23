@@ -53,6 +53,17 @@ public class ClimberSubsystemTest extends BaseCompetitionTest {
     }
 
     @Test
+    public void testUpperLimit() {
+        setClimberPosition(getSafeRange(), climber.getMaximumExtension() +1);
+        climber.extend();
+        verifyPower(climber.getDefaultPower(), 0);
+
+        setClimberPosition(climber.getMaximumExtension() +1, getSafeRange());
+        climber.extend();
+        verifyPower(0, climber.getDefaultPower());
+    }
+
+    @Test
     public void testSlowZone() {
         setClimberPosition(climber.getSlowZoneRange() -1, climber.getSlowZoneRange() -1);
         climber.extend();
