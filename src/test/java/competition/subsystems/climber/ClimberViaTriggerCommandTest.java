@@ -10,14 +10,22 @@ import competition.operator_interface.OperatorInterface;
 import competition.subsystems.climber.commands.ClimberViaTriggerCommand;
 import edu.wpi.first.wpilibj.MockXboxControllerAdapter;
 
-public class ClimberViaTriggerCommandTest extends BaseCompetitionTest {
+public class ClimberViaTriggerCommandTest extends ClimberSubsystemTest {
+    
+    ClimberViaTriggerCommand command;
+    MockXboxControllerAdapter mock;
+    OperatorInterface oi;
+
+    @Override
+    public void setUp() {
+        super.setUp();
+        command = this.injector.getInstance(ClimberViaTriggerCommand.class);
+        oi = this.injector.getInstance(OperatorInterface.class);
+        mock = ((MockXboxControllerAdapter)oi.operatorGamepad);
+    }
 
     @Test
     public void testRightTrigger(){
-        ClimberSubsystem climber = this.injector.getInstance(ClimberSubsystem.class);
-        ClimberViaTriggerCommand command = this.injector.getInstance(ClimberViaTriggerCommand.class);
-        OperatorInterface oi = this.injector.getInstance(OperatorInterface.class);
-        MockXboxControllerAdapter mock = ((MockXboxControllerAdapter)oi.operatorGamepad);
         
         mock.setLeftTrigger(0.0);
         mock.setRightTrigger(0.5); 
@@ -34,10 +42,6 @@ public class ClimberViaTriggerCommandTest extends BaseCompetitionTest {
 
     @Test
     public void testLeftTrigger(){
-        ClimberSubsystem climber = this.injector.getInstance(ClimberSubsystem.class);
-        ClimberViaTriggerCommand command = this.injector.getInstance(ClimberViaTriggerCommand.class);
-        OperatorInterface oi = this.injector.getInstance(OperatorInterface.class);
-        MockXboxControllerAdapter mock = ((MockXboxControllerAdapter)oi.operatorGamepad);
 
         mock.setLeftTrigger(0.5);
         mock.setRightTrigger(0.0);
@@ -55,10 +59,6 @@ public class ClimberViaTriggerCommandTest extends BaseCompetitionTest {
 
     @Test
     public void testBothTriggers(){
-        ClimberSubsystem climber = this.injector.getInstance(ClimberSubsystem.class);
-        ClimberViaTriggerCommand command = this.injector.getInstance(ClimberViaTriggerCommand.class);
-        OperatorInterface oi = this.injector.getInstance(OperatorInterface.class);
-        MockXboxControllerAdapter mock = ((MockXboxControllerAdapter)oi.operatorGamepad);
 
         mock.setLeftTrigger(0.5);
         mock.setRightTrigger(0.5);
