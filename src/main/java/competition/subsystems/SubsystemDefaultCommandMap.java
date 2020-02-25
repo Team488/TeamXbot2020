@@ -3,18 +3,17 @@ package competition.subsystems;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import competition.subsystems.armlifting.CollectorArmLiftingSubsystem;
-import competition.subsystems.armlifting.FrontCollectingSubsystem;
-import competition.subsystems.armlifting.commands.StopArmCommand;
-import competition.subsystems.armlifting.commands.StopFrontIntakeCommand;
+import competition.subsystems.arm.ArmSubsystem;
 import competition.subsystems.carousel.CarouselSubsystem;
-import competition.subsystems.carousel.commands.StopCarouselCommand;
+import competition.subsystems.carousel.commands.CarouselViaJoystickCommand;
 import competition.subsystems.drive.DriveSubsystem;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.hood.commands.StopHoodCommand;
-import competition.subsystems.internalconveyor.IndexerSubsystem;
-import competition.subsystems.internalconveyor.commands.IndexerViaTriggerCommand;
+import competition.subsystems.intake.IntakeSubsystem;
+import competition.subsystems.intake.commands.StopIntakeCommand;
+import competition.subsystems.internalconveyor.KickerSubsystem;
+import competition.subsystems.internalconveyor.commands.KickerViaTriggerCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.StopShooterWheelCommand;
 import competition.subsystems.turret.TurretSubsystem;
@@ -36,7 +35,8 @@ public class SubsystemDefaultCommandMap {
         scheduler.setDefaultCommand(tSub, maintain);
     }
 
-    public void setupCarouselSubsystem(XScheduler scheduler, CarouselSubsystem carousel, StopCarouselCommand command) {
+    @Inject
+    public void setupCarouselSubsystem(XScheduler scheduler, CarouselSubsystem carousel, CarouselViaJoystickCommand command) {
         scheduler.setDefaultCommand(carousel, command);
     }
 
@@ -46,13 +46,13 @@ public class SubsystemDefaultCommandMap {
     }
 
     @Inject
-    public void setupCollectorArmLiftingSubsystem(XScheduler scheduler, CollectorArmLiftingSubsystem arm, StopArmCommand command) {
-        scheduler.setDefaultCommand(arm, command);
+    public void setupArmSubsystem(XScheduler scheduler, ArmSubsystem arm) {
+        // NEVER SET A DEFAULT ARM COMMAND!!
     }
 
     @Inject
-    public void setupFrontCollectingSubsystem(XScheduler scheduler, FrontCollectingSubsystem frontIntake, StopFrontIntakeCommand command) {
-        scheduler.setDefaultCommand(frontIntake, command);
+    public void setupIntakeSubsystem(XScheduler scheduler, IntakeSubsystem intake, StopIntakeCommand command) {
+        scheduler.setDefaultCommand(intake, command);
     }
 
     @Inject
@@ -61,7 +61,7 @@ public class SubsystemDefaultCommandMap {
     }
 
     @Inject
-    public void setupIndexer(XScheduler scheduler, IndexerSubsystem indexer, IndexerViaTriggerCommand trigger) {
-        scheduler.setDefaultCommand(indexer, trigger);
+    public void setupKicker(XScheduler scheduler, KickerSubsystem kicker, KickerViaTriggerCommand trigger) {
+        scheduler.setDefaultCommand(kicker, trigger);
     }
 }

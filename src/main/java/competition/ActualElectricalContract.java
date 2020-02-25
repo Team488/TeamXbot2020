@@ -3,17 +3,17 @@ package competition;
 public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
-    public boolean isCollectorArmLiftingReady() {
+    public boolean isArmReady() {
         return false;
     }
 
     @Override
-    public boolean isIndexerReady() {
+    public boolean isKickerReady() {
         return true;
     }
 
     @Override
-    public boolean isFrontCollectingReady() {
+    public boolean isIntakeReady() {
         return false;
     }
 
@@ -28,12 +28,22 @@ public class ActualElectricalContract extends IdealElectricalContract {
     }
 
     @Override
-    public boolean isHangingReady() {
+    public boolean isClimberReady() {
         return false;
     }
 
     @Override
     public boolean isCarouselReady() {
-        return false;
+        return true;
+    }
+
+    @Override
+    public boolean isTurretReady() {
+        return true;
+    }
+
+    @Override
+    public boolean isDriveReady() {
+        return true;
     }
 }

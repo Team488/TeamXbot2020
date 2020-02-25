@@ -4,8 +4,11 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import competition.commandgroups.PassTowardsTargetCommand;
+import competition.subsystems.climber.commands.DynamicClimbCommand;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
+import competition.subsystems.intake.commands.EjectCommand;
+import competition.subsystems.intake.commands.IntakeCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.BangBangCommand;
 import competition.subsystems.shooterwheel.commands.ShooterWheelMaintainerCommand;
@@ -35,6 +38,12 @@ public class OperatorCommandMap {
     }
 
     @Inject
+    public void setupCollectionCommands(OperatorInterface oi, IntakeCommand intake, EjectCommand eject) {
+        oi.driverGamepad.getifAvailable(XboxButton.X).whileHeld(intake);
+        oi.driverGamepad.getifAvailable(XboxButton.Y).whileHeld(eject);
+    }
+
+    @Inject
     public void setupTurretCommands(OperatorInterface oi, TurretSubsystem turret,
             TurretRotateToVisionTargetCommand rotateToVisionTarget,
             PointTurretToFieldOrientedHeadingCommand pointDownrange) {
@@ -61,8 +70,12 @@ public class OperatorCommandMap {
 
     @Inject
     public void setupOperatorCommandGroups(OperatorInterface operatorInterface, PassTowardsTargetCommand passCommand) {
+        operatorInterface.operatorGamepad.getifAvailable(XboxButton.Y).whenPressed(passCommand, false);
+    }
 
-        operatorInterface.operatorGamepad.getifAvailable(XboxButton.Y).whenActive(passCommand, false);
+    @Inject
+    public void setupClimbCommands(OperatorInterface oi, DynamicClimbCommand dynamicClimb) {
+        oi.operatorGamepad.getifAvailable(XboxButton.Back).whileHeld(dynamicClimb);
     }
 
 }

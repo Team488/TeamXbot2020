@@ -3,19 +3,19 @@ package competition.subsystems.internalconveyor.commands;
 import com.google.inject.Inject;
 
 import competition.operator_interface.OperatorInterface;
-import competition.subsystems.internalconveyor.IndexerSubsystem;
+import competition.subsystems.internalconveyor.KickerSubsystem;
 import xbot.common.command.BaseCommand;
 import xbot.common.math.MathUtils;
 
-public class IndexerViaTriggerCommand extends BaseCommand {
+public class KickerViaTriggerCommand extends BaseCommand {
 
-    final IndexerSubsystem indexer;
+    final KickerSubsystem kicker;
     final OperatorInterface oi;
 
     @Inject
-    public IndexerViaTriggerCommand(IndexerSubsystem indexer, OperatorInterface oi) {
-        this.addRequirements(indexer);
-        this.indexer = indexer;
+    public KickerViaTriggerCommand(KickerSubsystem kicker, OperatorInterface oi) {
+        this.addRequirements(kicker);
+        this.kicker = kicker;
         this.oi = oi;
     }
 
@@ -29,6 +29,6 @@ public class IndexerViaTriggerCommand extends BaseCommand {
         double power = MathUtils.deadband(oi.operatorGamepad.getLeftTrigger(), oi.getJoystickDeadband());
         power = MathUtils.constrainDouble(power, 0, 1);
 
-        indexer.setPower(power);
+        kicker.setWheelPower(power);
     }
 }
