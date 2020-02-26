@@ -1,4 +1,4 @@
-package competition.subsystems.arm;
+package competition.subsystems.intake;
 
 import static org.junit.Assert.assertEquals;
 

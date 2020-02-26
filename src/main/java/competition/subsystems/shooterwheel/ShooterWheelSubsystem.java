@@ -1,11 +1,13 @@
 package competition.subsystems.shooterwheel;
 
+// import javax.swing.text.Utilities;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.revrobotics.ControlType;
 
 import competition.IdealElectricalContract;
-import edu.wpi.first.wpilibj.Timer;
+// import edu.wpi.first.wpilibj.Timer;
 import xbot.common.command.BaseSetpointSubsystem;
 import xbot.common.controls.actuators.XCANSparkMax;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
@@ -17,30 +19,34 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     
     private final DoubleProperty targetRpmProp;
     private final DoubleProperty currentRpmProp;
-    private final DoubleProperty timerProp;
+    // private final DoubleProperty timerProp;
 
     public XCANSparkMax leader;
     private XCANSparkMax follower;
     IdealElectricalContract contract;
+    // private Timer timer;
     
     @Inject
-    public ShooterWheelSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
+    public ShooterWheelSubsystem(final CommonLibFactory factory, final PropertyFactory pf,
+            final IdealElectricalContract contract) {
         log.info("Creating ShooterWheelSubsystem");
         pf.setPrefix(this);
         this.contract = contract;
-        
+
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
-        timerProp = pf.createPersistentProperty("Timer", 3);
+        // timerProp = pf.createPersistentProperty("Timer", 3);
 
-        if(contract.isShooterWheelReady()){
-            this.leader = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterMaster");
-            this.follower = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
+        if (contract.isShooterWheelReady()) {
+            this.leader = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(),
+                    "ShooterMaster");
+            this.follower = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(),
+                    "ShooterFollower");
             follower.follow(leader, true);
         }
     }
 
-    public void setTargetRPM(double speed) {
+    public void setTargetRPM(final double speed) {
         targetRpmProp.set(speed);
     }
 
@@ -48,31 +54,29 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
         return targetRpmProp.get();
     }
 
-    public void changeTargetRPM(double amount) {
+    public void changeTargetRPM(final double amount) {
         double speed = getTargetRPM();
         speed += amount;
         setTargetRPM(speed);
     }
 
-    public void setPidSetpoint(double speed) {
-        if(contract.isShooterWheelReady())
-        {
+    public void setPidSetpoint(final double speed) {
+        if (contract.isShooterWheelReady()) {
             leader.setReference(speed, ControlType.kVelocity);
         }
     }
 
-    public void setPower(double power) {
-        if(contract.isShooterWheelReady())
-        {
+    public void setPower(final double power) {
+        if (contract.isShooterWheelReady()) {
             leader.set(power);
         }
     }
 
-    public double getPower(){
+    public double getPower() {
         return leader.get();
     }
-  
-    public void stop () {
+
+    public void stop() {
         setPower(0);
     }
 
@@ -121,15 +125,21 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     }
 
     @Override
-    public void setTargetValue(double value) {
+    public void setTargetValue(final double value) {
         setTargetRPM(value);
     }
 
-    public void timedShooting() {
-        setPower(1);
-        Timer.delay(timerProp.get());
-    }
+    // public void setTimer(double seconds) {
+    //     timerProp.set(seconds);
+    // }
 
-    
-
+    // // public void timedShooting() {
+    // //     double time = timerProp.get();
+    // //     timer.start();
+    // //     if (timer.get() <= time) {
+    // //         setPower(1);
+    // //     }
+    // //     timer.stop();
+    // //     setPower(0);
+    // // }
 }

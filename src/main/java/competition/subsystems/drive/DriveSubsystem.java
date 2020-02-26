@@ -77,5 +77,10 @@ public class DriveSubsystem extends BaseSubsystem {
         rawLeftRotationsProp.set(getLeftTotalDistance());
         rawRightRotationsProp.set(getRightTotalDistance());
     }
+
+    public void goBackward(double power) {
+        this.leftMaster.set(-power);
+        this.rightMaster.set(-power);
+    }
     
 }
