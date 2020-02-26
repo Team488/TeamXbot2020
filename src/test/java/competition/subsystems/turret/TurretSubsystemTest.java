@@ -185,4 +185,26 @@ public class TurretSubsystemTest extends BaseCompetitionTest {
     protected void verifyRobotHeading(double expectedHeading) {
         assertEquals(expectedHeading, pose.getCurrentHeading().getValue(), 0.001);
     }
+
+    @Test
+    public void minLimitTest() {
+        MockCANTalon motor = (MockCANTalon)turret.motor;
+        motor.setReverseLimitSwitch(true);
+        turret.setPower(-1);
+        verifyTurretPower(0);
+        motor.setReverseLimitSwitch(false);
+        turret.setPower(1);
+        verifyTurretPower(1);
+    }
+
+    @Test
+    public void maxLimitTest() {
+        MockCANTalon motor = (MockCANTalon)turret.motor;
+        motor.setForwardLimitSwitch(true);
+        turret.setPower(1);
+        verifyTurretPower(0);
+        motor.setForwardLimitSwitch(false);
+        turret.setPower(1);
+        verifyTurretPower(1);
+    }
 }
