@@ -15,7 +15,7 @@ import xbot.common.properties.PropertyFactory;
 public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     
     final DoubleProperty targetRpmProp;
-    
+    final DoubleProperty fudgeRPMCompensatorProp;
     final DoubleProperty currentRpmProp;
     public XCANSparkMax leader;
     private XCANSparkMax follower;
@@ -29,12 +29,18 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
         
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
+        fudgeRPMCompensatorProp = pf.createPersistentProperty("Fudge RPM Compensator", 1);
 
         if(contract.isShooterWheelReady()){
             this.leader = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(), "ShooterMaster");
             this.follower = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(), "ShooterFollower");
             follower.follow(leader, true);
         }
+    }
+
+    public double velocityToRPM(double velocity) // input should be per second
+    {
+        return ((velocity * 60) / (0.25*Math.PI)) * fudgeRPMCompensatorProp.get(); //TODO: test and find out what the fudge number should be
     }
 
     public void setTargetRPM(double speed) {
@@ -118,7 +124,4 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
         setTargetRPM(value);
     }
 
-    public static double velosityToRPM(double velosity){
-        return -1; //TODO: turn velosity to rpm
-    }
 }

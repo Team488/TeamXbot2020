@@ -53,6 +53,11 @@ public class VisionSubsystem extends BaseSubsystem {
         return getAmbanNetworkTable().getEntry("yawToTarget").getNumber(0).doubleValue();
     }
 
+    public double getDistanceToTarget()
+    {
+        return 10; //TODO: Vision team please add a way to get the distance away to the target from the robot. 
+    }
+
     public boolean isAmbanActive() {
         return getAmbanNetworkTable().getEntry("active").getBoolean(false);
     }
