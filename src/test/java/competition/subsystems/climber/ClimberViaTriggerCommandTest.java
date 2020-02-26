@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import competition.BaseCompetitionTest;
 import competition.operator_interface.OperatorInterface;
 import competition.subsystems.climber.commands.ClimberViaTriggerCommand;
 import edu.wpi.first.wpilibj.MockXboxControllerAdapter;
