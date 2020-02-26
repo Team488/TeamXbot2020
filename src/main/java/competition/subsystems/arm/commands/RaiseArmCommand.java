@@ -21,11 +21,16 @@ public class RaiseArmCommand extends BaseCommand {
     @Override
     public void initialize() {
         log.info("Initializing");
+        armSubsystem.up();
     }
 
     @Override
     public void execute() {
-        armSubsystem.up();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
     
 }

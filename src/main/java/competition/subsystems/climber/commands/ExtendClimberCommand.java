@@ -23,6 +23,6 @@ public class ExtendClimberCommand extends BaseCommand{
     }
 
     public void execute(){
-        hangerSubsystem.extendClimber();
+        hangerSubsystem.extend();
     }
 }

@@ -6,8 +6,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import competition.BaseCompetitionTest;
+import competition.subsystems.carousel.CarouselSubsystem;
+import competition.subsystems.internalconveyor.KickerSubsystem;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
-import competition.subsystems.shooterwheel.commands.ShooterWheelSetPassPowerCommand;
 import competition.subsystems.shooterwheel.commands.ShooterWheelWaitForGoalCommand;
 import competition.subsystems.turret.TurretSubsystem;
 import competition.subsystems.turret.commands.PointTurretToFieldOrientedHeadingCommand;
@@ -18,11 +19,12 @@ public class PassTowardsTargetCommandTest extends BaseCompetitionTest {
 
     private TurretSubsystem turret;
     private ShooterWheelSubsystem shooter;
+    private KickerSubsystem kicker;
+    private CarouselSubsystem carousel;
 
     private PassTowardsTargetCommand command;
     private PointTurretToFieldOrientedHeadingCommand rotateTurretCommand;
     private TurretWaitForRotationToGoalCommand waitForRotateTurretCommand;
-    private ShooterWheelSetPassPowerCommand shooterPowerCommand;
     private ShooterWheelWaitForGoalCommand shooterWaitCommand;
 
     @Override
@@ -31,19 +33,16 @@ public class PassTowardsTargetCommandTest extends BaseCompetitionTest {
 
         this.turret = this.injector.getInstance(TurretSubsystem.class);
         this.shooter = this.injector.getInstance(ShooterWheelSubsystem.class);
+        this.kicker = this.injector.getInstance(KickerSubsystem.class);
+        this.carousel = this.injector.getInstance(CarouselSubsystem.class);
 
         this.rotateTurretCommand = this.injector.getInstance(PointTurretToFieldOrientedHeadingCommand.class);
         this.waitForRotateTurretCommand = this.injector.getInstance(TurretWaitForRotationToGoalCommand.class);
-        this.shooterPowerCommand = this.injector.getInstance(ShooterWheelSetPassPowerCommand.class);
         this.shooterWaitCommand = this.injector.getInstance(ShooterWheelWaitForGoalCommand.class);
 
         rotateTurretCommand.setFieldOrientedGoal(180);
 
-        this.command = new PassTowardsTargetCommand(
-            rotateTurretCommand,
-            shooterPowerCommand,
-            waitForRotateTurretCommand,
-            shooterWaitCommand);
+        this.command = this.injector.getInstance(PassTowardsTargetCommand.class);
     }
 
     @Test
@@ -67,6 +66,11 @@ public class PassTowardsTargetCommandTest extends BaseCompetitionTest {
         
         this.command.execute();
         assertTrue(this.shooterWaitCommand.isFinished());
+
+        // check that the kicker and carousel started
+        this.command.execute();
+        assertTrue(((MockCANTalon)(this.kicker.wheelMotor)).getSetpoint() != 0);
+        assertTrue(((MockCANTalon)(this.carousel.carouselMotor)).getSetpoint() != 0);
     }
 
     private void setRawTurretAngle(TurretSubsystem turret, double angle) {
