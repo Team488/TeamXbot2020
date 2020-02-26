@@ -15,6 +15,7 @@ public class PoseSubsystem extends BasePoseSubsystem {
     final DriveSubsystem drive;
     final DoubleProperty intPosX;
     final DoubleProperty intPosY;
+    final DoubleProperty intPosTheta;
 
     @Inject
     public PoseSubsystem(CommonLibFactory clf, PropertyFactory propManager, DriveSubsystem drive, PropertyFactory pf) {
@@ -23,9 +24,9 @@ public class PoseSubsystem extends BasePoseSubsystem {
         this.drive = drive;
         intPosX = pf.createEphemeralProperty("intPosX", 0);
         intPosY = pf.createEphemeralProperty("intPosY", 0);
+        intPosTheta = pf.createEphemeralProperty("intPosTheta", 0);
 
     }
-
 
     @Override
     protected double getLeftDriveDistance() {
@@ -37,8 +38,4 @@ public class PoseSubsystem extends BasePoseSubsystem {
         return drive.getRightTotalDistance();
     }
 
-    @Override
-    public double getIntPosX() {
-
-    }
 }

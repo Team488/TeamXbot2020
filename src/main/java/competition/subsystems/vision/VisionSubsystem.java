@@ -3,6 +3,8 @@ package competition.subsystems.vision;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import competition.subsystems.pose.PoseSubsystem;
+import xbot.common.injection.wpi_factories.CommonLibFactory;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import xbot.common.command.BaseSubsystem;
@@ -17,11 +19,15 @@ import xbot.common.properties.PropertyFactory;
 public class VisionSubsystem extends BaseSubsystem {
 
     private final NetworkTableInstance netTableInstance;
-    
+
     private final BooleanProperty ambanActiveProperty;
     private final BooleanProperty ambanFixAcquiredProperty;
     private final DoubleProperty ambanYawToTargetProperty;
-    
+    private DoubleProperty initialX;
+    private DoubleProperty initialY;
+    private DoubleProperty initialTheta;
+
+
     final LoggingLatch ambanFixAquiredLogLatch;
     final LoggingLatch ambanFixLostLogLatch;
 
@@ -29,6 +35,10 @@ public class VisionSubsystem extends BaseSubsystem {
     public VisionSubsystem(PropertyFactory pf, XScheduler scheduler, NetworkTableInstance netTableInstance) {
         log.info("Creating VisionSubsystem");
         pf.setPrefix(this);
+
+        this.initialX = pf.createEphemeralProperty("Initial X Position", 0);
+        this.initialY = pf.createEphemeralProperty("Initial Y Position", 0);
+        this.initialTheta = pf.createEphemeralProperty("Initial Heading", 0);
 
         this.netTableInstance = netTableInstance;
 
@@ -69,4 +79,16 @@ public class VisionSubsystem extends BaseSubsystem {
     private NetworkTable getAmbanNetworkTable() {
         return this.netTableInstance.getTable("amban");
     }
+
+    // TODO: check if it is set/sent to raspberry pi
+    public boolean initialPosSet(){
+        // check vision, compare pose position with vision position
+    }
+
+    public void sendXYThetaPos(double X, double Y, double Theta){
+        this.initialX.set(X);
+        this.initialY.set(Y);
+        this.initialTheta.set(Theta);
+    }
+
 }
