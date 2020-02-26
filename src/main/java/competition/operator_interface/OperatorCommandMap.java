@@ -52,6 +52,7 @@ public class OperatorCommandMap {
         oi.operatorGamepad.getifAvailable(XboxButton.RightStick).whenPressed(calibrate);
         oi.operatorGamepad.getifAvailable(XboxButton.Start).whenPressed(rotateToVisionTarget);
         oi.operatorGamepad.getifAvailable(XboxButton.X).whileHeld(pointDownrange);
+        oi.manualOperatorGamepad.getifAvailable(XboxButton.RightStick).whenPressed(calibrate);
     }
 
     @Inject
