@@ -83,7 +83,10 @@ public class VisionSubsystem extends BaseSubsystem {
         poseTable.getEntry("navReady").setBoolean(this.pose.getNavXReady());
         poseTable.getEntry("x").setNumber(fieldPose.getPoint().x);
         poseTable.getEntry("y").setNumber(fieldPose.getPoint().y);
-        poseTable.getEntry("yaw").setNumber(fieldPose.getHeading().getValue());
+        poseTable.getEntry("xVelocity").setNumber(this.pose.getCurrentVelocity().x);
+        poseTable.getEntry("yVelocity").setNumber(this.pose.getCurrentVelocity().y);
+        poseTable.getEntry("heading").setNumber(pose.getCurrentHeading().getValue());
+        poseTable.getEntry("headingAngularVelocity").setNumber(pose.getCurrentHeadingAngularVelocity());
         poseTable.getEntry("pitch").setNumber(this.pose.getRobotPitch());
         poseTable.getEntry("roll").setNumber(this.pose.getRobotRoll());
         poseTable.getEntry("yawAngularVelocity").setNumber(this.pose.getYawAngularVelocity());
