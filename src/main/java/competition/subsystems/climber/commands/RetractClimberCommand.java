@@ -23,6 +23,6 @@ public class RetractClimberCommand extends BaseCommand{
     }
 
     public void execute(){
-        climberSubsystem.retractClimber();
+        climberSubsystem.retract();
     }
 }

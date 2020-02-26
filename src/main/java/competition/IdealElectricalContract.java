@@ -20,16 +20,19 @@ public class IdealElectricalContract extends ElectricalContract {
         return new DeviceInfo(22, false);
     }
 
+    public boolean isDriveReady() {
+        return true;
+    }
 
     public DeviceInfo hoodMotor() {
-        return new DeviceInfo(90, false); //Motor not real
+        return new DeviceInfo(90, false); // Motor not real
     }
 
     public boolean isHoodReady() {
         return true;
     }
-    
-    public boolean isKickerReady(){
+
+    public boolean isKickerReady() {
         return true;
     }
 
@@ -41,13 +44,12 @@ public class IdealElectricalContract extends ElectricalContract {
         return true;
     }
 
-
-    //Everything above sure about inversion
-    //Everything below not sure about the inversion
+    // Everything above sure about inversion
+    // Everything below not sure about the inversion
     public DeviceInfo intakeMotor() {
         return new DeviceInfo(29, false);
     }
-
+    
     public boolean isIntakeReady() {
         return true;
     }
@@ -55,17 +57,17 @@ public class IdealElectricalContract extends ElectricalContract {
     public DeviceInfo shooterMotorMaster() {
         return new DeviceInfo(21, true);
     }
-    
+
     public DeviceInfo shooterMotorFollower() {
         return new DeviceInfo(34, false);
     }
 
-    public DeviceInfo climberMotorMaster() {
+    public DeviceInfo leftClimberMotor() {
         return new DeviceInfo(35, false);
     }
 
-    public DeviceInfo climberMotorFollower() {
-        return new DeviceInfo(20, false);
+    public DeviceInfo rightClimberMotor() {
+        return new DeviceInfo(20, true);
     }
 
     public boolean isClimberReady() {
@@ -73,10 +75,14 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo turretMotor() {
-        return new DeviceInfo(31, false);
+        return new DeviceInfo(30, false);
     }
 
     public DeviceInfo kickerMotor() {
+        return new DeviceInfo(31, false);
+    }
+
+    public DeviceInfo kickerRollerMotor() {
         return new DeviceInfo(24, false);
     }
 
@@ -85,7 +91,7 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo carouselMotor() {
-        return new DeviceInfo(35, false);
+        return new DeviceInfo(25, false);
     }
 
     public boolean isCarouselReady() {
