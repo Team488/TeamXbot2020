@@ -30,6 +30,8 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     private final BooleanProperty calibratedProp;
     private final DoubleProperty currentAngleProp;
     private double goalAngle;
+    private final BooleanProperty rightLimitProp;
+    private final BooleanProperty leftLimitProp;
 
     final PoseSubsystem pose;
 
@@ -50,6 +52,8 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
         ticksPerDegreeProp = pf.createPersistentProperty("Ticks Per Degree", 1);
         calibratedProp = pf.createEphemeralProperty("Calibrated", false);
         currentAngleProp = pf.createEphemeralProperty("Current Angle", 0);
+        rightLimitProp = pf.createEphemeralProperty("Over Right Limit", false);
+        leftLimitProp = pf.createEphemeralProperty("Over Left Limit", false);
 
         if (contract.isTurretReady()) {
             this.motor = factory.createCANTalon(contract.turretMotor().channel);
@@ -92,7 +96,7 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     public void turnRight() {
         motor.simpleSet(-turnPowerProp.get());
     }
-
+    
     public void setPower(double power) {
         if (isCalibrated()) {
             // No sense running the protection code if we don't know where we are.
@@ -107,11 +111,22 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
                 power = MathUtils.constrainDouble(power, 0, 1);
             }
         }
+        if (isAtMaxHardStop()) {
+            // Turned too far left. Only allow right/negative rotation.
+            power = MathUtils.constrainDouble(power, -1, 0);
+        }
+        if (isAtMinHardStop()) {
+            // Turned too far right. Only allow left/positive rotation.
+            power = MathUtils.constrainDouble(power, 0, 1);
+        }
+        
 
         if (contract.isTurretReady()) {
             motor.simpleSet(power);
         }
     }
+
+
 
     public boolean aboveMaximumAngle() {
         return getCurrentAngle() >= maxAngleProp.get();
@@ -119,6 +134,14 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
 
     public boolean belowMinimumAngle() {
         return getCurrentAngle() <= minAngleProp.get();
+    }
+
+    public boolean isAtMaxHardStop(){
+        return motor.isFwdLimitSwitchClosed();
+    }
+
+    public boolean isAtMinHardStop(){
+        return motor.isRevLimitSwitchClosed();
     }
 
     public double getCurrentAngle() {
@@ -131,6 +154,10 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
             return motor.getSelectedSensorPosition(0); 
         }
         return 0;
+    }
+
+    public void setCurrentAngle(double angle) {
+        currentAngleProp.set(angle);
     }
 
     public double getDefaultTurretPower() {
@@ -156,6 +183,8 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     @Override
     public void periodic() {
         currentAngleProp.set(getCurrentAngle());
+        leftLimitProp.set(isAtMaxHardStop());
+        rightLimitProp.set(isAtMinHardStop());
     }
 
     public void setGoalAngle(double angle) {

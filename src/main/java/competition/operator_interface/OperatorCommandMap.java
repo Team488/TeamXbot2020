@@ -66,6 +66,8 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.B).whenPressed(stop);
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(slowDown);
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(speedUp);
+        operatorInterface.manualOperatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(speedUp);
+        operatorInterface.manualOperatorGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(slowDown);
     }
 
     @Inject

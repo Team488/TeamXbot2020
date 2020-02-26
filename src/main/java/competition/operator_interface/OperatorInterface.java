@@ -18,6 +18,7 @@ public class OperatorInterface implements IPropertySupport {
   
     public XXboxController driverGamepad;
     public XXboxController operatorGamepad;
+    public XXboxController manualOperatorGamepad;
     final DoubleProperty joystickDeadband;
 
     @Inject
@@ -32,6 +33,10 @@ public class OperatorInterface implements IPropertySupport {
         operatorGamepad = factory.createXboxController(1);
         operatorGamepad.setLeftInversion(false, true);
         operatorGamepad.setRightInversion(true, true);
+
+        manualOperatorGamepad = factory.createXboxController(2);
+        manualOperatorGamepad.setLeftInversion(false, true);
+        manualOperatorGamepad.setRightInversion(true, true);
     }
     
     public double getJoystickDeadband() {
