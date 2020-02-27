@@ -6,6 +6,8 @@ import com.google.inject.Singleton;
 import competition.subsystems.arm.ArmSubsystem;
 import competition.subsystems.carousel.CarouselSubsystem;
 import competition.subsystems.carousel.commands.CarouselViaJoystickCommand;
+import competition.subsystems.climber.ClimberSubsystem;
+import competition.subsystems.climber.commands.ClimberViaTriggerCommand;
 import competition.subsystems.drive.DriveSubsystem;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.hood.HoodSubsystem;
@@ -29,7 +31,6 @@ public class SubsystemDefaultCommandMap {
     }
 
     @Inject
-
     public void setupTurretSubsystem(XScheduler scheduler, TurretSubsystem tSub, TurretMaintainerCommand maintain)
     {
         scheduler.setDefaultCommand(tSub, maintain);
@@ -63,5 +64,10 @@ public class SubsystemDefaultCommandMap {
     @Inject
     public void setupKicker(XScheduler scheduler, KickerSubsystem kicker, KickerViaTriggerCommand trigger) {
         scheduler.setDefaultCommand(kicker, trigger);
+    }
+
+    @Inject
+    public void setupClimbSubsystem(XScheduler scheduler, ClimberSubsystem climber, ClimberViaTriggerCommand command){
+        scheduler.setDefaultCommand(climber, command);
     }
 }
