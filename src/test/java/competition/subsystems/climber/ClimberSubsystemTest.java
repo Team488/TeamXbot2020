@@ -10,7 +10,7 @@ import xbot.common.controls.actuators.mock_adapters.MockCANSparkMax;
 
 public class ClimberSubsystemTest extends BaseCompetitionTest {
     
-    ClimberSubsystem climber;
+    protected ClimberSubsystem climber;
 
     @Override
     public void setUp() {
@@ -92,17 +92,17 @@ public class ClimberSubsystemTest extends BaseCompetitionTest {
         verifyPower(0.2 + delta, 0.2 - delta);
     }
 
-    private void verifyPower(double left, double right) {
+    protected void verifyPower(double left, double right) {
         assertEquals(left, climber.leftMotor.get(), 0.001);
         assertEquals(right, climber.rightMotor.get(), 0.001);
     }
 
-    private void setClimberPosition(double left, double right) {
+    protected void setClimberPosition(double left, double right) {
         ((MockCANSparkMax)climber.leftMotor).setPosition(left);
         ((MockCANSparkMax)climber.rightMotor).setPosition(right);
     }
 
-    private double getSafeRange() {
+    protected double getSafeRange() {
         return climber.getSlowZoneRange() + 10;
     }
 }
