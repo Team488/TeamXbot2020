@@ -56,7 +56,7 @@ public class OperatorCommandMap {
     }
 
     @Inject
-    public void setupShootercommands(OperatorInterface operatorInterface, ShooterWheelSubsystem shooter,
+    public void setupShooterCommands(OperatorInterface operatorInterface, ShooterWheelSubsystem shooter,
             ShooterWheelMaintainerCommand singleWheel, BangBangCommand bangBang) {
 
         Command speedUp = new InstantCommand(() -> shooter.changeTargetRPM(500));
