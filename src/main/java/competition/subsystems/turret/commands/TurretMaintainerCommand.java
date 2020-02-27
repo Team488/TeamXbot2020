@@ -41,6 +41,8 @@ public class TurretMaintainerCommand extends BaseMaintainerCommand {
 
     @Override
     protected double getHumanInput() {
-        return MathUtils.deadband(oi.operatorGamepad.getRightVector().x, oi.getJoystickDeadband());
+        double operatorPower =  MathUtils.deadband(oi.operatorGamepad.getRightVector().x, oi.getJoystickDeadband());
+        double manualPower = MathUtils.deadband(oi.manualOperatorGamepad.getRightVector().x, oi.getJoystickDeadband());
+        return operatorPower + manualPower;
     }
 }

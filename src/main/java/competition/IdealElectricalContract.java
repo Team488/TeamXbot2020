@@ -103,6 +103,10 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo getArmSolenoid() {
+        return new DeviceInfo(0, true);
+    }
+
+    public DeviceInfo getClimbSolenoid(){
         return new DeviceInfo(1, true);
     }
 }

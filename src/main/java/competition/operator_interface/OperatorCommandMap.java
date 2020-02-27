@@ -52,10 +52,11 @@ public class OperatorCommandMap {
         oi.operatorGamepad.getifAvailable(XboxButton.RightStick).whenPressed(calibrate);
         oi.operatorGamepad.getifAvailable(XboxButton.Start).whenPressed(rotateToVisionTarget);
         oi.operatorGamepad.getifAvailable(XboxButton.X).whileHeld(pointDownrange);
+        oi.manualOperatorGamepad.getifAvailable(XboxButton.RightStick).whenPressed(calibrate);
     }
 
     @Inject
-    public void setupShootercommands(OperatorInterface operatorInterface, ShooterWheelSubsystem shooter,
+    public void setupShooterCommands(OperatorInterface operatorInterface, ShooterWheelSubsystem shooter,
             ShooterWheelMaintainerCommand singleWheel, BangBangCommand bangBang) {
 
         Command speedUp = new InstantCommand(() -> shooter.changeTargetRPM(500));
@@ -66,6 +67,8 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.B).whenPressed(stop);
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(slowDown);
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(speedUp);
+        operatorInterface.manualOperatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(speedUp);
+        operatorInterface.manualOperatorGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(slowDown);
     }
 
     @Inject
