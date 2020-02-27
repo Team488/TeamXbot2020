@@ -6,6 +6,7 @@ import competition.operator_interface.OperatorInterface;
 import competition.subsystems.drive.DriveSubsystem;
 import xbot.common.command.BaseCommand;
 import xbot.common.math.MathUtils;
+import xbot.common.math.XYPair;
 
 public class ArcadeDriveCommand extends BaseCommand {
 
@@ -35,7 +36,7 @@ public class ArcadeDriveCommand extends BaseCommand {
         translate = MathUtils.exponentAndRetainSign(translate, 3);
         rotate = MathUtils.exponentAndRetainSign(rotate, 3);
 
-        drive.arcadeDrive(translate, rotate);
+        drive.drive(new XYPair(0, translate), rotate);
     }
 
 }

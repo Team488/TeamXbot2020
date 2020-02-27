@@ -1,7 +1,5 @@
 package competition.subsystems.vision;
 
-import java.text.FieldPosition;
-
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
