@@ -33,7 +33,7 @@ public class HoodMaintainerCommand extends BaseMaintainerCommand{
 
     @Override
     protected void calibratedMachineControlAction(){
-        double power = pid.calculate(hood.getGoalPercent(), hood.getPercentExtended());
+        double power = pid.calculate(hood.getGoalAngle(), hood.getPercentExtended());
         hood.setPower(power);
     }
 
