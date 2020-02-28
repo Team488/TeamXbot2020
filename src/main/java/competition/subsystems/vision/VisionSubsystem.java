@@ -21,11 +21,14 @@ public class VisionSubsystem extends BaseSubsystem {
     private final PoseSubsystem pose;
 
     private final NetworkTableInstance netTableInstance;
-    
+
     private final BooleanProperty ambanActiveProperty;
     private final BooleanProperty ambanFixAcquiredProperty;
     private final DoubleProperty ambanYawToTargetProperty;
-    
+    private DoubleProperty initialX;
+    private DoubleProperty initialY;
+    private DoubleProperty initialTheta;
+
     final LoggingLatch ambanFixAquiredLogLatch;
     final LoggingLatch ambanFixLostLogLatch;
 
@@ -34,6 +37,10 @@ public class VisionSubsystem extends BaseSubsystem {
             NetworkTableInstance netTableInstance, PoseSubsystem pose) {
         log.info("Creating VisionSubsystem");
         pf.setPrefix(this);
+
+        this.initialX = pf.createEphemeralProperty("Initial X Position", 0);
+        this.initialY = pf.createEphemeralProperty("Initial Y Position", 0);
+        this.initialTheta = pf.createEphemeralProperty("Initial Heading", 0);
 
         this.pose = pose;
         this.netTableInstance = netTableInstance;
@@ -88,6 +95,21 @@ public class VisionSubsystem extends BaseSubsystem {
         poseTable.getEntry("pitch").setNumber(this.pose.getRobotPitch());
         poseTable.getEntry("roll").setNumber(this.pose.getRobotRoll());
         poseTable.getEntry("yawAngularVelocity").setNumber(this.pose.getYawAngularVelocity());
+    }
+
+    // check vision, compare pose position with vision position, check if it is set/sent to raspberry pi
+    public boolean checkInitialPosSet(){
+        if(initialX.get() == pose.intPosX.get() && initialTheta.get() == pose.intPosTheta.get() && initialY.get() == pose.intPosY.get()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void sendXYThetaPos(double x, double y, double theta){
+        this.initialX.set(x);
+        this.initialY.set(y);
+        this.initialTheta.set(theta);
     }
 
     private NetworkTable getAmbanNetworkTable() {
