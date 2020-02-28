@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import competition.subsystems.pose.PoseSubsystem;
-import competition.subsystems.vision.commands.sendInitialPos;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import xbot.common.command.BaseSubsystem;
@@ -29,10 +28,6 @@ public class VisionSubsystem extends BaseSubsystem {
     private DoubleProperty initialX;
     private DoubleProperty initialY;
     private DoubleProperty initialTheta;
-
-    private sendInitialPos b;
-
-
 
     final LoggingLatch ambanFixAquiredLogLatch;
     final LoggingLatch ambanFixLostLogLatch;
@@ -108,17 +103,17 @@ public class VisionSubsystem extends BaseSubsystem {
 
     // check vision, compare pose position with vision position, check if it is set/sent to raspberry pi
     public boolean checkInitialPosSet(){
-        if(initialX.get() == b.X && initialTheta.get() == b.Theta && initialY.get() == b.Y){
+        if(initialX.get() == pose.intPosX.get() && initialTheta.get() == pose.intPosTheta.get() && initialY.get() == pose.intPosY.get()){
             return true;
         }else{
             return false;
         }
     }
 
-    public void sendXYThetaPos(double X, double Y, double Theta){
-        this.initialX.set(X);
-        this.initialY.set(Y);
-        this.initialTheta.set(Theta);
+    public void sendXYThetaPos(double x, double y, double theta){
+        this.initialX.set(x);
+        this.initialY.set(y);
+        this.initialTheta.set(theta);
     }
 
     private NetworkTable getPoseNetworkTable() {

@@ -13,9 +13,9 @@ import xbot.common.subsystems.pose.BasePoseSubsystem;
 public class PoseSubsystem extends BasePoseSubsystem {
 
     final DriveSubsystem drive;
-    final DoubleProperty intPosX;
-    final DoubleProperty intPosY;
-    final DoubleProperty intPosTheta;
+    public final DoubleProperty intPosX;
+    public final DoubleProperty intPosY;
+    public final DoubleProperty intPosTheta;
 
     @Inject
     public PoseSubsystem(CommonLibFactory clf, PropertyFactory propManager, DriveSubsystem drive, PropertyFactory pf) {
