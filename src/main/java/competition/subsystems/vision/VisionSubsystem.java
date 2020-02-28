@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import competition.subsystems.pose.PoseSubsystem;
+import competition.subsystems.vision.commands.sendInitialPos;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import xbot.common.command.BaseSubsystem;
@@ -28,6 +29,9 @@ public class VisionSubsystem extends BaseSubsystem {
     private DoubleProperty initialX;
     private DoubleProperty initialY;
     private DoubleProperty initialTheta;
+
+    private sendInitialPos b;
+
 
 
     final LoggingLatch ambanFixAquiredLogLatch;
@@ -102,11 +106,14 @@ public class VisionSubsystem extends BaseSubsystem {
         return this.netTableInstance.getTable("amban");
     }
 
-    // TODO: check if it is set/sent to raspberry pi
-    // public boolean initialPosSet(){
-
-    //     // check vision, compare pose position with vision position
-    // }
+    // check vision, compare pose position with vision position, check if it is set/sent to raspberry pi
+    public boolean checkInitialPosSet(){
+        if(initialX.get() == b.X && initialTheta.get() == b.Theta && initialY.get() == b.Y){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     public void sendXYThetaPos(double X, double Y, double Theta){
         this.initialX.set(X);
