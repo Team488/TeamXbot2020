@@ -16,9 +16,8 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
 
     final DoubleProperty calibrationOffsetProp;
     final DoubleProperty extendPowerProp;
-    final DoubleProperty slowlyExtendPowerProp;
+    final DoubleProperty manualPowerProp;
     final DoubleProperty retractPowerProp;
-    final DoubleProperty slowlyRetractPowerProp;
     final DoubleProperty rangeProp;
     final BooleanProperty calibratedProp;
     final DoubleProperty currentPercentExtendedProp;
@@ -35,9 +34,8 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
 
         calibrationOffsetProp = pf.createPersistentProperty("Calibration Offset", 0);
         extendPowerProp = pf.createPersistentProperty("Extend Power", 1);
-        slowlyExtendPowerProp = pf.createPersistentProperty("Slowly Extend Power", .15);
+        manualPowerProp = pf.createPersistentProperty("Manual Power", .15);
         retractPowerProp = pf.createPersistentProperty("Retract Power", -1);
-        slowlyRetractPowerProp = pf.createPersistentProperty("Slowly Retract Power", -.15);
         rangeProp = pf.createPersistentProperty("Range", 1000);
         currentPercentExtendedProp = pf.createEphemeralProperty("Current Percent Extended", 0);
         calibratedProp = pf.createEphemeralProperty("Calibrated", false);
@@ -77,11 +75,11 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     }
 
     public void slowlyExtend(){
-        setPower(slowlyExtendPowerProp.get());
+        setPower(manualPowerProp.get());
     }
 
     public void slowlyRetract(){
-        setPower(slowlyRetractPowerProp.get());
+        setPower(manualPowerProp.get() *-1 );
     }
 
     public void retract(){
