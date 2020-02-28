@@ -7,6 +7,7 @@ import com.revrobotics.ControlType;
 import competition.IdealElectricalContract;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANSparkMax;
+import xbot.common.controls.actuators.XSolenoid;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.math.MathUtils;
 import xbot.common.properties.DoubleProperty;
@@ -15,15 +16,19 @@ import xbot.common.properties.PropertyFactory;
 @Singleton
 public class ClimberSubsystem extends BaseSubsystem {
 
+    double power;
+    final DoubleProperty minPower;
+
     public enum ClimberSide {
         Left, Right
     }
-    
+
     final DoubleProperty climberPowerProp;
     final DoubleProperty maxClimberTicksProp;
     public XCANSparkMax leftMotor;
     public XCANSparkMax rightMotor;
     final IdealElectricalContract contract;
+    public final XSolenoid climbSolenoid;
     final DoubleProperty slowZoneProp;
     final DoubleProperty slowZoneFactorProp;
     final DoubleProperty defaultPowerProp;
@@ -34,7 +39,9 @@ public class ClimberSubsystem extends BaseSubsystem {
     public ClimberSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating ClimberSubsystem");
         pf.setPrefix(this);
+
         climberPowerProp = pf.createPersistentProperty("Climber Power", 1);
+        minPower = pf.createPersistentProperty("Minimium Power", 0.1);
         maxClimberTicksProp = pf.createPersistentProperty("Maximum Extension", 100);
         slowZoneProp = pf.createPersistentProperty("Slow Zone Size", 10);
         slowZoneFactorProp = pf.createPersistentProperty("Slow Zone Factor", 0.35);
@@ -42,7 +49,7 @@ public class ClimberSubsystem extends BaseSubsystem {
         unsafeExtensionProp = pf.createPersistentProperty("Unsafe Extension Distance", 3);
         catchUpFactorProp = pf.createPersistentProperty("Catch Up Factor", 0.333);
 
-
+        this.climbSolenoid = factory.createSolenoid(contract.getClimbSolenoid().channel);
         this.contract = contract;
 
         if (contract.isClimberReady()) {
@@ -67,7 +74,7 @@ public class ClimberSubsystem extends BaseSubsystem {
         return 0;
     }
 
-    public void setPositionalGoal(double positionGoal, ClimberSide side) {
+    private void setPositionalGoal(double positionGoal, ClimberSide side) {
         if (contract.isClimberReady()) {
             getMotorForSide(side).setReference(positionGoal, ControlType.kPosition);
         }
@@ -79,12 +86,26 @@ public class ClimberSubsystem extends BaseSubsystem {
         }
     }
 
+    private double applyDeadbandAndBrake(double power) {
+        power = MathUtils.deadband(power, minPower.get());
+        if (Math.abs(power) > 0.001) {
+            climbSolenoid.setOn(true);
+        } else {
+            climbSolenoid.setOn(false);
+        }
+        return power;
+    }
+
     /**
-     * Designed to keep the two sides in sync when extending or retracting. If the sides get too far
-     * apart, it applies an extra speed differential in order to let them synchronize again.
+     * Designed to keep the two sides in sync when extending or retracting. If the
+     * sides get too far apart, it applies an extra speed differential in order to
+     * let them synchronize again.
+     * 
      * @param power Climb power to use.
      */
     public void dynamicClimb(double power) {
+        power = applyDeadbandAndBrake(power);
+
         double leftPower = power;
         double rightPower = power;
 
@@ -98,7 +119,14 @@ public class ClimberSubsystem extends BaseSubsystem {
         setPower(rightPower, ClimberSide.Right);
     }
 
-    public void setPower(double power, ClimberSide side) {
+    public void setPower(double power) {
+        power = applyDeadbandAndBrake(power);
+        setPower(power, ClimberSide.Left);
+        setPower(power, ClimberSide.Right);
+    }
+
+    private void setPower(double power, ClimberSide side) {
+
         if (getPosition(side) < 0) {
             power = MathUtils.constrainDouble(power, 0, 1);
         }
@@ -115,24 +143,20 @@ public class ClimberSubsystem extends BaseSubsystem {
     }
 
     public void extend() {
-        setPower(defaultPowerProp.get(), ClimberSide.Left);
-        setPower(defaultPowerProp.get(), ClimberSide.Right);
+        setPower(defaultPowerProp.get());
     }
 
     public void retract() {
-        setPower(-defaultPowerProp.get(), ClimberSide.Left);
-        setPower(-defaultPowerProp.get(), ClimberSide.Right);
+        setPower(-defaultPowerProp.get());
     }
 
     public void stop() {
-        setPower(0, ClimberSide.Left);
-        setPower(0, ClimberSide.Right);
+        setPower(0);
     }
 
     public boolean unsafeToLowerArm() {
-        return 
-            getPosition(ClimberSide.Left) > unsafeExtensionProp.get() 
-            || getPosition(ClimberSide.Right) > unsafeExtensionProp.get();
+        return getPosition(ClimberSide.Left) > unsafeExtensionProp.get()
+                || getPosition(ClimberSide.Right) > unsafeExtensionProp.get();
     }
 
     public double getSlowZoneRange() {

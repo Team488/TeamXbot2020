@@ -26,7 +26,11 @@ public class CarouselViaJoystickCommand extends BaseCommand {
 
     @Override
     public void execute() {
-        double power = MathUtils.deadband(oi.operatorGamepad.getLeftVector().x, oi.getJoystickDeadband());
+        double operatorPower = MathUtils.deadband(oi.operatorGamepad.getLeftVector().x, oi.getJoystickDeadband());
+        double manualOperatorPower = MathUtils.deadband(oi.manualOperatorGamepad.getLeftVector().x, oi.getJoystickDeadband());
+        
+        double power = operatorPower + manualOperatorPower;
+        
         carousel.setPower(power);
     }
 }
