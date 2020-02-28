@@ -9,11 +9,6 @@ public class SendInitialPos extends BaseCommand{
     VisionSubsystem b;
     PoseSubsystem pose;
 
-    // Might delete, constructor probably not needed
-    // @Inject
-    // public sendInitialPos(PropertyFactory pf){
-    // }
-
     @Override
     public void execute() {
     }
