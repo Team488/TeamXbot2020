@@ -25,7 +25,9 @@ public class ClimberViaTriggerCommand extends BaseCommand{
 
     public void execute(){
         double extend = MathUtils.deadband(oi.operatorGamepad.getLeftTrigger(), oi.getJoystickDeadband());
+        extend +=  MathUtils.deadband(oi.manualOperatorGamepad.getLeftTrigger(), oi.getJoystickDeadband());
         double retract = MathUtils.deadband(oi.operatorGamepad.getRightTrigger(), oi.getJoystickDeadband()) * -1;
+        retract += MathUtils.deadband(oi.manualOperatorGamepad.getRightTrigger(), oi.getJoystickDeadband()) * -1;
         double power = extend + retract;
         climberSubsystem.setPower(power);
     }
