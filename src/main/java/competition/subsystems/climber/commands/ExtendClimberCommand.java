@@ -8,13 +8,13 @@ import xbot.common.command.BaseCommand;
 public class ExtendClimberCommand extends BaseCommand{
 
     final OperatorInterface oi;
-    final ClimberSubsystem hangerSubsystem;
+    final ClimberSubsystem climberSubsystem;
 
     @Inject
-    public ExtendClimberCommand(OperatorInterface oi, ClimberSubsystem hangerSubsystem){
+    public ExtendClimberCommand(OperatorInterface oi, ClimberSubsystem climberSubsystem){
         this.oi = oi;
-        this.hangerSubsystem = hangerSubsystem;
-        this.addRequirements(this.hangerSubsystem);
+        this.climberSubsystem = climberSubsystem;
+        this.addRequirements(this.climberSubsystem);
     }
 
     @Override
@@ -23,6 +23,6 @@ public class ExtendClimberCommand extends BaseCommand{
     }
 
     public void execute(){
-        hangerSubsystem.extend();
+        climberSubsystem.extend();
     }
 }

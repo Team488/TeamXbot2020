@@ -3,18 +3,22 @@ package competition.subsystems.vision;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import competition.subsystems.pose.PoseSubsystem;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.command.XScheduler;
 import xbot.common.logging.LoggingLatch;
 import xbot.common.logic.Latch.EdgeType;
+import xbot.common.math.FieldPose;
 import xbot.common.properties.BooleanProperty;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
 @Singleton
 public class VisionSubsystem extends BaseSubsystem {
+
+    private final PoseSubsystem pose;
 
     private final NetworkTableInstance netTableInstance;
     
@@ -26,10 +30,12 @@ public class VisionSubsystem extends BaseSubsystem {
     final LoggingLatch ambanFixLostLogLatch;
 
     @Inject
-    public VisionSubsystem(PropertyFactory pf, XScheduler scheduler, NetworkTableInstance netTableInstance) {
+    public VisionSubsystem(PropertyFactory pf, XScheduler scheduler,
+            NetworkTableInstance netTableInstance, PoseSubsystem pose) {
         log.info("Creating VisionSubsystem");
         pf.setPrefix(this);
 
+        this.pose = pose;
         this.netTableInstance = netTableInstance;
 
         this.ambanActiveProperty = pf.createEphemeralProperty("Amban active", false);
@@ -47,6 +53,8 @@ public class VisionSubsystem extends BaseSubsystem {
         ambanActiveProperty.set(isAmbanActive());
         ambanFixAcquiredProperty.set(isAmbanFixAcquired());
         ambanYawToTargetProperty.set(getAmbanYawToTarget());
+
+        publishPose();
     }
 
     public double getAmbanYawToTarget() {
@@ -66,7 +74,27 @@ public class VisionSubsystem extends BaseSubsystem {
         return fixAcquiredValue;
     }
 
+    private void publishPose() {
+        NetworkTable poseTable = getPoseNetworkTable();
+        FieldPose fieldPose = this.pose.getCurrentFieldPose();
+
+        poseTable.getEntry("navReady").setBoolean(this.pose.getNavXReady());
+        poseTable.getEntry("x").setNumber(fieldPose.getPoint().x);
+        poseTable.getEntry("y").setNumber(fieldPose.getPoint().y);
+        poseTable.getEntry("xVelocity").setNumber(this.pose.getCurrentVelocity().x);
+        poseTable.getEntry("yVelocity").setNumber(this.pose.getCurrentVelocity().y);
+        poseTable.getEntry("heading").setNumber(pose.getCurrentHeading().getValue());
+        poseTable.getEntry("headingAngularVelocity").setNumber(pose.getCurrentHeadingAngularVelocity());
+        poseTable.getEntry("pitch").setNumber(this.pose.getRobotPitch());
+        poseTable.getEntry("roll").setNumber(this.pose.getRobotRoll());
+        poseTable.getEntry("yawAngularVelocity").setNumber(this.pose.getYawAngularVelocity());
+    }
+
     private NetworkTable getAmbanNetworkTable() {
         return this.netTableInstance.getTable("amban");
+    }
+
+    private NetworkTable getPoseNetworkTable() {
+        return this.netTableInstance.getTable("pose");
     }
 }

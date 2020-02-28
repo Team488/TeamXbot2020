@@ -876,8 +876,7 @@
               "Graph/Visible time": 30.0,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0,
-              "Visible data/SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent": true
+              "Y-axis/Lower bound": -1.0
             }
           },
           "5,2": {
@@ -1009,7 +1008,22 @@
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
-        "tiles": {}
+        "tiles": {
+          "4,1": {
+            "size": [
+              5,
+              1
+            ],
+            "content": {
+              "_type": "Number Slider",
+              "_source0": "network_table:///SmartDashboard/IntakeSubsystem/Intake Power",
+              "_title": "SmartDashboard/IntakeSubsystem/Intake Power",
+              "Slider Settings/Min": -1.0,
+              "Slider Settings/Max": 1.0,
+              "Slider Settings/Block increment": 0.0625
+            }
+          }
+        }
       }
     }
   ],
