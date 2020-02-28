@@ -15,4 +15,13 @@ public class DriveSubsystemTest extends BaseWPITest {
         assertEquals(1, driveSubsystem.leftMaster.get() , 0.001);
         assertEquals(1, driveSubsystem.rightMaster.get(), 0.001);
     }
+
+    @Test
+    public void testDriveBackward() {
+        DriveSubsystem drive = this.injector.getInstance(DriveSubsystem.class);
+        drive.driveBackward(1);
+
+        assertEquals(-1, drive.leftMaster.get(), 0.001);
+        assertEquals(-1, drive.rightMaster.get(), 0.001);
+    }
 }

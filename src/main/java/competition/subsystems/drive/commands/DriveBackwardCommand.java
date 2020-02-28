@@ -5,7 +5,6 @@ import com.google.inject.Inject;
 import competition.operator_interface.OperatorInterface;
 import competition.subsystems.drive.DriveSubsystem;
 import xbot.common.command.BaseCommand;
-import xbot.common.properties.DoubleProperty;
 
 public class DriveBackwardCommand extends BaseCommand {
 
@@ -14,7 +13,7 @@ public class DriveBackwardCommand extends BaseCommand {
     final double power;
 
     @Inject
-    public DriveBackwardCommand(OperatorInterface oi, DriveSubsystem driveSubsystem) {
+    public DriveBackwardCommand(OperatorInterface oi, DriveSubsystem driveSubsystem, double power) {
         this.oi = oi;
         this.driveSubsystem = driveSubsystem;
         this.power = power;
@@ -28,6 +27,6 @@ public class DriveBackwardCommand extends BaseCommand {
 
     @Override
     public void execute() {
-        driveSubsystem.goBackward(power);
+        driveSubsystem.driveBackward(power);
     }
 }
