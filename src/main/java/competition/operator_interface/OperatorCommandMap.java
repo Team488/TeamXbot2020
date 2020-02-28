@@ -9,6 +9,9 @@ import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 import competition.subsystems.intake.commands.EjectCommand;
 import competition.subsystems.intake.commands.IntakeCommand;
+import competition.subsystems.internalconveyor.KickerSubsystem;
+import competition.subsystems.internalconveyor.commands.ManualLiftCommand;
+import competition.subsystems.internalconveyor.commands.ManualReverseCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.BangBangCommand;
 import competition.subsystems.shooterwheel.commands.ShooterWheelMaintainerCommand;
@@ -81,4 +84,10 @@ public class OperatorCommandMap {
         oi.operatorGamepad.getifAvailable(XboxButton.Back).whileHeld(dynamicClimb);
     }
 
+    @Inject
+    public void setupKickerCommands(OperatorInterface oi, KickerSubsystem kicker, ManualLiftCommand liftCommand, 
+            ManualReverseCommand reverseCommand){
+            oi.manualOperatorGamepad.getifAvailable(XboxButton.A).whileHeld(liftCommand);
+            oi.manualOperatorGamepad.getifAvailable(XboxButton.B).whileHeld(reverseCommand);
+    }
 }
