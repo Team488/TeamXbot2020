@@ -7,6 +7,7 @@ import competition.commandgroups.PassTowardsTargetCommand;
 import competition.subsystems.climber.commands.DynamicClimbCommand;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
+import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.intake.commands.EjectCommand;
 import competition.subsystems.intake.commands.IntakeCommand;
 import competition.subsystems.internalconveyor.KickerSubsystem;
@@ -92,5 +93,14 @@ public class OperatorCommandMap {
             ManualReverseCommand reverseCommand){
             oi.manualOperatorGamepad.getifAvailable(XboxButton.A).whileHeld(liftCommand);
             oi.manualOperatorGamepad.getifAvailable(XboxButton.B).whileHeld(reverseCommand);
+    }
+  
+    @Inject
+    public void setUpHoodCommands(OperatorInterface oi, HoodSubsystem hood){
+        Command slowlyExtend = new InstantCommand(() -> hood.slowlyExtend());
+        Command slowlyRetract = new InstantCommand(() -> hood.slowlyRetract());
+
+        oi.manualOperatorGamepad.getifAvailable(XboxButton.Y).whileHeld(slowlyExtend);
+        oi.manualOperatorGamepad.getifAvailable(XboxButton.X).whileHeld(slowlyRetract);
     }
 }
