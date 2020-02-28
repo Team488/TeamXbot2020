@@ -3,8 +3,6 @@ package competition.subsystems.vision;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import competition.subsystems.pose.PoseSubsystem;
-import xbot.common.injection.wpi_factories.CommonLibFactory;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import xbot.common.command.BaseSubsystem;
