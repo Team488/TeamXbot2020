@@ -29,6 +29,6 @@ public class KickerViaTriggerCommand extends BaseCommand {
         double power = MathUtils.deadband(oi.operatorGamepad.getLeftTrigger(), oi.getJoystickDeadband());
         power = MathUtils.constrainDouble(power, 0, 1);
 
-        kicker.setWheelPower(power);
+        kicker.setPower(power);
     }
 }

@@ -35,10 +35,9 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
 
     final PoseSubsystem pose;
 
-
     @Inject
     public TurretSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract,
-    XScheduler scheduler, PoseSubsystem pose) {
+            XScheduler scheduler, PoseSubsystem pose) {
         log.info("Creating TurretSubsystem");
         pf.setPrefix(this);
         this.contract = contract;
@@ -57,21 +56,20 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
 
         if (contract.isTurretReady()) {
             this.motor = factory.createCANTalon(contract.turretMotor().channel);
-            motor.configureAsMasterMotor(
-                this.getPrefix(), 
-                "TurretMotor", 
-                contract.turretMotor().inverted, 
-                contract.turretEncoder().inverted);
+            motor.configureAsMasterMotor(this.getPrefix(), "TurretMotor", contract.turretMotor().inverted,
+                    contract.turretEncoder().inverted);
 
-                motor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
-                motor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+            motor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+                    0);
+            motor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+                    0);
 
         }
 
         scheduler.registerSubsystem(this);
     }
 
-    public void calibrateTurret(){ //here
+    public void calibrateTurret() { // here
         calibrationOffset = getCurrentRawAngle();
         log.info("Angle set to the default of" + defaultForwardHeadingProp.get());
         setIsCalibrated(true);
@@ -96,11 +94,11 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     public void turnRight() {
         motor.simpleSet(-turnPowerProp.get());
     }
-    
+
     public void setPower(double power) {
         if (isCalibrated()) {
             // No sense running the protection code if we don't know where we are.
-            
+
             // Check for any reason power should be constrained.
             if (aboveMaximumAngle() || motor.isFwdLimitSwitchClosed()) {
                 // Turned too far left. Only allow right/negative rotation.
@@ -119,14 +117,11 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
             // Turned too far right. Only allow left/positive rotation.
             power = MathUtils.constrainDouble(power, 0, 1);
         }
-        
 
         if (contract.isTurretReady()) {
             motor.simpleSet(power);
         }
     }
-
-
 
     public boolean aboveMaximumAngle() {
         return getCurrentAngle() >= maxAngleProp.get();
@@ -136,12 +131,18 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
         return getCurrentAngle() <= minAngleProp.get();
     }
 
-    public boolean isAtMaxHardStop(){
-        return motor.isFwdLimitSwitchClosed();
+    public boolean isAtMaxHardStop() {
+        if (contract.isTurretReady()) {
+            return motor.isFwdLimitSwitchClosed();
+        }
+        return false;
     }
 
-    public boolean isAtMinHardStop(){
-        return motor.isRevLimitSwitchClosed();
+    public boolean isAtMinHardStop() {
+        if (contract.isTurretReady()) {
+            return motor.isRevLimitSwitchClosed();
+        }
+        return false;
     }
 
     public double getCurrentAngle() {
@@ -151,7 +152,7 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
 
     private double getCurrentRawAngle() {
         if (contract.isTurretReady()) {
-            return motor.getSelectedSensorPosition(0); 
+            return motor.getSelectedSensorPosition(0);
         }
         return 0;
     }
@@ -198,7 +199,8 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     public void setFieldOrientedGoalAngle(double angle) {
         // Take the current robot heading, recast it into turret units
         double robotHeading = pose.getCurrentHeading().shiftBounds(90).getValue();
-        // Formula is: Robot Oriented Turret Heading = Desired FO Turret Heading - Robot FO Heading + 90
+        // Formula is: Robot Oriented Turret Heading = Desired FO Turret Heading - Robot
+        // FO Heading + 90
         double turretGoalHeading = angle - robotHeading + 90;
         setGoalAngle(turretGoalHeading);
     }
