@@ -3,8 +3,11 @@ package competition.operator_interface;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import edu.wpi.first.wpilibj.MockXboxControllerAdapter;
 import xbot.common.controls.sensors.XXboxController;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
+import xbot.common.injection.wpi_factories.DevicePolice;
+import xbot.common.logging.RobotAssertionManager;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.IPropertySupport;
 import xbot.common.properties.PropertyFactory;
@@ -22,7 +25,7 @@ public class OperatorInterface implements IPropertySupport {
     final DoubleProperty joystickDeadband;
 
     @Inject
-    public OperatorInterface(CommonLibFactory factory, PropertyFactory pf) {
+    public OperatorInterface(CommonLibFactory factory, PropertyFactory pf, RobotAssertionManager manager, DevicePolice police) {
         pf.setPrefix(this);
         joystickDeadband = pf.createPersistentProperty("JoystickDeadband", 0.08);
 
@@ -34,7 +37,7 @@ public class OperatorInterface implements IPropertySupport {
         operatorGamepad.setLeftInversion(false, true);
         operatorGamepad.setRightInversion(true, true);
 
-        manualOperatorGamepad = factory.createXboxController(2);
+        manualOperatorGamepad = new MockXboxControllerAdapter(2, factory, manager, police); //factory.createXboxController(2);
         manualOperatorGamepad.setLeftInversion(false, true);
         manualOperatorGamepad.setRightInversion(true, true);
     }
