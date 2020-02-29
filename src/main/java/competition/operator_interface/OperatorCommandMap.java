@@ -68,8 +68,8 @@ public class OperatorCommandMap {
     public void setupShooterCommands(OperatorInterface operatorInterface, ShooterWheelSubsystem shooter,
             ShooterWheelMaintainerCommand singleWheel, BangBangCommand bangBang) {
 
-        Command speedUp = new InstantCommand(() -> shooter.changeTargetRPM(500));
-        Command slowDown = new InstantCommand(() -> shooter.changeTargetRPM(-500));
+        Command speedUp = new InstantCommand(() -> shooter.changeTargetRPM(500), shooter.getSetpointLock());
+        Command slowDown = new InstantCommand(() -> shooter.changeTargetRPM(-500), shooter.getSetpointLock());
         Command stop = new RunCommand(() -> shooter.stop(), shooter);
 
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.A).whenPressed(singleWheel);
@@ -98,11 +98,12 @@ public class OperatorCommandMap {
 
     @Inject
     public void setUpHoodCommands(OperatorInterface oi, HoodSubsystem hood){
-        Command slowlyExtend = new InstantCommand(() -> hood.slowlyExtend());
-        Command slowlyRetract = new InstantCommand(() -> hood.slowlyRetract());
+        oi.operatorGamepad.getifAvailable(XboxButton.LeftStick).whenPressed(new InstantCommand(hood::calibrateHood));
 
-        oi.manualOperatorGamepad.getifAvailable(XboxButton.Y).whileHeld(slowlyExtend);
-        oi.manualOperatorGamepad.getifAvailable(XboxButton.X).whileHeld(slowlyRetract);
+        var hoodForward = new InstantCommand(() -> hood.changeTargetPercent(10), hood.getSetpointLock());
+        var hoodBack = new InstantCommand(() -> hood.changeTargetPercent(10), hood.getSetpointLock());
+
+        oi.operatorGamepad.getPovIfAvailable(0).whenPressed(hoodForward);
+        oi.operatorGamepad.getPovIfAvailable(180).whenPressed(hoodBack);
     }
-
 }
