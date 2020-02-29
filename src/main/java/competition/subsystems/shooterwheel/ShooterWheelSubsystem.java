@@ -135,4 +135,14 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     public void setTargetValue(double value) {
         setTargetRPM(value);
     }
+
+    @Override
+    public boolean isMaintainerAtGoal() {
+        boolean basicAtGoal =  super.isMaintainerAtGoal();
+        return basicAtGoal && shooterMovingSome();
+    }
+
+    private boolean shooterMovingSome() {
+        return getCurrentRPM() > 500;
+    }
 }
