@@ -55,7 +55,7 @@ public class OperatorCommandMap {
         Command calibrate = new InstantCommand(() -> turret.calibrateTurret());
 
         oi.operatorGamepad.getifAvailable(XboxButton.RightStick).whenPressed(calibrate);
-        oi.operatorGamepad.getifAvailable(XboxButton.Start).whenPressed(rotateToVisionTarget);
+        //oi.operatorGamepad.getifAvailable(XboxButton.Start).whenPressed(rotateToVisionTarget);
         oi.operatorGamepad.getifAvailable(XboxButton.X).whileHeld(pointDownrange);
         oi.manualOperatorGamepad.getifAvailable(XboxButton.RightStick).whenPressed(calibrate);
     }
