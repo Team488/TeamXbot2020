@@ -17,8 +17,8 @@ import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.intake.commands.EjectCommand;
 import competition.subsystems.intake.commands.IntakeCommand;
 import competition.subsystems.internalconveyor.KickerSubsystem;
-import competition.subsystems.internalconveyor.commands.ManualLiftCommand;
-import competition.subsystems.internalconveyor.commands.ManualReverseCommand;
+import competition.subsystems.internalconveyor.commands.KickerLiftCommand;
+import competition.subsystems.internalconveyor.commands.KickerReverseCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.BangBangCommand;
 import competition.subsystems.shooterwheel.commands.ShooterWheelMaintainerCommand;
@@ -135,8 +135,8 @@ public class OperatorCommandMap {
     }
 
     @Inject
-    public void setupKickerCommands(OperatorInterface oi, KickerSubsystem kicker, ManualLiftCommand liftCommand,
-            ManualReverseCommand reverseCommand){
+    public void setupKickerCommands(OperatorInterface oi, KickerSubsystem kicker, KickerLiftCommand liftCommand,
+            KickerReverseCommand reverseCommand){
             oi.manualOperatorGamepad.getifAvailable(XboxButton.A).whileHeld(liftCommand);
             oi.manualOperatorGamepad.getifAvailable(XboxButton.B).whileHeld(reverseCommand);
     }

@@ -5,13 +5,13 @@ import competition.operator_interface.OperatorInterface;
 import competition.subsystems.internalconveyor.KickerSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class ManualLiftCommand extends BaseCommand{
+public class KickerLiftCommand extends BaseCommand{
 
     final OperatorInterface oi;
     final KickerSubsystem kicker;
 
     @Inject
-    public ManualLiftCommand(OperatorInterface oi, KickerSubsystem kicker){
+    public KickerLiftCommand(OperatorInterface oi, KickerSubsystem kicker){
         this.oi = oi;
         this.kicker = kicker;
         this.addRequirements(kicker);
@@ -23,6 +23,6 @@ public class ManualLiftCommand extends BaseCommand{
     }
 
     public void execute(){
-        kicker.manualLift();
+        kicker.lift();
     }
 }

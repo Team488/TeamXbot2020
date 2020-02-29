@@ -5,13 +5,13 @@ import competition.operator_interface.OperatorInterface;
 import competition.subsystems.internalconveyor.KickerSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class ManualReverseCommand extends BaseCommand{
+public class KickerReverseCommand extends BaseCommand{
 
     final OperatorInterface oi;
     final KickerSubsystem kicker;
 
     @Inject
-    public ManualReverseCommand (OperatorInterface oi, KickerSubsystem kicker){
+    public KickerReverseCommand (OperatorInterface oi, KickerSubsystem kicker){
         this.oi = oi;
         this.kicker = kicker;
         this.addRequirements(kicker);
@@ -23,6 +23,6 @@ public class ManualReverseCommand extends BaseCommand{
     }
 
     public void execute(){
-        kicker.manualReverse();
+        kicker.reverse();
     }
 }
