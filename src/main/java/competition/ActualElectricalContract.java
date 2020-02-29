@@ -14,7 +14,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isIntakeReady() {
-        return true;
+        return false;
     }
 
     @Override
@@ -44,6 +44,6 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isDriveReady() {
-        return false;
+        return true;
     }
 }

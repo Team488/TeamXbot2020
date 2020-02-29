@@ -40,9 +40,9 @@ public class KickerSubsystem extends BaseSubsystem { //makes conveyer transport 
 
         if(contract.isKickerReady()){
             this.wheelMotor = factory.createCANTalon(contract.kickerMotor().channel);
-            this.rollerMotor = factory.createCANTalon(contract.kickerRollerMotor().channel);
+            //this.rollerMotor = factory.createCANTalon(contract.kickerRollerMotor().channel);
             this.wheelMotor.setInverted(contract.kickerMotor().inverted);
-            this.rollerMotor.setInverted(contract.kickerRollerMotor().inverted);
+            //this.rollerMotor.setInverted(contract.kickerRollerMotor().inverted);
         }
 
         scheduler.registerSubsystem(this);
@@ -76,13 +76,13 @@ public class KickerSubsystem extends BaseSubsystem { //makes conveyer transport 
 
     private void setRollerPower(double power){
         if(contract.isKickerReady()){
-            rollerMotor.simpleSet(power);
+            //rollerMotor.simpleSet(power);
         }
     }
 
     private double getPower() {
         if (contract.isKickerReady()) {
-            return rollerMotor.getMotorOutputPercent();
+            //return rollerMotor.getMotorOutputPercent();
         }
         return 0;
     }
