@@ -55,6 +55,7 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
         leftLimitProp = pf.createEphemeralProperty("Over Left Limit", false);
 
         if (contract.isTurretReady()) {
+            calibrateTurret();
             this.motor = factory.createCANTalon(contract.turretMotor().channel);
             motor.configureAsMasterMotor(this.getPrefix(), "TurretMotor", contract.turretMotor().inverted,
                     contract.turretEncoder().inverted);
