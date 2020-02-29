@@ -16,15 +16,14 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
 
     final DoubleProperty calibrationOffsetProp;
     final DoubleProperty extendPowerProp;
+    final DoubleProperty manualPowerProp;
     final DoubleProperty retractPowerProp;
     final DoubleProperty rangeProp;
     final BooleanProperty calibratedProp;
     final DoubleProperty currentPercentExtendedProp;
     private IdealElectricalContract contract;
     public XCANTalon hoodMotor;
-    final DoubleProperty goalAngleProp;
-
-    double rawPosition; //for testing
+    final DoubleProperty goalPercentProp;
 
     @Inject
     public HoodSubsystem (CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract,
@@ -35,11 +34,12 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
 
         calibrationOffsetProp = pf.createPersistentProperty("Calibration Offset", 0);
         extendPowerProp = pf.createPersistentProperty("Extend Power", 1);
+        manualPowerProp = pf.createPersistentProperty("Manual Power", .15);
         retractPowerProp = pf.createPersistentProperty("Retract Power", -1);
         rangeProp = pf.createPersistentProperty("Range", 1000);
         currentPercentExtendedProp = pf.createEphemeralProperty("Current Percent Extended", 0);
         calibratedProp = pf.createEphemeralProperty("Calibrated", false);
-        goalAngleProp = pf.createEphemeralProperty("Goal Angle", 0);
+        goalPercentProp = pf.createEphemeralProperty("Goal Percent", 0);
 
         if (contract.isHoodReady()) {
              this.hoodMotor = factory.createCANTalon(contract.hoodMotor().channel);
@@ -47,10 +47,6 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         }
 
         scheduler.registerSubsystem(this);
-    }
-
-    public void setAngle(double angle){
-        currentPercentExtendedProp.set(angle);
     }
 
     public void calibrateHood(){
@@ -66,16 +62,24 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         return calibratedProp.get();
     }
 
-    public void setGoalAngle(double angle){
-        goalAngleProp.set(angle);
+    public void setGoalPercent(double percent){
+        goalPercentProp.set(percent);
     }
 
-    public double getGoalAngle(){
-        return goalAngleProp.get();
+    public double getGoalPercent(){
+        return goalPercentProp.get();
     }
 
     public void extend(){
         setPower(extendPowerProp.get());
+    }
+
+    public void slowlyExtend(){
+        setPower(manualPowerProp.get());
+    }
+
+    public void slowlyRetract(){
+        setPower(manualPowerProp.get() *-1 );
     }
 
     public void retract(){
@@ -133,11 +137,11 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
 
     @Override
     public double getTargetValue(){
-        return getGoalAngle();
+        return getGoalPercent();
     }
 
     @Override
     public void setTargetValue(double value){
-        setGoalAngle(value);
+        setGoalPercent(value);
     }
 }
