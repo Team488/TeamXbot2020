@@ -650,6 +650,19 @@
               "_source0": "network_table:///LiveWindow/Ungrouped/navX-Sensor/Value",
               "_title": "Ungrouped/navX-Sensor/Value"
             }
+          },
+          "1,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///LiveWindow/Ungrouped/DigitalInput[1]/Value",
+              "_title": "Ungrouped/DigitalInput[1]/Value",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
           }
         }
       }
@@ -876,7 +889,8 @@
               "Graph/Visible time": 30.0,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0
+              "Y-axis/Lower bound": -1.0,
+              "Visible data/SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent": true
             }
           },
           "5,2": {
