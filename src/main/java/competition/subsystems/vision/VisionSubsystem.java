@@ -25,9 +25,9 @@ public class VisionSubsystem extends BaseSubsystem {
     private final BooleanProperty ambanActiveProperty;
     private final BooleanProperty ambanFixAcquiredProperty;
     private final DoubleProperty ambanYawToTargetProperty;
-    private DoubleProperty initialX;
-    private DoubleProperty initialY;
-    private DoubleProperty initialTheta;
+    public DoubleProperty initialX;
+    public DoubleProperty initialY;
+    public DoubleProperty initialTheta;
 
     final LoggingLatch ambanFixAquiredLogLatch;
     final LoggingLatch ambanFixLostLogLatch;
@@ -99,7 +99,11 @@ public class VisionSubsystem extends BaseSubsystem {
     //TODO: need to find a way to get values of pose
     // check vision, compare pose position with vision position, check if it is set/sent to raspberry pi
     public boolean checkInitialPosSet(){
-        if(initialX.get() == pose.intPosX.get() && initialTheta.get() == pose.intPosTheta.get() && initialY.get() == pose.intPosY.get()){
+        double y = pose.getCurrentFieldPose().getPoint().y;
+        double x = pose.getCurrentFieldPose().getPoint().x;
+        double theta = pose.getCurrentFieldPose().getHeading().getValue();
+
+        if(initialX.get() == x && initialTheta.get() == theta && initialY.get() == y){
             return true;
         }else{
             return false;
