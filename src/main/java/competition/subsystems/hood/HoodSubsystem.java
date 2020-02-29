@@ -63,7 +63,14 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     }
 
     public void setGoalPercent(double percent){
+        percent = MathUtils.constrainDouble(percent, 0, 1);
         goalPercentProp.set(percent);
+    }
+
+    public void changeTargetPercent(double delta) {
+        double goal = getGoalPercent();
+        goal += delta;
+        setGoalPercent(goal);
     }
 
     public double getGoalPercent(){
