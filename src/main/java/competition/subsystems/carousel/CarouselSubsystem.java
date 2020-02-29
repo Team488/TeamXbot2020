@@ -49,7 +49,7 @@ public class CarouselSubsystem extends BaseSubsystem{
     }
 
     public double getFiringPower() {
-        return firingPowerProp.get()
+        return firingPowerProp.get();
     }
 
     public void turnLeft(){

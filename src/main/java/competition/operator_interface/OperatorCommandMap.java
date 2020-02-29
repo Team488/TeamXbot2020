@@ -4,6 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import competition.commandgroups.PassTowardsTargetCommand;
+import competition.commandgroups.PrepareToFireCommand;
+import competition.commandgroups.ShutdownShootingCommand;
+import competition.subsystems.carousel.commands.CarouselFiringModeCommand;
 import competition.subsystems.climber.commands.DynamicClimbCommand;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
@@ -18,6 +21,8 @@ import competition.subsystems.turret.commands.TurretRotateToVisionTargetCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import xbot.common.controls.sensors.AdvancedButton;
 import xbot.common.controls.sensors.XXboxController.XboxButton;
 import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
 
@@ -72,8 +77,14 @@ public class OperatorCommandMap {
     }
 
     @Inject
-    public void setupOperatorCommandGroups(OperatorInterface operatorInterface, PassTowardsTargetCommand passCommand) {
-        operatorInterface.operatorGamepad.getifAvailable(XboxButton.Y).whenPressed(passCommand, false);
+    public void setupOperatorCommandGroups(OperatorInterface oi, PassTowardsTargetCommand passCommand,
+    PrepareToFireCommand prepareToFire, CarouselFiringModeCommand carouselFiringMode, ShutdownShootingCommand stopShooting) {
+        oi.operatorGamepad.getifAvailable(XboxButton.Y).whenPressed(passCommand, false);
+
+        var fire = new SequentialCommandGroup(prepareToFire, carouselFiringMode);
+        AdvancedButton fireButton = oi.operatorGamepad.getifAvailable(XboxButton.Start);
+        fireButton.whenPressed(fire);
+        fireButton.whenReleased(stopShooting);
     }
 
     @Inject

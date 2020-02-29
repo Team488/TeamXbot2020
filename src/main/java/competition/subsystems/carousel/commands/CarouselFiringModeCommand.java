@@ -44,8 +44,19 @@ public class CarouselFiringModeCommand extends BaseCommand {
         log.info("Initializing");
     }
 
+    @Override
+    public void execute() {
+        double power = carousel.getFiringPower();
+        
+        if (!readyToSpin()) {
+            power = 0;
+        }
+
+        carousel.setPower(power);
+    }
+
     private boolean readyToSpin() {
-        boolean ready = atGoal(turret) && atGoal(hood) && kicker.isKickerLikelyClear() && shooterMovingSome();
+        boolean ready = atGoal(turret) && atGoal(hood) && kicker.isKickerLikelyClear();
 
         // if we're not in stream fire, then we are in accurate mode.
         if (!streamFire) {
@@ -57,9 +68,5 @@ public class CarouselFiringModeCommand extends BaseCommand {
 
     private boolean atGoal(BaseSetpointSubsystem subsystem) {
         return subsystem.isMaintainerAtGoal();
-    }
-
-    private boolean shooterMovingSome() {
-        return wheel.getCurrentRPM() > 500;
     }
 }
