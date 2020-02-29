@@ -1,13 +1,20 @@
 package competition.subsystems.vision.commands;
 
+import com.google.inject.Inject;
+
 import competition.subsystems.pose.PoseSubsystem;
 import competition.subsystems.vision.VisionSubsystem;
 import xbot.common.command.BaseCommand;
 
-public class SendInitialPos extends BaseCommand{
+public class SendInitialPositionToRaspberryCommand extends BaseCommand{
 
     VisionSubsystem b;
     PoseSubsystem pose;
+
+    @Inject
+    public SendInitialPositionToRaspberryCommand(){ // TODO: check if any thing is needed in the parameters (probably PropertyFactory)
+
+    }
 
     @Override
     public void execute() {

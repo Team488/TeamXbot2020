@@ -96,7 +96,7 @@ public class VisionSubsystem extends BaseSubsystem {
         poseTable.getEntry("roll").setNumber(this.pose.getRobotRoll());
         poseTable.getEntry("yawAngularVelocity").setNumber(this.pose.getYawAngularVelocity());
     }
-
+    //TODO: need to find a way to get values of pose
     // check vision, compare pose position with vision position, check if it is set/sent to raspberry pi
     public boolean checkInitialPosSet(){
         if(initialX.get() == pose.intPosX.get() && initialTheta.get() == pose.intPosTheta.get() && initialY.get() == pose.intPosY.get()){
