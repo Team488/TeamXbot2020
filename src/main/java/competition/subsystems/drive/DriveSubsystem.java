@@ -29,9 +29,9 @@ public class DriveSubsystem extends BaseDriveSubsystem {
 
 
     // would need to run characterization tool for these values (ks, kv, track width):
-    public static final double ks = 0; // static gain
-    public static final double kv = 0; // velocity gain
-    public static final double trackWidth = 0; // track width
+    public static final double ks = 1.06; // static gain
+    public static final double kv = 0.0635; // velocity gain
+    public static final double trackWidth = 1.09; // track width
 
     private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(trackWidth);
     private DifferentialDriveWheelSpeeds wheelSpeeds;

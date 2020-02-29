@@ -18,48 +18,20 @@ public class ArcadeDriveWithKinematicsCommand extends BaseCommand {
     final DoubleProperty linearVelocityConstantValue;
     final DoubleProperty angularVelocityConstantValue;
 
-    double linearVelocityConstant = 1; // needs tuning
-    double angularVelocityConstant = 1; // needs tuning
-
     @Inject
     public ArcadeDriveWithKinematicsCommand(DriveSubsystem drive, OperatorInterface oi, PropertyFactory propManager) {
         this.drive = drive;
         this.oi = oi;
         this.addRequirements(drive);
 
-        linearVelocityConstantValue = propManager.createEphemeralProperty("Linear Velocity Constant Value", 0.0);
-        angularVelocityConstantValue = propManager.createEphemeralProperty("Angular Velocity Constant Value", 0.0);
+        linearVelocityConstantValue = propManager.createPersistentProperty("Linear Velocity Constant Value", 200.0);
+        angularVelocityConstantValue = propManager.createPersistentProperty("Angular Velocity Constant Value", 300.0);
         
     }
 
     @Override
     public void initialize() {
         log.info("Initializing");
-    }
-
-    // Functions for robot tuning
-    public void increaseLinearVelocityConstant(double increaseRate) {
-        linearVelocityConstant += increaseRate;
-        linearVelocityConstantValue.set(linearVelocityConstant);
-        log.info("Linear Velocity Constant Increased by " + increaseRate + ": " + linearVelocityConstant);
-    }
-
-    public void decreaseLinearVelocityConstant(double decreaseRate) {
-        linearVelocityConstant -= decreaseRate;
-        linearVelocityConstantValue.set(linearVelocityConstant);
-        log.info("Linear Velocity Constant Decreased by " + decreaseRate + ": " + linearVelocityConstant);
-    }
-
-    public void increaseAngularVelocityConstant(double increaseRate) {
-        angularVelocityConstant += increaseRate;
-        angularVelocityConstantValue.set(angularVelocityConstant);
-        log.info("Angular Velocity Constant Increased by " + increaseRate + ": " + linearVelocityConstant);
-    }
-    
-    public void decreaseAngularVelocityConstant(double decreaseRate) {
-        angularVelocityConstant -= decreaseRate;
-        angularVelocityConstantValue.set(angularVelocityConstant);
-        log.info("Angular Velocity Constant Decreased by " + decreaseRate + ": " + linearVelocityConstant);
     }
 
     @Override
@@ -73,8 +45,8 @@ public class ArcadeDriveWithKinematicsCommand extends BaseCommand {
         translate = MathUtils.exponentAndRetainSign(translate, 3);
         rotate = MathUtils.exponentAndRetainSign(rotate, 3);
 
-        translate *= linearVelocityConstant;
-        rotate *= angularVelocityConstant;
+        translate *= linearVelocityConstantValue.get();
+        rotate *= angularVelocityConstantValue.get();
 
         drive.kinematicsDrive(translate, rotate);
     }
