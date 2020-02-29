@@ -47,7 +47,7 @@ public class IdealElectricalContract extends ElectricalContract {
     // Everything above sure about inversion
     // Everything below not sure about the inversion
     public DeviceInfo intakeMotor() {
-        return new DeviceInfo(29, false);
+        return new DeviceInfo(29, true);
     }
     
     public boolean isIntakeReady() {
@@ -79,11 +79,11 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo kickerMotor() {
-        return new DeviceInfo(31, false);
+        return new DeviceInfo(24, true);
     }
 
     public DeviceInfo kickerRollerMotor() {
-        return new DeviceInfo(24, false);
+        return new DeviceInfo(31, false);
     }
 
     public DeviceInfo turretEncoder() {
@@ -108,5 +108,9 @@ public class IdealElectricalContract extends ElectricalContract {
 
     public DeviceInfo getClimbSolenoid(){
         return new DeviceInfo(1, true);
+    }
+
+    public DeviceInfo getSpindexerSensor() {
+        return new DeviceInfo(1, false);
     }
 }
