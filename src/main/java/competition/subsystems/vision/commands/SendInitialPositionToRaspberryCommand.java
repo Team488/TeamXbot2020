@@ -8,12 +8,13 @@ import xbot.common.command.BaseCommand;
 
 public class SendInitialPositionToRaspberryCommand extends BaseCommand{
 
-    VisionSubsystem b;
+    VisionSubsystem vision;
     PoseSubsystem pose;
 
     @Inject
-    public SendInitialPositionToRaspberryCommand(){ // TODO: check if any thing is needed in the parameters (probably PropertyFactory)
-
+    public SendInitialPositionToRaspberryCommand(VisionSubsystem eyes, PoseSubsystem pos){
+        this.vision = eyes;
+        this.pose = pos;
     }
 
     @Override
@@ -27,7 +28,7 @@ public class SendInitialPositionToRaspberryCommand extends BaseCommand{
         double x = pose.getCurrentFieldPose().getPoint().x; // XY Values
         double y = pose.getCurrentFieldPose().getPoint().y; // XY Values
 
-        b.sendXYThetaPos(x, y, theta);
+        vision.sendXYThetaPos(x, y, theta);
 
     }
 
