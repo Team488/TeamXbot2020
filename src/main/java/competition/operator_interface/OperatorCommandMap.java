@@ -1,11 +1,14 @@
 package competition.operator_interface;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import competition.commandgroups.PassTowardsTargetCommand;
 import competition.commandgroups.PrepareToFireCommand;
 import competition.commandgroups.ShutdownShootingCommand;
+import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand;
+import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand.FieldPosition;
 import competition.subsystems.carousel.commands.CarouselFiringModeCommand;
 import competition.subsystems.climber.commands.DynamicClimbCommand;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
@@ -57,8 +60,8 @@ public class OperatorCommandMap {
         Command oriented90 = new InstantCommand(() -> turret.setFieldOrientedGoalAngle(90));
 
         oi.operatorGamepad.getifAvailable(XboxButton.RightStick).whenPressed(calibrate);
-        //oi.operatorGamepad.getifAvailable(XboxButton.Start).whenPressed(rotateToVisionTarget);
-        oi.operatorGamepad.getifAvailable(XboxButton.X).whileHeld(pointDownrange);
+        // oi.operatorGamepad.getifAvailable(XboxButton.Start).whenPressed(rotateToVisionTarget);
+        //oi.operatorGamepad.getifAvailable(XboxButton.X).whileHeld(pointDownrange);
         oi.manualOperatorGamepad.getifAvailable(XboxButton.RightStick).whenPressed(calibrate);
         oi.manualOperatorGamepad.getifAvailable(XboxButton.LeftStick).whenPressed(oriented90);
         oi.manualOperatorGamepad.getifAvailable(XboxButton.Start).whileHeld(rotateToVisionTarget);
@@ -82,13 +85,45 @@ public class OperatorCommandMap {
 
     @Inject
     public void setupOperatorCommandGroups(OperatorInterface oi, PassTowardsTargetCommand passCommand,
-    PrepareToFireCommand prepareToFire, CarouselFiringModeCommand carouselFiringMode, ShutdownShootingCommand stopShooting) {
-        oi.operatorGamepad.getifAvailable(XboxButton.Y).whenPressed(passCommand, false);
+            Provider<PrepareToFireCommand> prepareToFireProvider,
+            Provider<CarouselFiringModeCommand> carouselFiringModeProvider, 
+            Provider<ShutdownShootingCommand> stopShootingProvider,
+            Provider<SetWheelAndHoodGoalsCommand> goalsProvider) {
+        var yButton = oi.operatorGamepad.getifAvailable(XboxButton.Y);
+        var xButton = oi.operatorGamepad.getifAvailable(XboxButton.X);
 
-        var fire = new SequentialCommandGroup(prepareToFire, carouselFiringMode);
-        AdvancedButton fireButton = oi.operatorGamepad.getifAvailable(XboxButton.Start);
-        fireButton.whenPressed(fire);
-        fireButton.whenReleased(stopShooting);
+        setupFiringCommand(
+            yButton, 
+            FieldPosition.InitiationCloseToGoal, 
+            goalsProvider.get(), 
+            prepareToFireProvider.get(), 
+            carouselFiringModeProvider.get(),
+            stopShootingProvider.get());
+
+        setupFiringCommand(
+            xButton, 
+            FieldPosition.InitiationFarFromGoal, 
+            goalsProvider.get(), 
+            prepareToFireProvider.get(), 
+            carouselFiringModeProvider.get(),
+            stopShootingProvider.get());
+    }
+
+    private void setupFiringCommand(
+        AdvancedButton button,
+        FieldPosition position, 
+        SetWheelAndHoodGoalsCommand setGoals,
+        PrepareToFireCommand prepare,
+        CarouselFiringModeCommand runCarousel,
+        ShutdownShootingCommand stopShooting) {
+            setGoals.setGoals(position);
+            var firingSequence = new SequentialCommandGroup(setGoals, prepare, runCarousel);
+            twinBindButton(button, firingSequence, stopShooting);
+        }
+
+    private void twinBindButton(AdvancedButton button, Command pressCommand, Command releaseCommand) {
+        button.whenPressed(pressCommand);
+        button.whenReleased(releaseCommand);
     }
 
     @Inject
@@ -97,12 +132,12 @@ public class OperatorCommandMap {
     }
 
     @Inject
-    public void setUpHoodCommands(OperatorInterface oi, HoodSubsystem hood){
+    public void setUpHoodCommands(OperatorInterface oi, HoodSubsystem hood) {        
         oi.operatorGamepad.getifAvailable(XboxButton.LeftStick).whenPressed(new InstantCommand(hood::calibrateHood));
-
+        
         var hoodForward = new InstantCommand(() -> hood.changeTargetPercent(10), hood.getSetpointLock());
         var hoodBack = new InstantCommand(() -> hood.changeTargetPercent(10), hood.getSetpointLock());
-
+        
         oi.operatorGamepad.getPovIfAvailable(0).whenPressed(hoodForward);
         oi.operatorGamepad.getPovIfAvailable(180).whenPressed(hoodBack);
     }
