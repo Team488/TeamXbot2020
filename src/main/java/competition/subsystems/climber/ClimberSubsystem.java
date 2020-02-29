@@ -28,7 +28,7 @@ public class ClimberSubsystem extends BaseSubsystem {
     public XCANSparkMax leftMotor;
     public XCANSparkMax rightMotor;
     final IdealElectricalContract contract;
-    public final XSolenoid climbSolenoid;
+    public XSolenoid climbSolenoid;
     final DoubleProperty slowZoneProp;
     final DoubleProperty slowZoneFactorProp;
     final DoubleProperty defaultPowerProp;
@@ -49,7 +49,6 @@ public class ClimberSubsystem extends BaseSubsystem {
         unsafeExtensionProp = pf.createPersistentProperty("Unsafe Extension Distance", 3);
         catchUpFactorProp = pf.createPersistentProperty("Catch Up Factor", 0.333);
 
-        this.climbSolenoid = factory.createSolenoid(contract.getClimbSolenoid().channel);
         this.contract = contract;
 
         if (contract.isClimberReady()) {
@@ -57,6 +56,7 @@ public class ClimberSubsystem extends BaseSubsystem {
                     "LeftMotor");
             this.rightMotor = factory.createCANSparkMax(contract.rightClimberMotor().channel, this.getPrefix(),
                     "RightMotor");
+            this.climbSolenoid = factory.createSolenoid(contract.getClimbSolenoid().channel);
         }
     }
 
@@ -88,10 +88,12 @@ public class ClimberSubsystem extends BaseSubsystem {
 
     private double applyDeadbandAndBrake(double power) {
         power = MathUtils.deadband(power, minPower.get());
-        if (Math.abs(power) > 0.001) {
-            climbSolenoid.setOn(true);
-        } else {
-            climbSolenoid.setOn(false);
+        if (contract.isClimberReady()) {
+            if (Math.abs(power) > 0.001) {
+                climbSolenoid.setOn(true);
+            } else {
+                climbSolenoid.setOn(false);
+            }
         }
         return power;
     }

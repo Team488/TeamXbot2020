@@ -9,7 +9,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isKickerReady() {
-        return false;
+        return true;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isShooterWheelReady() {
-        return false;
+        return true;
     }
 
     @Override
