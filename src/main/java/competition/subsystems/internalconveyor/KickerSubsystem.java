@@ -49,9 +49,19 @@ public class KickerSubsystem extends BaseSubsystem { //makes conveyer transport 
         setWheelPower(wheelLiftPowerProp.get());
     }
 
+    // public void manualLift(){
+    //     setWheelPower(manualWheelLiftPowerProp.get());
+    //     setRollerPower(manualRollerLiftPowerProp.get());
+    // }
+
     public void reverse(){
         setWheelPower(wheelReversePowerProp.get());
     }
+
+    // public void manualReverse(){
+    //     setWheelPower(manualWheelReversePowerProp.get());
+    //     setRollerPower(manualRollerReversePowerProp.get());
+    // }
 
     public void stop(){
         setWheelPower(0);

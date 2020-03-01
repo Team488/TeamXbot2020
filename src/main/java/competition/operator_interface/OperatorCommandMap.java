@@ -21,6 +21,9 @@ import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.intake.commands.EjectCommand;
 import competition.subsystems.intake.commands.IntakeCommand;
+import competition.subsystems.internalconveyor.KickerSubsystem;
+import competition.subsystems.internalconveyor.commands.KickerLiftCommand;
+import competition.subsystems.internalconveyor.commands.KickerReverseCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.shooterwheel.commands.BangBangCommand;
 import competition.subsystems.shooterwheel.commands.ShooterWheelMaintainerCommand;
@@ -115,21 +118,37 @@ public class OperatorCommandMap {
 
         twinBindButton(aButton, preheatGoals, cooldownSequence);
 
-        setupFiringCommand(bButton, FieldPosition.TrenchCloseToGoal, goalsProvider.get(),
-                prepareToFireProvider.get(), carouselFiringModeProvider.get(), stopShootingProvider.get());
+        setupFiringCommand(bButton,
+        FieldPosition.TrenchCloseToGoal, goalsProvider.get(),
+        prepareToFireProvider.get(),
+        carouselFiringModeProvider.get(),
+        stopShootingProvider.get());
 
-        setupFiringCommand(xButton, FieldPosition.InitiationCloseToGoal, goalsProvider.get(),
-                prepareToFireProvider.get(), carouselFiringModeProvider.get(), stopShootingProvider.get());
+        setupFiringCommand(xButton,
+        FieldPosition.InitiationCloseToGoal,
+        goalsProvider.get(),
+        prepareToFireProvider.get(),
+        carouselFiringModeProvider.get(),
+        stopShootingProvider.get());
 
-        setupFiringCommand(yButton, FieldPosition.InitiationFarFromGoal, goalsProvider.get(),
-                prepareToFireProvider.get(), carouselFiringModeProvider.get(), stopShootingProvider.get());
+        setupFiringCommand(yButton,
+        FieldPosition.InitiationFarFromGoal,
+        goalsProvider.get(),
+        prepareToFireProvider.get(),
+        carouselFiringModeProvider.get(),
+        stopShootingProvider.get());
     }
 
-    private void setupFiringCommand(AdvancedButton button, FieldPosition position, SetWheelAndHoodGoalsCommand setGoals,
-            PrepareToFireCommand prepare, CarouselFiringModeCommand runCarousel, ShutdownShootingCommand stopShooting) {
-        setGoals.setGoals(position);
-        var firingSequence = new SequentialCommandGroup(setGoals, prepare, runCarousel);
-        twinBindButton(button, firingSequence, stopShooting);
+
+    private void setupFiringCommand(AdvancedButton button,
+    FieldPosition position,
+    SetWheelAndHoodGoalsCommand setGoals,
+    PrepareToFireCommand prepare,
+    CarouselFiringModeCommand runCarousel,
+    ShutdownShootingCommand stopShooting){
+            setGoals.setGoals(position);
+            var firingSequence = new SequentialCommandGroup(setGoals, prepare, runCarousel);
+            twinBindButton(button, firingSequence, stopShooting);
     }
 
     private void twinBindButton(AdvancedButton button, Command pressCommand, Command releaseCommand) {
@@ -140,6 +159,13 @@ public class OperatorCommandMap {
     @Inject
     public void setupClimbCommands(OperatorInterface oi, DynamicClimbCommand dynamicClimb) {
         oi.operatorGamepad.getifAvailable(XboxButton.Back).whileHeld(dynamicClimb);
+    }
+
+    @Inject
+    public void setupKickerCommands(OperatorInterface oi, KickerSubsystem kicker, KickerLiftCommand liftCommand,
+            KickerReverseCommand reverseCommand){
+            oi.manualOperatorGamepad.getifAvailable(XboxButton.A).whileHeld(liftCommand);
+            oi.manualOperatorGamepad.getifAvailable(XboxButton.B).whileHeld(reverseCommand);
     }
 
     @Inject
@@ -154,6 +180,7 @@ public class OperatorCommandMap {
         oi.manualOperatorGamepad.getPovIfAvailable(180).whenPressed(hoodBack);
     }
 
+    @Inject
     public void setupArmCommands(OperatorInterface oi, RaiseArmCommand raiseArm, LowerArmCommand lowerArm, TrenchSafetyCommand trenchSafety) {
         oi.driverGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(raiseArm);
         oi.driverGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(lowerArm);
