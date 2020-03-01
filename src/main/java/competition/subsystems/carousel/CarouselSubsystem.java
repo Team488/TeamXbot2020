@@ -30,7 +30,7 @@ public class CarouselSubsystem extends BaseSubsystem{
         leftCarouselPowerProp = pf.createPersistentProperty("Left Carousel Power", 1);
         rightCarouselPowerProp = pf.createPersistentProperty("Right Carousel Power", -1);
         positionSensorActivatedProp = pf.createEphemeralProperty("Position Sensor Activated", false);
-        firingPowerProp = pf.createPersistentProperty("Firing Power", 0.75);
+        firingPowerProp = pf.createPersistentProperty("Firing Power", 1);
         this.contract = contract;
 
         if(contract.isCarouselReady()){
