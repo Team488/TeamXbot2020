@@ -7,9 +7,11 @@ import com.google.inject.Singleton;
 import competition.commandgroups.PassTowardsTargetCommand;
 import competition.commandgroups.PrepareToFireCommand;
 import competition.commandgroups.ShutdownShootingCommand;
+import competition.commandgroups.UnjamCarouselCommand;
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand;
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand.FieldPosition;
 import competition.subsystems.carousel.commands.CarouselFiringModeCommand;
+import competition.subsystems.carousel.commands.StopCarouselCommand;
 import competition.subsystems.climber.commands.DynamicClimbCommand;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
@@ -88,9 +90,13 @@ public class OperatorCommandMap {
             Provider<PrepareToFireCommand> prepareToFireProvider,
             Provider<CarouselFiringModeCommand> carouselFiringModeProvider, 
             Provider<ShutdownShootingCommand> stopShootingProvider,
-            Provider<SetWheelAndHoodGoalsCommand> goalsProvider) {
+            Provider<SetWheelAndHoodGoalsCommand> goalsProvider,
+            Provider<UnjamCarouselCommand> unJamCarouselProvider, 
+            StopCarouselCommand stopCarousel
+            ) {
         var yButton = oi.operatorGamepad.getifAvailable(XboxButton.Y);
         var xButton = oi.operatorGamepad.getifAvailable(XboxButton.X);
+        var aButton = oi.operatorGamepad.getifAvailable(XboxButton.A);
 
         setupFiringCommand(
             yButton, 
@@ -107,6 +113,11 @@ public class OperatorCommandMap {
             prepareToFireProvider.get(), 
             carouselFiringModeProvider.get(),
             stopShootingProvider.get());
+
+            setUpCarouselUnjamming(
+            aButton, 
+            unJamCarouselProvider.get(), 
+            stopCarousel);
     }
 
     private void setupFiringCommand(
@@ -141,4 +152,11 @@ public class OperatorCommandMap {
         oi.operatorGamepad.getPovIfAvailable(0).whenPressed(hoodForward);
         oi.operatorGamepad.getPovIfAvailable(180).whenPressed(hoodBack);
     }
+
+    private void setUpCarouselUnjamming(AdvancedButton button, UnjamCarouselCommand unJamCommand, StopCarouselCommand stopCarousel) {
+        
+        button.whileHeld(unJamCommand);
+        button.whenReleased(stopCarousel);
+    }
+
 }
