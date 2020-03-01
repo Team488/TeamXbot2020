@@ -7,6 +7,7 @@ import com.google.inject.Singleton;
 import competition.commandgroups.PassTowardsTargetCommand;
 import competition.commandgroups.PrepareToFireCommand;
 import competition.commandgroups.ShutdownShootingCommand;
+import competition.commandgroups.TrenchSafetyCommand;
 import competition.commandgroups.ShakeCarouselCommand;
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand;
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand.FieldPosition;
@@ -153,8 +154,10 @@ public class OperatorCommandMap {
         oi.manualOperatorGamepad.getPovIfAvailable(180).whenPressed(hoodBack);
     }
 
-    public void setupArmCommands(OperatorInterface oi, RaiseArmCommand raiseArm, LowerArmCommand lowerArm) {
+    public void setupArmCommands(OperatorInterface oi, RaiseArmCommand raiseArm, LowerArmCommand lowerArm, TrenchSafetyCommand trenchSafety) {
         oi.driverGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(raiseArm);
         oi.driverGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(lowerArm);
+
+        oi.driverGamepad.getifAvailable(XboxButton.X).whenPressed(trenchSafety);
     }
 }
