@@ -11,13 +11,14 @@ import competition.subsystems.climber.commands.ClimberViaTriggerCommand;
 import competition.subsystems.drive.DriveSubsystem;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.hood.HoodSubsystem;
-import competition.subsystems.hood.commands.StopHoodCommand;
+import competition.subsystems.hood.commands.HoodMaintainerCommand;
 import competition.subsystems.intake.IntakeSubsystem;
+import competition.subsystems.intake.commands.CollectViaTriggersCommand;
 import competition.subsystems.intake.commands.StopIntakeCommand;
 import competition.subsystems.internalconveyor.KickerSubsystem;
 import competition.subsystems.internalconveyor.commands.KickerViaTriggerCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
-import competition.subsystems.shooterwheel.commands.StopShooterWheelCommand;
+import competition.subsystems.shooterwheel.commands.ShooterWheelMaintainerCommand;
 import competition.subsystems.turret.TurretSubsystem;
 import competition.subsystems.turret.commands.TurretMaintainerCommand;
 import xbot.common.command.XScheduler;
@@ -42,7 +43,7 @@ public class SubsystemDefaultCommandMap {
     }
 
     @Inject
-    public void setupHoodSubsystem(XScheduler scheduler, HoodSubsystem hood, StopHoodCommand command) {
+    public void setupHoodSubsystem(XScheduler scheduler, HoodSubsystem hood, HoodMaintainerCommand command) {
         scheduler.setDefaultCommand(hood, command);
     }
 
@@ -52,12 +53,12 @@ public class SubsystemDefaultCommandMap {
     }
 
     @Inject
-    public void setupIntakeSubsystem(XScheduler scheduler, IntakeSubsystem intake, StopIntakeCommand command) {
+    public void setupIntakeSubsystem(XScheduler scheduler, IntakeSubsystem intake, CollectViaTriggersCommand command) {
         scheduler.setDefaultCommand(intake, command);
     }
 
     @Inject
-    public void setupShooterWheelSubsystem(XScheduler scheduler, ShooterWheelSubsystem shooterWheel, StopShooterWheelCommand command) {
+    public void setupShooterWheelSubsystem(XScheduler scheduler, ShooterWheelSubsystem shooterWheel, ShooterWheelMaintainerCommand command) {
         scheduler.setDefaultCommand(shooterWheel, command);
     }
 

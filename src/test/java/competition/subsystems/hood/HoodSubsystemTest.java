@@ -1,6 +1,8 @@
 package competition.subsystems.hood;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -71,6 +73,26 @@ public class HoodSubsystemTest extends BaseCompetitionTest {
         hood.calibrateHood();
         changeTicks(496);
         assertEquals(.258, hood.getPercentExtended(), 0.001);
+    }
+
+    @Test
+    public void testRetractForCalibation(){
+        hood.retractForCalibration();
+
+        assertEquals(-0.05, hood.hoodMotor.getMotorOutputPercent(), 0.001);
+    }
+
+    @Test
+    public void testCalibrationTimeout(){
+        assertFalse(hood.isCalibrateInProgress());
+        assertFalse(hood.isCalibrated());
+
+        hood.setCalibrationStartTime();
+        assertTrue(hood.isCalibrateInProgress());
+        assertFalse(hood.isCalibrateTimedOut());
+
+        timer.advanceTimeInSecondsBy(10);
+        assertTrue(hood.isCalibrateTimedOut());
     }
 
     private void changeTicks(int ticks) {

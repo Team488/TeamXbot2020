@@ -1,571 +1,6 @@
 {
   "tabPane": [
     {
-      "title": "SmartDashboard",
-      "autoPopulate": true,
-      "autoPopulatePrefix": "SmartDashboard/",
-      "widgetPane": {
-        "gridSize": 128.0,
-        "showGrid": true,
-        "hgap": 16.0,
-        "vgap": 16.0,
-        "tiles": {
-          "0,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/DualNeoSubsystem/Leader/kFeedForward",
-              "_title": "DualNeoSubsystem/Leader/kFeedForward"
-            }
-          },
-          "1,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl22SubSystem/motor22/current",
-              "_title": "MotorControl22SubSystem/motor22/current"
-            }
-          },
-          "2,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl23SubSystem/motor23/current",
-              "_title": "MotorControl23SubSystem/motor23/current"
-            }
-          },
-          "3,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl22SubSystem/motor22/temperature",
-              "_title": "MotorControl22SubSystem/motor22/temperature"
-            }
-          },
-          "4,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl21SubSystem/motor21/voltage",
-              "_title": "MotorControl21SubSystem/motor21/voltage"
-            }
-          },
-          "5,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl22SubSystem/motor22/position",
-              "_title": "MotorControl22SubSystem/motor22/position"
-            }
-          },
-          "6,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl34SubSystem/motor34/velocity",
-              "_title": "MotorControl34SubSystem/motor34/velocity"
-            }
-          },
-          "7,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/PoseSubsystem/RIO rotated",
-              "_title": "PoseSubsystem/RIO rotated",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
-          },
-          "8,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/PoseSubsystem/Total distance X",
-              "_title": "PoseSubsystem/Total distance X"
-            }
-          },
-          "9,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/PoseSubsystem/Total distance Y",
-              "_title": "PoseSubsystem/Total distance Y"
-            }
-          },
-          "0,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl22SubSystem/motor22/voltage",
-              "_title": "MotorControl22SubSystem/motor22/voltage"
-            }
-          },
-          "1,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/DualNeoSubsystem/Leader/kIzone",
-              "_title": "DualNeoSubsystem/Leader/kIzone"
-            }
-          },
-          "2,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/PoseSubsystem/Right drive distance",
-              "_title": "PoseSubsystem/Right drive distance"
-            }
-          },
-          "3,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl32SubSystem/motor32/current",
-              "_title": "MotorControl32SubSystem/motor32/current"
-            }
-          },
-          "4,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl21SubSystem/motor21/velocity",
-              "_title": "MotorControl21SubSystem/motor21/velocity"
-            }
-          },
-          "5,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl23SubSystem/motor23/voltage",
-              "_title": "MotorControl23SubSystem/motor23/voltage"
-            }
-          },
-          "6,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/PoseSubsystem/Current pitch",
-              "_title": "PoseSubsystem/Current pitch"
-            }
-          },
-          "7,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl33SubSystem/motor33/current",
-              "_title": "MotorControl33SubSystem/motor33/current"
-            }
-          },
-          "8,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl23SubSystem/motor23/position",
-              "_title": "MotorControl23SubSystem/motor23/position"
-            }
-          },
-          "9,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl34SubSystem/motor34/current",
-              "_title": "MotorControl34SubSystem/motor34/current"
-            }
-          },
-          "0,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/DualNeoSubsystem/Leader/kMinOutput",
-              "_title": "DualNeoSubsystem/Leader/kMinOutput"
-            }
-          },
-          "1,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl33SubSystem/motor33/temperature",
-              "_title": "MotorControl33SubSystem/motor33/temperature"
-            }
-          },
-          "2,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl32SubSystem/motor32/voltage",
-              "_title": "MotorControl32SubSystem/motor32/voltage"
-            }
-          },
-          "3,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/RobotSession",
-              "_title": "RobotSession"
-            }
-          },
-          "4,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/PoseSubsystem/Current roll",
-              "_title": "PoseSubsystem/Current roll"
-            }
-          },
-          "5,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Robot loop frequency report interval",
-              "_title": "Robot loop frequency report interval"
-            }
-          },
-          "6,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl22SubSystem/motor22/velocity",
-              "_title": "MotorControl22SubSystem/motor22/velocity"
-            }
-          },
-          "7,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl33SubSystem/motor33/voltage",
-              "_title": "MotorControl33SubSystem/motor33/voltage"
-            }
-          },
-          "8,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl32SubSystem/motor32/position",
-              "_title": "MotorControl32SubSystem/motor32/position"
-            }
-          },
-          "9,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/PoseSubsystem/Total distance Y Robot Perspective",
-              "_title": "PoseSubsystem/Total distance Y Robot Perspective"
-            }
-          },
-          "0,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl34SubSystem/motor34/voltage",
-              "_title": "MotorControl34SubSystem/motor34/voltage"
-            }
-          },
-          "1,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl21SubSystem/motor21/temperature",
-              "_title": "MotorControl21SubSystem/motor21/temperature"
-            }
-          },
-          "2,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/PoseSubsystem/Total Velocity",
-              "_title": "PoseSubsystem/Total Velocity"
-            }
-          },
-          "3,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/DualNeoSubsystem/Leader/kMaxOutput",
-              "_title": "DualNeoSubsystem/Leader/kMaxOutput"
-            }
-          },
-          "4,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl23SubSystem/motor23/velocity",
-              "_title": "MotorControl23SubSystem/motor23/velocity"
-            }
-          },
-          "5,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl33SubSystem/motor33/position",
-              "_title": "MotorControl33SubSystem/motor33/position"
-            }
-          },
-          "6,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/DualNeoSubsystem/TargetRPM",
-              "_title": "DualNeoSubsystem/TargetRPM"
-            }
-          },
-          "7,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl23SubSystem/motor23/temperature",
-              "_title": "MotorControl23SubSystem/motor23/temperature"
-            }
-          },
-          "8,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/PoseSubsystem/Left drive distance",
-              "_title": "PoseSubsystem/Left drive distance"
-            }
-          },
-          "9,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl32SubSystem/motor32/velocity",
-              "_title": "MotorControl32SubSystem/motor32/velocity"
-            }
-          },
-          "0,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/PoseSubsystem/Inherent RIO roll",
-              "_title": "PoseSubsystem/Inherent RIO roll"
-            }
-          },
-          "1,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl32SubSystem/motor32/temperature",
-              "_title": "MotorControl32SubSystem/motor32/temperature"
-            }
-          },
-          "2,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl34SubSystem/motor34/position",
-              "_title": "MotorControl34SubSystem/motor34/position"
-            }
-          },
-          "3,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/PoseSubsystem/Current compass heading",
-              "_title": "PoseSubsystem/Current compass heading"
-            }
-          },
-          "4,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/PoseSubsystem/Inherent RIO pitch",
-              "_title": "PoseSubsystem/Inherent RIO pitch"
-            }
-          },
-          "5,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl21SubSystem/motor21/position",
-              "_title": "MotorControl21SubSystem/motor21/position"
-            }
-          },
-          "6,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl34SubSystem/motor34/temperature",
-              "_title": "MotorControl34SubSystem/motor34/temperature"
-            }
-          },
-          "7,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/MotorControl33SubSystem/motor33/velocity",
-              "_title": "MotorControl33SubSystem/motor33/velocity"
-            }
-          },
-          "8,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/DualNeoSubsystem/Leader/kD",
-              "_title": "DualNeoSubsystem/Leader/kD"
-            }
-          },
-          "9,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/DualNeoSubsystem/Leader/kI",
-              "_title": "DualNeoSubsystem/Leader/kI"
-            }
-          }
-        }
-      }
-    },
-    {
       "title": "LiveWindow",
       "autoPopulate": true,
       "autoPopulatePrefix": "LiveWindow/",
@@ -809,30 +244,6 @@
               "_title": "/SmartDashboard/BangBangCommand/Max Power"
             }
           },
-          "9,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/speedTolerance",
-              "_title": "/SmartDashboard/ShooterWheelSubsystem/speedTolerance"
-            }
-          },
-          "9,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/speedWithinTolerance",
-              "_title": "SmartDashboard/ShooterWheelSubsystem/speedWithinTolerance",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
-          },
           "3,3": {
             "size": [
               1,
@@ -877,36 +288,93 @@
               "_title": "SmartDashboard/ShooterWheelSubsystem/ShooterFollower/Voltage"
             }
           },
-          "0,0": {
+          "9,3": {
             "size": [
-              2,
-              2
+              1,
+              1
             ],
             "content": {
-              "_type": "Graph",
-              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent",
-              "_title": "SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent",
-              "Graph/Visible time": 30.0,
-              "Y-axis/Automatic bounds": true,
-              "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0,
-              "Visible data/SmartDashboard/ShooterWheelSubsystem/ShooterMaster/Percent": true
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelMaintainerCommand/Error Within Tolerance",
+              "_title": "/SmartDashboard/ShooterWheelMaintainerCommand/Error Within Tolerance",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "8,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelMaintainerCommand/Error Is Time Stable",
+              "_title": "/SmartDashboard/ShooterWheelMaintainerCommand/Error Is Time Stable",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
             }
           },
           "5,2": {
             "size": [
-              4,
-              3
+              1,
+              1
             ],
             "content": {
-              "_type": "Graph",
-              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/CurrentRPM",
-              "_title": "SmartDashboard/ShooterWheelSubsystem/CurrentRPM",
-              "Graph/Visible time": 30.0,
-              "Y-axis/Automatic bounds": true,
-              "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0,
-              "Visible data/SmartDashboard/ShooterWheelSubsystem/CurrentRPM": true
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/HoodMaintainerCommand/Error Is Time Stable",
+              "_title": "/SmartDashboard/HoodMaintainerCommand/Error Is Time Stable",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "6,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/TurretMaintainerCommand/Error Is Time Stable",
+              "_title": "/SmartDashboard/TurretMaintainerCommand/Error Is Time Stable",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelMaintainerCommand/Error Is Time Stable",
+              "_title": "/SmartDashboard/ShooterWheelMaintainerCommand/Error Is Time Stable",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/KickerSubsystem/Is Kicker Clear",
+              "_title": "/SmartDashboard/KickerSubsystem/Is Kicker Clear",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "8,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelMaintainerCommand/Error Tolerance",
+              "_title": "/SmartDashboard/ShooterWheelMaintainerCommand/Error Tolerance"
             }
           }
         }
@@ -1014,7 +482,7 @@
       }
     },
     {
-      "title": "Tab 5",
+      "title": "Hood",
       "autoPopulate": false,
       "autoPopulatePrefix": "",
       "widgetPane": {
@@ -1035,6 +503,190 @@
               "Slider Settings/Min": -1.0,
               "Slider Settings/Max": 1.0,
               "Slider Settings/Block increment": 0.0625
+            }
+          },
+          "3,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/HoodSubsystem/Calibrated",
+              "_title": "/SmartDashboard/HoodSubsystem/Calibrated",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "4,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/HoodSubsystem/Calibration Offset",
+              "_title": "/SmartDashboard/HoodSubsystem/Calibration Offset"
+            }
+          },
+          "5,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/HoodSubsystem/Current Percent Extended",
+              "_title": "/SmartDashboard/HoodSubsystem/Current Percent Extended"
+            }
+          },
+          "6,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/HoodSubsystem/Range",
+              "_title": "/SmartDashboard/HoodSubsystem/Range"
+            }
+          },
+          "4,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/HoodPID/Max Output",
+              "_title": "/SmartDashboard/HoodPID/Max Output"
+            }
+          },
+          "5,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/HoodPID/Min Output",
+              "_title": "/SmartDashboard/HoodPID/Min Output"
+            }
+          },
+          "4,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/HoodMaintainerCommand/Current Mode",
+              "_title": "/SmartDashboard/HoodMaintainerCommand/Current Mode"
+            }
+          },
+          "6,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/HoodPID/P",
+              "_title": "/SmartDashboard/HoodPID/P"
+            }
+          },
+          "7,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/HoodPID/I",
+              "_title": "/SmartDashboard/HoodPID/I"
+            }
+          },
+          "8,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/HoodPID/D",
+              "_title": "/SmartDashboard/HoodPID/D"
+            }
+          },
+          "7,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/HoodMaintainerCommand/Error Tolerance",
+              "_title": "/SmartDashboard/HoodMaintainerCommand/Error Tolerance"
+            }
+          },
+          "8,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/HoodMaintainerCommand/Error Within Tolerance",
+              "_title": "/SmartDashboard/HoodMaintainerCommand/Error Within Tolerance",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "9,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/HoodMaintainerCommand/Error Is Time Stable",
+              "_title": "/SmartDashboard/HoodMaintainerCommand/Error Is Time Stable",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "7,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/HoodSubsystem/Goal Percent",
+              "_title": "/SmartDashboard/HoodSubsystem/Goal Percent"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Intake",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "4,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/IntakeSubsystem/Intake Power",
+              "_title": "/SmartDashboard/IntakeSubsystem/Intake Power"
             }
           }
         }

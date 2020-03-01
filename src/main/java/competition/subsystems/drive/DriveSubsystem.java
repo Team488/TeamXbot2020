@@ -69,6 +69,11 @@ public class DriveSubsystem extends BaseDriveSubsystem {
             leftFollower.follow(leftMaster, contract.leftFrontDriveNeo().inverted);
             rightMaster.setInverted(contract.rightRearDriveNeo().inverted);
             rightFollower.follow(rightMaster, contract.rightFrontDriveNeo().inverted);
+
+            leftMaster.burnFlash();
+            leftFollower.burnFlash();
+            rightMaster.burnFlash();
+            rightFollower.burnFlash();
         }
 
         rawLeftRotationsProp = pf.createEphemeralProperty("RawLeftRotations", 0.0);
