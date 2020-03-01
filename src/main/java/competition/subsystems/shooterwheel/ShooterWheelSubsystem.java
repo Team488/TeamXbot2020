@@ -22,7 +22,6 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     private XCANSparkMax follower;
     IdealElectricalContract contract;
 
-
     @Inject
     public ShooterWheelSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
         log.info("Creating ShooterWheelSubsystem");
