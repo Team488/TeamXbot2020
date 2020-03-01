@@ -14,6 +14,7 @@ public class ReCenterTurretCommandTest extends BaseCompetitionTest{
         TurretSubsystem turret = this.injector.getInstance(TurretSubsystem.class);
         ReCenterTurretCommand recenter = this.injector.getInstance(ReCenterTurretCommand.class);
 
+        turret.setGoalAngle(35);
         recenter.initialize();
         assertTrue("Checking if Re-center angle is set", -90 == turret.getGoalAngle());
     }
