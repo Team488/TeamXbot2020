@@ -17,7 +17,7 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
     private double hoodPercentGoal;
 
     public enum FieldPosition {
-        PointBlank, InitiationCloseToGoal, TrenchCloseToGoal, TrenchFarFromGoal, InitiationFarFromGoal
+        PointBlank, InitiationLaser, InitiationCloseToGoal, TrenchCloseToGoal, TrenchFarFromGoal, InitiationFarFromGoal
     }
 
     private final DoubleProperty pointBlankRpmProp;
@@ -25,6 +25,9 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
 
     private final DoubleProperty initiationCloseToGoalRpmProp;
     private final DoubleProperty initiationClosetoGoalHoodProp;
+
+    private final DoubleProperty initiationLaserRpmProp;
+    private final DoubleProperty initiationLaserHoodProp;
 
     private final DoubleProperty trenchCloseToGoalRpmProp;
     private final DoubleProperty trenchCloseToGoalHoodProp;
@@ -49,6 +52,10 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
         initiationCloseToGoalRpmProp = pf.createPersistentProperty("Initiation CLOSE to Goal RPM", 2400);
         initiationClosetoGoalHoodProp = pf.createPersistentProperty("Initiation CLOSE to Goal Hood", 0.1);
 
+        // Laser for autonomous
+        initiationLaserRpmProp = pf.createPersistentProperty("Initiation LASER Goal RPM", 2400);
+        initiationLaserHoodProp = pf.createPersistentProperty("Initiation LASER Goal Hood", 0.1);
+
         // Tested, works
         trenchCloseToGoalRpmProp = pf.createPersistentProperty("Trench CLOSE to Goal RPM", 3300);
         trenchCloseToGoalHoodProp = pf.createPersistentProperty("Trench CLOSE to Goal Hood", 0.49);
@@ -57,7 +64,7 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
         trenchFarFromGoalRpmProp = pf.createPersistentProperty("Trench FAR from Goal RPM", 4000);
         trenchFarFromGoalHoodProp = pf.createPersistentProperty("Trench FAR from Goal Hood", 0);
 
-        // "Pass"   
+        // "Pass"
         initiationFarFromGoalRpmProp = pf.createPersistentProperty("Initiation FAR from Goal RPM", 3500);
         initiationFarfromGoalHoodProp = pf.createPersistentProperty("Initiation FAR from Goal Hood", 0.6);
 
@@ -76,6 +83,9 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
             break;
         case InitiationCloseToGoal:
             setGoals(initiationCloseToGoalRpmProp.get(), initiationClosetoGoalHoodProp.get());
+            break;
+        case InitiationLaser:
+            setGoals(initiationLaserRpmProp.get(), initiationLaserHoodProp.get());
             break;
         case TrenchCloseToGoal:
             setGoals(trenchCloseToGoalRpmProp.get(), trenchCloseToGoalHoodProp.get());

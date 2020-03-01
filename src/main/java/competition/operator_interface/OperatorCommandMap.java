@@ -113,7 +113,7 @@ public class OperatorCommandMap {
         setupFiringCommand(bButton, FieldPosition.TrenchCloseToGoal, goalsProvider.get(),
                 prepareToFireProvider.get(), carouselFiringModeProvider.get(), stopShootingProvider.get());
 
-        setupFiringCommand(yButton, FieldPosition.InitiationCloseToGoal, goalsProvider.get(),
+        setupFiringCommand(xButton, FieldPosition.InitiationCloseToGoal, goalsProvider.get(),
                 prepareToFireProvider.get(), carouselFiringModeProvider.get(), stopShootingProvider.get());
 
         setupFiringCommand(yButton, FieldPosition.InitiationFarFromGoal, goalsProvider.get(),
