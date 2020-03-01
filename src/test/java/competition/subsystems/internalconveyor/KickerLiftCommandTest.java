@@ -26,7 +26,7 @@ public class KickerLiftCommandTest extends BaseCompetitionTest{
 
         lift.execute();
 
-        assertEquals(-1, kicker.rollerMotor.getMotorOutputPercent(), 0.001);
+        assertEquals(1, kicker.rollerMotor.getMotorOutputPercent(), 0.001);
     }
 
 }
