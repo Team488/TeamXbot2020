@@ -1,6 +1,10 @@
 package competition.subsystems.hood;
+
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
 import competition.IdealElectricalContract;
 import xbot.common.command.BaseSetpointSubsystem;
 import xbot.common.command.XScheduler;
@@ -24,6 +28,7 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     private IdealElectricalContract contract;
     public XCANTalon hoodMotor;
     final DoubleProperty goalPercentProp;
+    final BooleanProperty atReverseLimitProp;
 
     @Inject
     public HoodSubsystem (CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract,
@@ -40,10 +45,12 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         currentPercentExtendedProp = pf.createEphemeralProperty("Current Percent Extended", 0);
         calibratedProp = pf.createEphemeralProperty("Calibrated", false);
         goalPercentProp = pf.createEphemeralProperty("Goal Percent", 0);
+        atReverseLimitProp = pf.createEphemeralProperty("At Reverse Limit", false);
 
         if (contract.isHoodReady()) {
              this.hoodMotor = factory.createCANTalon(contract.hoodMotor().channel);
              hoodMotor.configureAsMasterMotor(this.getPrefix(), "Hood", contract.hoodMotor().inverted, false);
+             hoodMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
         }
 
         scheduler.registerSubsystem(this);
@@ -123,6 +130,7 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
 
     public void periodic(){
         currentPercentExtendedProp.set(getPercentExtended());
+        atReverseLimitProp.set(hoodMotor.isRevLimitSwitchClosed());
     }
 
     public double getPercentExtended(){

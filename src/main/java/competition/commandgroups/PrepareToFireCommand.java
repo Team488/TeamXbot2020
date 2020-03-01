@@ -24,11 +24,12 @@ public class PrepareToFireCommand extends SequentialCommandGroup {
     @Inject
     PrepareToFireCommand(ShooterWheelSubsystem wheel, TurretSubsystem turret, HoodSubsystem hood,
             KickerSubsystem kicker, PropertyFactory pf) {
-        waitTimeProp = pf.createPersistentProperty("Max Wait Time", 3);
+        pf.setPrefix(this.getName());
+        waitTimeProp = pf.createPersistentProperty("Max Wait Time", 5);
 
         var waitForReadiness = new ParallelCommandGroup(
             new SimpleWaitForMaintainerCommand(wheel, getWaitTime()),
-            new SimpleWaitForMaintainerCommand(turret, getWaitTime()),
+            //new SimpleWaitForMaintainerCommand(turret, getWaitTime()), // TODO: bring online soon!
             new SimpleWaitForMaintainerCommand(hood, getWaitTime())
         );
 

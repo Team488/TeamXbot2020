@@ -19,7 +19,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isHoodReady() {
-        return false;
+        return true;
     }
 
     @Override
@@ -44,6 +44,6 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isDriveReady() {
-        return true;
+        return false;
     }
 }

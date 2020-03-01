@@ -3,7 +3,6 @@ package competition.operator_interface;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import edu.wpi.first.wpilibj.MockXboxControllerAdapter;
 import xbot.common.controls.sensors.XXboxController;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.injection.wpi_factories.DevicePolice;
@@ -37,7 +36,7 @@ public class OperatorInterface implements IPropertySupport {
         operatorGamepad.setLeftInversion(false, true);
         operatorGamepad.setRightInversion(true, true);
 
-        manualOperatorGamepad = new MockXboxControllerAdapter(2, factory, manager, police); //factory.createXboxController(2);
+        manualOperatorGamepad = factory.createXboxController(2); // new MockXboxControllerAdapter(2, factory, manager, police); //factory.createXboxController(2);
         manualOperatorGamepad.setLeftInversion(false, true);
         manualOperatorGamepad.setRightInversion(true, true);
     }
