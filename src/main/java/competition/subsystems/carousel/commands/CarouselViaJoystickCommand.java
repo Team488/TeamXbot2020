@@ -1,7 +1,5 @@
 package competition.subsystems.carousel.commands;
 
-import java.util.function.Supplier;
-
 import com.google.inject.Inject;
 
 import competition.operator_interface.OperatorInterface;

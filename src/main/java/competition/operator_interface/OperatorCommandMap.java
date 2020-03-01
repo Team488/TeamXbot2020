@@ -10,6 +10,8 @@ import competition.commandgroups.ShutdownShootingCommand;
 import competition.commandgroups.ShakeCarouselCommand;
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand;
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand.FieldPosition;
+import competition.subsystems.arm.commands.LowerArmCommand;
+import competition.subsystems.arm.commands.RaiseArmCommand;
 import competition.subsystems.carousel.commands.CarouselFiringModeCommand;
 import competition.subsystems.carousel.commands.StopCarouselCommand;
 import competition.subsystems.climber.commands.DynamicClimbCommand;
@@ -116,7 +118,7 @@ public class OperatorCommandMap {
         setupFiringCommand(bButton, FieldPosition.TrenchCloseToGoal, goalsProvider.get(),
                 prepareToFireProvider.get(), carouselFiringModeProvider.get(), stopShootingProvider.get());
 
-        setupFiringCommand(yButton, FieldPosition.InitiationCloseToGoal, goalsProvider.get(),
+        setupFiringCommand(xButton, FieldPosition.InitiationCloseToGoal, goalsProvider.get(),
                 prepareToFireProvider.get(), carouselFiringModeProvider.get(), stopShootingProvider.get());
 
         setupFiringCommand(yButton, FieldPosition.InitiationFarFromGoal, goalsProvider.get(),
@@ -150,5 +152,10 @@ public class OperatorCommandMap {
 
         oi.manualOperatorGamepad.getPovIfAvailable(0).whenPressed(hoodForward);
         oi.manualOperatorGamepad.getPovIfAvailable(180).whenPressed(hoodBack);
+    }
+
+    public void setupArmCommands(OperatorInterface oi, RaiseArmCommand raiseArm, LowerArmCommand lowerArm) {
+        oi.driverGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(raiseArm);
+        oi.driverGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(lowerArm);
     }
 }

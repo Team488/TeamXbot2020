@@ -38,6 +38,9 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
             follower.follow(leader, true);
 
             this.leader.enableVoltageCompensation(12);
+
+            leader.burnFlash();
+            follower.burnFlash();
         }
     }
 
