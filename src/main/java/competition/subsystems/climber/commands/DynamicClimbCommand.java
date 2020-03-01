@@ -27,8 +27,8 @@ public class DynamicClimbCommand extends BaseCommand {
     @Override
     public void execute() {
         // left is extend, right is retract.
-        double left = MathUtils.deadband(oi.operatorGamepad.getLeftTrigger(), oi.getJoystickDeadband());
-        double right = MathUtils.deadband(oi.operatorGamepad.getRightTrigger(), oi.getJoystickDeadband());
-        climber.dynamicClimb(left - right);
+        double retract = MathUtils.deadband(oi.operatorGamepad.getLeftTrigger(), oi.getJoystickDeadband());
+        double extend = MathUtils.deadband(oi.operatorGamepad.getRightTrigger(), oi.getJoystickDeadband());
+        climber.dynamicClimb(extend - retract);
     }
 }

@@ -36,6 +36,11 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
             this.follower = factory.createCANSparkMax(contract.shooterMotorFollower().channel, this.getPrefix(),
                     "ShooterFollower");
             follower.follow(leader, true);
+
+            this.leader.enableVoltageCompensation(12);
+
+            leader.burnFlash();
+            follower.burnFlash();
         }
     }
 

@@ -25,10 +25,14 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public DeviceInfo hoodMotor() {
-        return new DeviceInfo(90, false); // Motor not real
+        return new DeviceInfo(31, false); // Motor not real
     }
 
     public boolean isHoodReady() {
+        return true;
+    }
+
+    public boolean isHoodLimitSwitchReady() {
         return true;
     }
 
@@ -81,11 +85,7 @@ public class IdealElectricalContract extends ElectricalContract {
     public DeviceInfo kickerMotor() {
         return new DeviceInfo(24, true);
     }
-
-    public DeviceInfo kickerRollerMotor() {
-        return new DeviceInfo(31, false);
-    }
-
+    
     public DeviceInfo turretEncoder() {
         return new DeviceInfo(0, true);
     }

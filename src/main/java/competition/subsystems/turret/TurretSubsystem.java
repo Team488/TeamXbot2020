@@ -54,15 +54,20 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
         rightLimitProp = pf.createEphemeralProperty("Over Right Limit", false);
         leftLimitProp = pf.createEphemeralProperty("Over Left Limit", false);
 
+
         if (contract.isTurretReady()) {
             this.motor = factory.createCANTalon(contract.turretMotor().channel);
             motor.configureAsMasterMotor(this.getPrefix(), "TurretMotor", contract.turretMotor().inverted,
-                    contract.turretEncoder().inverted);
+            contract.turretEncoder().inverted);
 
             motor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
-                    0);
+            0);
             motor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
-                    0);
+            0);
+
+            if(isCalibrated() == false){
+                calibrateTurret();
+            }
 
         }
 
