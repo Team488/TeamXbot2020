@@ -73,6 +73,10 @@ public class OperatorCommandMap {
 
         Command speedUp = new InstantCommand(() -> shooter.changeTargetRPM(500), shooter.getSetpointLock());
         Command slowDown = new InstantCommand(() -> shooter.changeTargetRPM(-500), shooter.getSetpointLock());
+
+        Command increaseTrim = new InstantCommand(() -> shooter.increaseTargetTrimRPM(100));
+        Command decreaseTrim = new InstantCommand(() -> shooter.increaseTargetTrimRPM(-100));
+
         Command stop = new RunCommand(() -> shooter.stop(), shooter);
 
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.A).whenPressed(singleWheel);
@@ -81,6 +85,9 @@ public class OperatorCommandMap {
         operatorInterface.operatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(speedUp);
         operatorInterface.manualOperatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(speedUp);
         operatorInterface.manualOperatorGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(slowDown);
+
+        // assign a button to increaseTrim
+        // assign a button to decreaseTrim
     }
 
     @Inject

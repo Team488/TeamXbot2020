@@ -16,10 +16,12 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     
     private final DoubleProperty targetRpmProp;
     private final DoubleProperty currentRpmProp;
+    private final DoubleProperty rpmTrimProp;
 
     public XCANSparkMax leader;
     private XCANSparkMax follower;
     IdealElectricalContract contract;
+
 
     @Inject
     public ShooterWheelSubsystem(CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract) {
@@ -29,6 +31,7 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
 
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
+        rpmTrimProp = pf.createPersistentProperty("TrimRPM", 0);
 
         if (contract.isShooterWheelReady()) {
             this.leader = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(),
@@ -44,7 +47,27 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     }
 
     public double getTargetRPM() {
-        return targetRpmProp.get();
+        if (targetRpmProp.get() == 0) {
+            return targetRpmProp.get();
+        }
+        return targetRpmProp.get() + getTrimRPM();
+    }
+
+    public void increaseTargetTrimRPM(double increaseRate) {
+        rpmTrimProp.set(getTrimRPM() + increaseRate);
+    }
+    
+    public void setTargetTrimRPM(double trim) {
+        rpmTrimProp.set(trim);
+    }
+
+    public double getTrimRPM() {
+        return rpmTrimProp.get();
+    }
+    
+
+    public void resetTrimRPM() {
+        rpmTrimProp.set(0);
     }
 
     public void changeTargetRPM(double amount) {
