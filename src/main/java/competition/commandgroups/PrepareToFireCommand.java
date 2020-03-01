@@ -4,6 +4,8 @@ import java.util.function.Supplier;
 
 import com.google.inject.Inject;
 
+import org.apache.log4j.Logger;
+
 import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.internalconveyor.KickerSubsystem;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
@@ -20,6 +22,8 @@ public class PrepareToFireCommand extends SequentialCommandGroup {
 
     private final DoubleProperty waitTimeProp;
     Supplier<Double> externalWaitSupplier;
+
+    private static Logger log = Logger.getLogger(ShutdownShootingCommand.class);
 
     @Inject
     PrepareToFireCommand(ShooterWheelSubsystem wheel, TurretSubsystem turret, HoodSubsystem hood,
@@ -50,5 +54,11 @@ public class PrepareToFireCommand extends SequentialCommandGroup {
             return () -> waitTimeProp.get();
         }
         return externalWaitSupplier;
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        log.info("Initializing");
     }
 }

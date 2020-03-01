@@ -146,11 +146,4 @@ public class OperatorCommandMap {
         oi.operatorGamepad.getPovIfAvailable(0).whenPressed(hoodForward);
         oi.operatorGamepad.getPovIfAvailable(180).whenPressed(hoodBack);
     }
-
-    private void setUpCarouselUnjamming(AdvancedButton button, UnjamCarouselCommand unJamCommand, StopCarouselCommand stopCarousel) {
-        
-        button.whileHeld(unJamCommand);
-        button.whenReleased(stopCarousel);
-    }
-
 }
