@@ -13,6 +13,7 @@ import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.hood.commands.HoodMaintainerCommand;
 import competition.subsystems.intake.IntakeSubsystem;
+import competition.subsystems.intake.commands.CollectViaTriggersCommand;
 import competition.subsystems.intake.commands.StopIntakeCommand;
 import competition.subsystems.internalconveyor.KickerSubsystem;
 import competition.subsystems.internalconveyor.commands.KickerViaTriggerCommand;
@@ -52,7 +53,7 @@ public class SubsystemDefaultCommandMap {
     }
 
     @Inject
-    public void setupIntakeSubsystem(XScheduler scheduler, IntakeSubsystem intake, StopIntakeCommand command) {
+    public void setupIntakeSubsystem(XScheduler scheduler, IntakeSubsystem intake, CollectViaTriggersCommand command) {
         scheduler.setDefaultCommand(intake, command);
     }
 
