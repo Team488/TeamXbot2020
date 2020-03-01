@@ -60,7 +60,7 @@ public class CarouselManagerCommand extends BaseCommand {
     @Override
     public void execute() {
         double power = getPower();
-        
+
         if (Math.abs(getPower()) > minimumPowerToAgitateProp.get()) {
             updateDirection();
 
@@ -70,6 +70,9 @@ public class CarouselManagerCommand extends BaseCommand {
                 break;
             case Reverse:
                 power = -getPower();
+                break;
+            default:
+                break;
             }
         }
 
@@ -93,6 +96,8 @@ public class CarouselManagerCommand extends BaseCommand {
                 direction = CarouselDirection.Forward;
                 forwardValidator.checkStable(true);
             }
+            break;
+        default:
             break;
         }
     }
