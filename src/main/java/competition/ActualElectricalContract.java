@@ -19,7 +19,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isHoodReady() {
-        return false;
+        return true;
     }
 
     @Override
