@@ -41,20 +41,25 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
         this.hood = hood;
         pf.setPrefix(this);
 
+        // TODO: Find values for this one.
         pointBlankRpmProp = pf.createPersistentProperty("Point Blank RPM", 2500);
         pointBlankHoodProp = pf.createPersistentProperty("Point Blank Hood", 0);
 
-        initiationCloseToGoalRpmProp = pf.createPersistentProperty("Initiation CLOSE to Goal RPM", 3000);
-        initiationClosetoGoalHoodProp = pf.createPersistentProperty("Initiation CLOSE to Goal Hood", 0);
+        // Lob shot
+        initiationCloseToGoalRpmProp = pf.createPersistentProperty("Initiation CLOSE to Goal RPM", 2400);
+        initiationClosetoGoalHoodProp = pf.createPersistentProperty("Initiation CLOSE to Goal Hood", 0.1);
 
+        // Tested, works
         trenchCloseToGoalRpmProp = pf.createPersistentProperty("Trench CLOSE to Goal RPM", 3300);
-        trenchCloseToGoalHoodProp = pf.createPersistentProperty("Trench CLOSE to Goal Hood", 0);
+        trenchCloseToGoalHoodProp = pf.createPersistentProperty("Trench CLOSE to Goal Hood", 0.49);
 
+        // Doesn't seem possible.
         trenchFarFromGoalRpmProp = pf.createPersistentProperty("Trench FAR from Goal RPM", 4000);
         trenchFarFromGoalHoodProp = pf.createPersistentProperty("Trench FAR from Goal Hood", 0);
 
-        initiationFarFromGoalRpmProp = pf.createPersistentProperty("Initiation FAR from Goal RPM", 3700);
-        initiationFarfromGoalHoodProp = pf.createPersistentProperty("Initiation FAR from Goal Hood", 0);
+        // "Pass"   
+        initiationFarFromGoalRpmProp = pf.createPersistentProperty("Initiation FAR from Goal RPM", 3500);
+        initiationFarfromGoalHoodProp = pf.createPersistentProperty("Initiation FAR from Goal Hood", 0.6);
 
         this.addRequirements(wheel.getSetpointLock(), hood.getSetpointLock());
     }
