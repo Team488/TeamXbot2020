@@ -26,4 +26,8 @@ public class ReCenterTurretCommand extends BaseSetpointCommand{
     public void execute(){
     }
 
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }
