@@ -9,6 +9,7 @@ import competition.IdealElectricalContract;
 import xbot.common.command.BaseSetpointSubsystem;
 import xbot.common.command.XScheduler;
 import xbot.common.controls.actuators.XCANTalon;
+import xbot.common.controls.sensors.XTimer;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.math.MathUtils;
 import xbot.common.properties.BooleanProperty;
@@ -19,6 +20,8 @@ import xbot.common.properties.PropertyFactory;
 public class HoodSubsystem extends BaseSetpointSubsystem{
 
     final DoubleProperty calibrationOffsetProp;
+    final DoubleProperty calibratePowerProp;
+    final DoubleProperty calibrateTimeoutProp;
     final DoubleProperty extendPowerProp;
     final DoubleProperty manualPowerProp;
     final DoubleProperty retractPowerProp;
@@ -29,6 +32,7 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     public XCANTalon hoodMotor;
     final DoubleProperty goalPercentProp;
     final BooleanProperty atReverseLimitProp;
+    private double calibrationStartTime;
 
     @Inject
     public HoodSubsystem (CommonLibFactory factory, PropertyFactory pf, IdealElectricalContract contract,
@@ -38,6 +42,8 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         this.contract = contract;
 
         calibrationOffsetProp = pf.createPersistentProperty("Calibration Offset", 0);
+        calibratePowerProp = pf.createPersistentProperty("Calibration power", 0.05);
+        calibrateTimeoutProp = pf.createPersistentProperty("Calibration timeout seconds", 3.0);
         extendPowerProp = pf.createPersistentProperty("Extend Power", 1);
         manualPowerProp = pf.createPersistentProperty("Manual Power", .15);
         retractPowerProp = pf.createPersistentProperty("Retract Power", -1);
@@ -53,12 +59,15 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
              hoodMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
         }
 
+        calibrationStartTime = -1;
+
         scheduler.registerSubsystem(this);
     }
 
     public void calibrateHood(){
         calibrationOffsetProp.set(getCurrentRawPosition());
         setIsCalibrated(true);
+        calibrationStartTime = -1;
     }
     
     public void setIsCalibrated(boolean value){
@@ -100,6 +109,10 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         setPower(retractPowerProp.get());
     }
 
+    public void retractForCalibration(){
+        setPower(calibratePowerProp.get() * -1);
+    }
+
     public void stop(){
         setPower(0);
     }
@@ -112,14 +125,26 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         return (currentPercentExtendedProp.get() <= 0);
     }
 
+    public void setCalibrationStartTime(){
+        calibrationStartTime = XTimer.getFPGATimestamp();
+    }
+
+    public boolean isCalibrateInProgress(){
+        return calibrationStartTime != -1;
+    }
+
+    public boolean isCalibrateTimedOut(){
+        return calibrationStartTime + calibrateTimeoutProp.get() < XTimer.getFPGATimestamp(); 
+    }
+
     public void setPower(double power){
         if(isCalibrated()){
 
             if(isFullyExtended()){
-            power = MathUtils.constrainDouble(power, -1, 0);
+                power = MathUtils.constrainDouble(power, -1, 0);
             }
             if(isFullyRetracted()){
-            power = MathUtils.constrainDouble(power, 0, 1);
+                power = MathUtils.constrainDouble(power, 0, 1);
             }
         }
 
@@ -130,7 +155,7 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
 
     public void periodic(){
         currentPercentExtendedProp.set(getPercentExtended());
-        atReverseLimitProp.set(hoodMotor.isRevLimitSwitchClosed());
+        atReverseLimitProp.set(isAtReverseLimit());
     }
 
     public double getPercentExtended(){
@@ -156,7 +181,11 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     }
 
     @Override
-    public void setTargetValue(double value){
+    public void setTargetValue(double value) {
         setGoalPercent(value);
+    }
+
+    public boolean isAtReverseLimit() {
+        return hoodMotor.isRevLimitSwitchClosed();
     }
 }

@@ -32,6 +32,10 @@ public class IdealElectricalContract extends ElectricalContract {
         return true;
     }
 
+    public boolean isHoodLimitSwitchReady() {
+        return false;
+    }
+
     public boolean isKickerReady() {
         return true;
     }
