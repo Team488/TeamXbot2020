@@ -4,10 +4,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import competition.BaseCompetitionTest;
 import competition.subsystems.pose.PoseSubsystem;
 import competition.subsystems.vision.commands.SendInitialPositionToRaspberryCommand;
 
-public class SendInitialPositionToRaspberryCommandTest extends VisionSubsystemTest{
+public class SendInitialPositionToRaspberryCommandTest extends BaseCompetitionTest{
 
     SendInitialPositionToRaspberryCommand initial;
     VisionSubsystem vision;
