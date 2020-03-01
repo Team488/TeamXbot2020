@@ -39,6 +39,6 @@ public class HoodMaintainerCommand extends BaseMaintainerCommand{
 
     @Override
     protected double getHumanInput(){
-        return MathUtils.deadband(oi.operatorGamepad.getLeftVector().y, oi.getJoystickDeadband());
+        return MathUtils.deadband(oi.manualOperatorGamepad.getLeftVector().y*.25, oi.getJoystickDeadband());
     }
 }

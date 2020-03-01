@@ -56,7 +56,7 @@ public class CarouselFiringModeCommand extends BaseCommand {
     }
 
     private boolean readyToSpin() {
-        boolean ready = atGoal(turret) && atGoal(hood) && kicker.isKickerLikelyClear();
+        boolean ready = /*atGoal(turret) &&*/ atGoal(hood) && kicker.isKickerLikelyClear();
 
         // if we're not in stream fire, then we are in accurate mode.
         if (!streamFire) {
