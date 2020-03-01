@@ -33,7 +33,7 @@ public class IdealElectricalContract extends ElectricalContract {
     }
 
     public boolean isHoodLimitSwitchReady() {
-        return false;
+        return true;
     }
 
     public boolean isKickerReady() {
