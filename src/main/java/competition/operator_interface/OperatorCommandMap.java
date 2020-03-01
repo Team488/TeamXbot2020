@@ -119,7 +119,6 @@ public class OperatorCommandMap {
 
         setupFiringCommand(yButton, FieldPosition.InitiationFarFromGoal, goalsProvider.get(),
                 prepareToFireProvider.get(), carouselFiringModeProvider.get(), stopShootingProvider.get());
-x
     }
 
     private void setupFiringCommand(AdvancedButton button, FieldPosition position, SetWheelAndHoodGoalsCommand setGoals,
