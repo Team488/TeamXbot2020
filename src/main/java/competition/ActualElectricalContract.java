@@ -23,6 +23,11 @@ public class ActualElectricalContract extends IdealElectricalContract {
     }
 
     @Override
+    public boolean isHoodLimitSwitchReady() {
+        return false;
+    }
+
+    @Override
     public boolean isShooterWheelReady() {
         return true;
     }
