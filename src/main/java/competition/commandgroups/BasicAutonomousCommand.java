@@ -26,7 +26,7 @@ public class BasicAutonomousCommand extends SequentialCommandGroup {
         AutonomousDriveCommand drive)
     {
         pf.setPrefix(BasicAutonomousCommand.class.getName());
-        delayBeforeShootProp = pf.createPersistentProperty("Delay before auto fire", 0.0);
+        delayBeforeShootProp = pf.createPersistentProperty("Delay before auto fire seconds", 0.0);
 
         var delayBeforeShoot = new DelayViaSupplierCommand(() -> delayBeforeShootProp.get());
 
