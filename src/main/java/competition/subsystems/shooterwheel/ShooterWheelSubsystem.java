@@ -31,7 +31,7 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
 
         targetRpmProp = pf.createEphemeralProperty("TargetRPM", 0);
         currentRpmProp = pf.createEphemeralProperty("CurrentRPM", 0);
-        rpmTrimProp = pf.createPersistentProperty("TrimRPM", 0);
+        rpmTrimProp = pf.createEphemeralProperty("TrimRPM", 0);
 
         if (contract.isShooterWheelReady()) {
             this.leader = factory.createCANSparkMax(contract.shooterMotorMaster().channel, this.getPrefix(),
@@ -47,14 +47,14 @@ public class ShooterWheelSubsystem extends BaseSetpointSubsystem {
     }
 
     public double getTargetRPM() {
-        if (targetRpmProp.get() == 0) {
+        if (Math.abs(targetRpmProp.get()) < 50.0) {
             return targetRpmProp.get();
         }
         return targetRpmProp.get() + getTrimRPM();
     }
 
-    public void increaseTargetTrimRPM(double increaseRate) {
-        rpmTrimProp.set(getTrimRPM() + increaseRate);
+    public void changeTrimRPM(double changeRate) {
+        rpmTrimProp.set(getTrimRPM() + changeRate);
     }
     
     public void setTargetTrimRPM(double trim) {
