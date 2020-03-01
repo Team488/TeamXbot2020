@@ -186,6 +186,9 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     }
 
     public boolean isAtReverseLimit() {
-        return hoodMotor.isRevLimitSwitchClosed();
+        if (contract.isHoodReady()) {
+            return hoodMotor.isRevLimitSwitchClosed(); 
+        }
+        return false;
     }
 }
