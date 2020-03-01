@@ -19,7 +19,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isHoodReady() {
-        return true;
+        return false;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isShooterWheelReady() {
-        return true;
+        return false;
     }
 
     @Override
