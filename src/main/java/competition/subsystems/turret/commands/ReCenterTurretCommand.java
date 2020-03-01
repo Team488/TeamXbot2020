@@ -7,7 +7,7 @@ import xbot.common.command.BaseSetpointCommand;
 
 public class ReCenterTurretCommand extends BaseSetpointCommand{
 
-    final TurretSubsystem turret;
+    TurretSubsystem turret;
     private double headingGoal = -90; // recenter value, can also be 270
 
     @Inject
@@ -19,7 +19,7 @@ public class ReCenterTurretCommand extends BaseSetpointCommand{
     @Override
     public void initialize(){
         log.info("Initializing");
-        turret.setFieldOrientedGoalAngle(headingGoal);
+        turret.setGoalAngle(headingGoal);
     }
 
     @Override

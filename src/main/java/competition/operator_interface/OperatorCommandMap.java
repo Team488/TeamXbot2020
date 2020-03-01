@@ -23,6 +23,7 @@ import competition.subsystems.shooterwheel.commands.BangBangCommand;
 import competition.subsystems.shooterwheel.commands.ShooterWheelMaintainerCommand;
 import competition.subsystems.turret.TurretSubsystem;
 import competition.subsystems.turret.commands.PointTurretToFieldOrientedHeadingCommand;
+import competition.subsystems.turret.commands.ReCenterTurretCommand;
 import competition.subsystems.turret.commands.TurretRotateToVisionTargetCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -59,12 +60,14 @@ public class OperatorCommandMap {
     @Inject
     public void setupTurretCommands(OperatorInterface oi, TurretSubsystem turret,
             TurretRotateToVisionTargetCommand rotateToVisionTarget,
-            PointTurretToFieldOrientedHeadingCommand pointDownrange) {
+            PointTurretToFieldOrientedHeadingCommand pointDownrange,
+            ReCenterTurretCommand recenter) {
         Command calibrate = new InstantCommand(() -> turret.calibrateTurret());
         Command oriented90 = new InstantCommand(() -> turret.setFieldOrientedGoalAngle(90));
 
         // oi.operatorGamepad.getifAvailable(XboxButton.Start).whenPressed(rotateToVisionTarget);
         // oi.operatorGamepad.getifAvailable(XboxButton.X).whileHeld(pointDownrange);
+        oi.operatorGamepad.getifAvailable(XboxButton.RightStick).whenPressed(recenter);
         oi.manualOperatorGamepad.getifAvailable(XboxButton.RightStick).whenPressed(calibrate);
         oi.manualOperatorGamepad.getifAvailable(XboxButton.Start).whileHeld(rotateToVisionTarget);
     }
@@ -92,7 +95,7 @@ public class OperatorCommandMap {
             Provider<CarouselFiringModeCommand> carouselFiringModeProvider,
             Provider<ShutdownShootingCommand> stopShootingProvider, Provider<SetWheelAndHoodGoalsCommand> goalsProvider,
             Provider<ShakeCarouselCommand> unJamCarouselProvider, StopCarouselCommand stopCarousel) {
-        
+
         var aButton = oi.operatorGamepad.getifAvailable(XboxButton.A);
                 var bButton = oi.operatorGamepad.getifAvailable(XboxButton.B);
         var xButton = oi.operatorGamepad.getifAvailable(XboxButton.X);
