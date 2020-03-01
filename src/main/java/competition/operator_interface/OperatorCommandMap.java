@@ -7,7 +7,7 @@ import com.google.inject.Singleton;
 import competition.commandgroups.PassTowardsTargetCommand;
 import competition.commandgroups.PrepareToFireCommand;
 import competition.commandgroups.ShutdownShootingCommand;
-import competition.commandgroups.UnjamCarouselCommand;
+import competition.commandgroups.ShakeCarouselCommand;
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand;
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand.FieldPosition;
 import competition.subsystems.carousel.commands.CarouselFiringModeCommand;
@@ -91,7 +91,7 @@ public class OperatorCommandMap {
             Provider<CarouselFiringModeCommand> carouselFiringModeProvider, 
             Provider<ShutdownShootingCommand> stopShootingProvider,
             Provider<SetWheelAndHoodGoalsCommand> goalsProvider,
-            Provider<UnjamCarouselCommand> unJamCarouselProvider, 
+            Provider<ShakeCarouselCommand> unJamCarouselProvider, 
             StopCarouselCommand stopCarousel
             ) {
         var yButton = oi.operatorGamepad.getifAvailable(XboxButton.Y);
