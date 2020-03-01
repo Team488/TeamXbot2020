@@ -2,6 +2,7 @@ package competition.commandgroups;
 
 import com.google.inject.Inject;
 import competition.subsystems.carousel.commands.TurnLeftCarouselCommand;
+import competition.subsystems.carousel.commands.TurnRightCarouselCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import xbot.common.command.DelayViaSupplierCommand;
@@ -13,7 +14,7 @@ public class ShakeCarouselCommand extends SequentialCommandGroup {
     private final DoubleProperty shakeDurationProp;
 
     @Inject
-    public ShakeCarouselCommand(TurnLeftCarouselCommand turnLeft, TurnLeftCarouselCommand turnRight, PropertyFactory pf) {
+    public ShakeCarouselCommand(TurnLeftCarouselCommand turnLeft, TurnRightCarouselCommand turnRight, PropertyFactory pf) {
         pf.setPrefix(this.getName());
         shakeDurationProp = pf.createPersistentProperty("Shake Duration", 0.75);
 

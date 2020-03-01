@@ -32,6 +32,8 @@ public class CarouselManagerCommand extends BaseCommand {
         pf.setPrefix(this);
         this.addRequirements(carousel);
 
+        direction = CarouselDirection.Forward;
+
         forwardDurationProp = pf.createPersistentProperty("Forward Duration", 0.9);
         reverseDurationProp = pf.createPersistentProperty("Reverse Duration", 0.1);
         minimumPowerToAgitateProp = pf.createPersistentProperty("Minimum Power to Agitate", 0.3);

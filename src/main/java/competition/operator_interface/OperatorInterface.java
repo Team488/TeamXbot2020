@@ -33,7 +33,7 @@ public class OperatorInterface implements IPropertySupport {
         driverGamepad.setRightInversion(true, true);
 
         operatorGamepad = factory.createXboxController(1);
-        operatorGamepad.setLeftInversion(false, true);
+        operatorGamepad.setLeftInversion(true, true);
         operatorGamepad.setRightInversion(true, true);
 
         manualOperatorGamepad = factory.createXboxController(2);
