@@ -135,8 +135,8 @@ public class OperatorCommandMap {
     public void setUpHoodCommands(OperatorInterface oi, HoodSubsystem hood) {        
         oi.operatorGamepad.getifAvailable(XboxButton.LeftStick).whenPressed(new InstantCommand(hood::calibrateHood));
         
-        var hoodForward = new InstantCommand(() -> hood.changeTargetPercent(0.1), hood.getSetpointLock());
-        var hoodBack = new InstantCommand(() -> hood.changeTargetPercent(-0.1), hood.getSetpointLock());
+        var hoodForward = new InstantCommand(() -> hood.changeTargetPercent(0.05), hood.getSetpointLock());
+        var hoodBack = new InstantCommand(() -> hood.changeTargetPercent(-0.05), hood.getSetpointLock());
         
         oi.operatorGamepad.getPovIfAvailable(0).whenPressed(hoodForward);
         oi.operatorGamepad.getPovIfAvailable(180).whenPressed(hoodBack);

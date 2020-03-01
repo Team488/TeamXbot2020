@@ -244,17 +244,6 @@
               "_title": "/SmartDashboard/BangBangCommand/Max Power"
             }
           },
-          "9,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/ShooterWheelSubsystem/speedTolerance",
-              "_title": "/SmartDashboard/ShooterWheelSubsystem/speedTolerance"
-            }
-          },
           "3,3": {
             "size": [
               1,
@@ -307,7 +296,7 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/ShooterWheelMaintainerCommand/Error Within Tolerance",
-              "_title": "SmartDashboard/ShooterWheelMaintainerCommand/Error Within Tolerance",
+              "_title": "/SmartDashboard/ShooterWheelMaintainerCommand/Error Within Tolerance",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -320,7 +309,7 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/ShooterWheelMaintainerCommand/Error Is Time Stable",
-              "_title": "SmartDashboard/ShooterWheelMaintainerCommand/Error Is Time Stable",
+              "_title": "/SmartDashboard/ShooterWheelMaintainerCommand/Error Is Time Stable",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -333,7 +322,7 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/HoodMaintainerCommand/Error Is Time Stable",
-              "_title": "HoodStable",
+              "_title": "/SmartDashboard/HoodMaintainerCommand/Error Is Time Stable",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -346,7 +335,7 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/TurretMaintainerCommand/Error Is Time Stable",
-              "_title": "SmartDashboard/TurretMaintainerCommand/Error Is Time Stable",
+              "_title": "/SmartDashboard/TurretMaintainerCommand/Error Is Time Stable",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -359,7 +348,7 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/ShooterWheelMaintainerCommand/Error Is Time Stable",
-              "_title": "ShooterStable",
+              "_title": "/SmartDashboard/ShooterWheelMaintainerCommand/Error Is Time Stable",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -372,9 +361,20 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/KickerSubsystem/Is Kicker Clear",
-              "_title": "SmartDashboard/KickerSubsystem/Is Kicker Clear",
+              "_title": "/SmartDashboard/KickerSubsystem/Is Kicker Clear",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "8,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelMaintainerCommand/Error Tolerance",
+              "_title": "/SmartDashboard/ShooterWheelMaintainerCommand/Error Tolerance"
             }
           }
         }
@@ -513,7 +513,7 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/HoodSubsystem/Calibrated",
-              "_title": "SmartDashboard/HoodSubsystem/Calibrated",
+              "_title": "/SmartDashboard/HoodSubsystem/Calibrated",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -526,7 +526,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodSubsystem/Calibration Offset",
-              "_title": "SmartDashboard/HoodSubsystem/Calibration Offset"
+              "_title": "/SmartDashboard/HoodSubsystem/Calibration Offset"
             }
           },
           "5,0": {
@@ -537,7 +537,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodSubsystem/Current Percent Extended",
-              "_title": "SmartDashboard/HoodSubsystem/Current Percent Extended"
+              "_title": "/SmartDashboard/HoodSubsystem/Current Percent Extended"
             }
           },
           "6,0": {
@@ -548,7 +548,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodSubsystem/Range",
-              "_title": "SmartDashboard/HoodSubsystem/Range"
+              "_title": "/SmartDashboard/HoodSubsystem/Range"
             }
           },
           "4,3": {
@@ -559,7 +559,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodPID/Max Output",
-              "_title": "SmartDashboard/HoodPID/Max Output"
+              "_title": "/SmartDashboard/HoodPID/Max Output"
             }
           },
           "5,3": {
@@ -570,7 +570,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodPID/Min Output",
-              "_title": "SmartDashboard/HoodPID/Min Output"
+              "_title": "/SmartDashboard/HoodPID/Min Output"
             }
           },
           "4,2": {
@@ -581,7 +581,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodMaintainerCommand/Current Mode",
-              "_title": "SmartDashboard/HoodMaintainerCommand/Current Mode"
+              "_title": "/SmartDashboard/HoodMaintainerCommand/Current Mode"
             }
           },
           "6,2": {
@@ -592,7 +592,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodPID/P",
-              "_title": "SmartDashboard/HoodPID/P"
+              "_title": "/SmartDashboard/HoodPID/P"
             }
           },
           "7,2": {
@@ -603,7 +603,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodPID/I",
-              "_title": "SmartDashboard/HoodPID/I"
+              "_title": "/SmartDashboard/HoodPID/I"
             }
           },
           "8,2": {
@@ -614,7 +614,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodPID/D",
-              "_title": "SmartDashboard/HoodPID/D"
+              "_title": "/SmartDashboard/HoodPID/D"
             }
           },
           "7,3": {
@@ -625,7 +625,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodMaintainerCommand/Error Tolerance",
-              "_title": "SmartDashboard/HoodMaintainerCommand/Error Tolerance"
+              "_title": "/SmartDashboard/HoodMaintainerCommand/Error Tolerance"
             }
           },
           "8,3": {
@@ -636,7 +636,7 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/HoodMaintainerCommand/Error Within Tolerance",
-              "_title": "SmartDashboard/HoodMaintainerCommand/Error Within Tolerance",
+              "_title": "/SmartDashboard/HoodMaintainerCommand/Error Within Tolerance",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -649,7 +649,7 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/HoodMaintainerCommand/Error Is Time Stable",
-              "_title": "SmartDashboard/HoodMaintainerCommand/Error Is Time Stable",
+              "_title": "/SmartDashboard/HoodMaintainerCommand/Error Is Time Stable",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
@@ -662,7 +662,31 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodSubsystem/Goal Percent",
-              "_title": "SmartDashboard/HoodSubsystem/Goal Percent"
+              "_title": "/SmartDashboard/HoodSubsystem/Goal Percent"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Intake",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "4,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/IntakeSubsystem/Intake Power",
+              "_title": "/SmartDashboard/IntakeSubsystem/Intake Power"
             }
           }
         }
@@ -670,9 +694,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -6.400000095367432,
-    "y": 1.600000023841858,
-    "width": 1547.199951171875,
-    "height": 828.7999877929688
+    "x": -7.199999809265137,
+    "y": -7.199999809265137,
+    "width": 1550.4000244140625,
+    "height": 838.4000244140625
   }
 }

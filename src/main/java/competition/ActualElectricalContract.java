@@ -14,7 +14,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isIntakeReady() {
-        return false;
+        return true;
     }
 
     @Override
