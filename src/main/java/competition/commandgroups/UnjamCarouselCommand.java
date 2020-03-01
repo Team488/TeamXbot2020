@@ -6,14 +6,14 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import xbot.common.command.DelayViaSupplierCommand;
 
-public class UnjamCarouselCommand extends SequentialCommandGroup{
+public class UnjamCarouselCommand extends SequentialCommandGroup {
 
     @Inject
     public UnjamCarouselCommand(TurnLeftCarouselCommand turnLeft, TurnLeftCarouselCommand turnRight) {
-        DelayViaSupplierCommand timedForShaking = new DelayViaSupplierCommand(() -> 0.75);
-        
-        var turnLeftTimed = new ParallelDeadlineGroup(timedForShaking, turnLeft);
-        var turnRightTimed = new ParallelDeadlineGroup(timedForShaking, turnRight);
+        DelayViaSupplierCommand leftShakeWait = new DelayViaSupplierCommand(() -> Math.random() * 0.5 + 0.25);
+        DelayViaSupplierCommand rightShakeWait = new DelayViaSupplierCommand(() -> Math.random() * 0.5 + 0.25);
+        var turnLeftTimed = new ParallelDeadlineGroup(leftShakeWait, turnLeft);
+        var turnRightTimed = new ParallelDeadlineGroup(rightShakeWait, turnRight);
 
         this.addCommands(turnLeftTimed, turnRightTimed);
     }

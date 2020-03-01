@@ -96,7 +96,6 @@ public class OperatorCommandMap {
             ) {
         var yButton = oi.operatorGamepad.getifAvailable(XboxButton.Y);
         var xButton = oi.operatorGamepad.getifAvailable(XboxButton.X);
-        var aButton = oi.operatorGamepad.getifAvailable(XboxButton.A);
 
         setupFiringCommand(
             yButton, 
@@ -113,11 +112,6 @@ public class OperatorCommandMap {
             prepareToFireProvider.get(), 
             carouselFiringModeProvider.get(),
             stopShootingProvider.get());
-
-            setUpCarouselUnjamming(
-            aButton, 
-            unJamCarouselProvider.get(), 
-            stopCarousel);
     }
 
     private void setupFiringCommand(
