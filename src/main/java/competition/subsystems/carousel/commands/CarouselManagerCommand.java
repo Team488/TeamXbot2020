@@ -24,6 +24,7 @@ public class CarouselManagerCommand extends BaseCommand {
 
     private final DoubleProperty forwardDurationProp;
     private final DoubleProperty reverseDurationProp;
+    private final DoubleProperty minimumPowerToAgitateProp;
 
     @Inject
     public CarouselManagerCommand(CarouselSubsystem carousel, PropertyFactory pf) {
@@ -33,6 +34,8 @@ public class CarouselManagerCommand extends BaseCommand {
 
         forwardDurationProp = pf.createPersistentProperty("Forward Duration", 0.9);
         reverseDurationProp = pf.createPersistentProperty("Reverse Duration", 0.1);
+        minimumPowerToAgitateProp = pf.createPersistentProperty("Minimum Power to Agitate", 0.3);
+
         forwardValidator = new TimeStableValidator(() -> forwardDurationProp.get());
         reverseValidator = new TimeStableValidator(() -> reverseDurationProp.get());
     }
@@ -56,15 +59,18 @@ public class CarouselManagerCommand extends BaseCommand {
 
     @Override
     public void execute() {
-        double power = 0;
-        updateDirection();
+        double power = getPower();
+        
+        if (Math.abs(getPower()) > minimumPowerToAgitateProp.get()) {
+            updateDirection();
 
-        switch (direction) {
-        case Forward:
-            power = getPower();
-            break;
-        case Reverse:
-            power = -getPower();
+            switch (direction) {
+            case Forward:
+                power = getPower();
+                break;
+            case Reverse:
+                power = -getPower();
+            }
         }
 
         carousel.setPower(power);
@@ -97,5 +103,9 @@ public class CarouselManagerCommand extends BaseCommand {
 
     public double getReverseTime() {
         return reverseDurationProp.get();
+    }
+
+    public double getMinimumPowerToAgitate() {
+        return minimumPowerToAgitateProp.get();
     }
 }

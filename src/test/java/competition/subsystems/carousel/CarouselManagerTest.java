@@ -53,4 +53,29 @@ public class CarouselManagerTest extends BaseCompetitionTest {
         command.execute();
         verifyPower(1);
     }
+
+    @Test
+    public void testThreshold() {
+        setPower(command.getMinimumPowerToAgitate() * 0.9);
+        command.initialize();
+        
+        command.execute();
+        verifyPower(command.getMinimumPowerToAgitate() * 0.9);
+
+        timer.advanceTimeInSecondsBy(command.getForwardTime() * 0.5);
+        command.execute();
+        verifyPower(command.getMinimumPowerToAgitate() * 0.9);
+
+        timer.advanceTimeInSecondsBy(command.getForwardTime() * 0.51);
+        command.execute();
+        verifyPower(command.getMinimumPowerToAgitate() * 0.9);
+
+        timer.advanceTimeInSecondsBy(command.getReverseTime() * 0.5);
+        command.execute();
+        verifyPower(command.getMinimumPowerToAgitate() * 0.9);
+
+        timer.advanceTimeInSecondsBy(command.getReverseTime() * 0.51);
+        command.execute();
+        verifyPower(command.getMinimumPowerToAgitate() * 0.9);
+    }
 }
