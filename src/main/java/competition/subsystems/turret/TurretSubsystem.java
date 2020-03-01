@@ -25,7 +25,7 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     private final DoubleProperty maxAngleProp;
     private final DoubleProperty minAngleProp;
     private final DoubleProperty turnPowerProp;
-    private final DoubleProperty defaultHeadingProp;
+    private final DoubleProperty defaultForwardHeadingProp;
     private final DoubleProperty ticksPerDegreeProp;
     private final BooleanProperty calibratedProp;
     private final DoubleProperty currentAngleProp;
@@ -44,10 +44,10 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
         this.pose = pose;
 
         calibrationOffset = 0;
-        maxAngleProp = pf.createPersistentProperty("Max Angle", 0);
+        maxAngleProp = pf.createPersistentProperty("Max Angle", 180);
         minAngleProp = pf.createPersistentProperty("Min Angle", -180);
         turnPowerProp = pf.createPersistentProperty("Turn Speed", .03);
-        defaultHeadingProp = pf.createPersistentProperty("Default Heading", -90);
+        defaultForwardHeadingProp = pf.createPersistentProperty("Default Forward Heading", 90);
         ticksPerDegreeProp = pf.createPersistentProperty("Ticks Per Degree", 1);
         calibratedProp = pf.createEphemeralProperty("Calibrated", false);
         currentAngleProp = pf.createEphemeralProperty("Current Angle", 0);
@@ -76,7 +76,7 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
 
     public void calibrateTurret() { // here
         calibrationOffset = getCurrentRawAngle();
-        log.info("Angle set to the default of" + defaultHeadingProp.get());
+        log.info("Angle set to the default of" + defaultForwardHeadingProp.get());
         setIsCalibrated(true);
     }
 
@@ -152,7 +152,7 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
 
     public double getCurrentAngle() {
         double ticks = getCurrentRawAngle() - calibrationOffset;
-        return (ticks / ticksPerDegreeProp.get()) + defaultHeadingProp.get();
+        return (ticks / ticksPerDegreeProp.get()) + defaultForwardHeadingProp.get();
     }
 
     private double getCurrentRawAngle() {
