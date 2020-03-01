@@ -97,18 +97,6 @@ public class VisionSubsystem extends BaseSubsystem {
         poseTable.getEntry("yawAngularVelocity").setNumber(this.pose.getYawAngularVelocity());
     }
 
-    public boolean checkInitialPosSet(){
-        double y = pose.getCurrentFieldPose().getPoint().y;
-        double x = pose.getCurrentFieldPose().getPoint().x;
-        double theta = pose.getCurrentFieldPose().getHeading().getValue();
-
-        if(initialX.get() == x && initialTheta.get() == theta && initialY.get() == y){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
     public void sendXYThetaPos(double x, double y, double theta){
         this.initialX.set(x);
         this.initialY.set(y);

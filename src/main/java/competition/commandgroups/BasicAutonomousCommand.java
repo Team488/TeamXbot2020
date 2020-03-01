@@ -4,9 +4,7 @@ import com.google.inject.Inject;
 
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand;
 import competition.subsystems.carousel.commands.CarouselFiringModeCommand;
-import competition.subsystems.drive.DriveSubsystem;
 import competition.subsystems.drive.commands.AutonomousDriveCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
