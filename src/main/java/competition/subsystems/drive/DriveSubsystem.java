@@ -6,6 +6,10 @@ import com.google.inject.Singleton;
 import org.apache.log4j.Logger;
 
 import competition.IdealElectricalContract;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import xbot.common.controls.actuators.XCANSparkMax;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.math.PIDFactory;
@@ -19,6 +23,16 @@ import xbot.common.subsystems.drive.BaseDriveSubsystem;
 @Singleton
 public class DriveSubsystem extends BaseDriveSubsystem {
     private static Logger log = Logger.getLogger(DriveSubsystem.class);
+
+
+    // would need to run characterization tool for these values (ks, kv, track width):
+    public static final double ks = 1.06; // static gain
+    public static final double kv = 0.0635; // velocity gain
+    public static final double trackWidth = 1.09; // track width
+
+    private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(trackWidth);
+    private DifferentialDriveWheelSpeeds wheelSpeeds;
+    private SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(ks, kv);
 
     public XCANSparkMax leftMaster;
     public XCANSparkMax leftFollower;
@@ -55,6 +69,11 @@ public class DriveSubsystem extends BaseDriveSubsystem {
             leftFollower.follow(leftMaster, contract.leftFrontDriveNeo().inverted);
             rightMaster.setInverted(contract.rightRearDriveNeo().inverted);
             rightFollower.follow(rightMaster, contract.rightFrontDriveNeo().inverted);
+
+            leftMaster.burnFlash();
+            leftFollower.burnFlash();
+            rightMaster.burnFlash();
+            rightFollower.burnFlash();
         }
 
         rawLeftRotationsProp = pf.createEphemeralProperty("RawLeftRotations", 0.0);
@@ -81,6 +100,20 @@ public class DriveSubsystem extends BaseDriveSubsystem {
         double right = translate.y + rotate;
 
         setRawPower(left, right);
+    }
+
+    public void kinematicsDrive(double linearVelocity, double angularVelocity) {
+        var chassisSpeed = new ChassisSpeeds(linearVelocity, 0.0, angularVelocity); // 0.0 = no y directional
+        wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeed);
+        
+        double leftSetPoint = wheelSpeeds.leftMetersPerSecond;
+        double rightSetPoint = wheelSpeeds.rightMetersPerSecond;
+        
+        double leftPower = feedforward.calculate(leftSetPoint);
+        double rightPower = feedforward.calculate(rightSetPoint);
+
+        leftMaster.setVoltage(leftPower);
+        rightMaster.setVoltage(rightPower);
     }
 
     public void setRawPower(double left, double right) {

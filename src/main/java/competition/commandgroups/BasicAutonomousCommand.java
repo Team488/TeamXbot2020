@@ -24,7 +24,7 @@ public class BasicAutonomousCommand extends SequentialCommandGroup {
         // ParallelDeadine: TimeToDrive, combined with StopShooting/DriveBackwards
         var timetoShoot = new DelayViaSupplierCommand(() -> 10.0);
         var timeToDrive = new DelayViaSupplierCommand(() -> 1.0);
-        drive.setDrivePower(-0.5, 0-.5);
+        drive.setDrivePower(0.5, 0.5);
 
         var shootSequence = new ParallelCommandGroup(setGoals, prepare, spinCarousel);
         var driveSequence = new ParallelCommandGroup(stopShooting, drive);

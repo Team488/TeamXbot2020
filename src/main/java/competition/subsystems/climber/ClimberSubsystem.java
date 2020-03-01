@@ -57,6 +57,9 @@ public class ClimberSubsystem extends BaseSubsystem {
             this.rightMotor = factory.createCANSparkMax(contract.rightClimberMotor().channel, this.getPrefix(),
                     "RightMotor");
             this.climbSolenoid = factory.createSolenoid(contract.getClimbSolenoid().channel);
+
+            leftMotor.burnFlash();
+            rightMotor.burnFlash();
         }
     }
 

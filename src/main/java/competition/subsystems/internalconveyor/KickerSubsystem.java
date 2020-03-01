@@ -8,6 +8,7 @@ import xbot.common.command.XScheduler;
 import xbot.common.controls.actuators.XCANTalon;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
 import xbot.common.logic.TimeStableValidator;
+import xbot.common.properties.BooleanProperty;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
@@ -17,8 +18,7 @@ public class KickerSubsystem extends BaseSubsystem { //makes conveyer transport 
 
     private final DoubleProperty wheelLiftPowerProp;
     private final DoubleProperty wheelReversePowerProp;
-    private final DoubleProperty rollerLiftPowerProp;
-    private final DoubleProperty rollerReversePowerProp;
+    private final BooleanProperty isKickerClearProp;
 
     private IdealElectricalContract contract;
     public XCANTalon wheelMotor;
@@ -33,16 +33,13 @@ public class KickerSubsystem extends BaseSubsystem { //makes conveyer transport 
         this.contract = contract;
         wheelLiftPowerProp = pf.createPersistentProperty("Wheel Lift Power", 1);
         wheelReversePowerProp = pf.createPersistentProperty("Wheel Reverse Power", -0.25);
-        rollerLiftPowerProp = pf.createPersistentProperty("Roller Lift Power", 1);
-        rollerReversePowerProp = pf.createPersistentProperty("Roller Reverse Power", -0.25);
         cellClearTimerProp = pf.createPersistentProperty("Cell Clear Timer", 0.75);
         cellClearTimer = new TimeStableValidator(() -> cellClearTimerProp.get());
+        isKickerClearProp = pf.createEphemeralProperty("Is Kicker Clear", false);
 
         if(contract.isKickerReady()){
             this.wheelMotor = factory.createCANTalon(contract.kickerMotor().channel);
-            this.rollerMotor = factory.createCANTalon(contract.kickerRollerMotor().channel);
             this.wheelMotor.setInverted(contract.kickerMotor().inverted);
-            this.rollerMotor.setInverted(contract.kickerRollerMotor().inverted);
         }
 
         scheduler.registerSubsystem(this);
@@ -50,22 +47,18 @@ public class KickerSubsystem extends BaseSubsystem { //makes conveyer transport 
 
     public void lift(){
         setWheelPower(wheelLiftPowerProp.get());
-        setRollerPower(rollerLiftPowerProp.get());
     }
 
     public void reverse(){
         setWheelPower(wheelReversePowerProp.get());
-        setRollerPower(rollerReversePowerProp.get());
     }
 
     public void stop(){
         setWheelPower(0);
-        setRollerPower(0);
     }
 
     public void setPower(double power) {
         setWheelPower(power);
-        setRollerPower(power);
     }
 
     private void setWheelPower(double power){
@@ -74,15 +67,9 @@ public class KickerSubsystem extends BaseSubsystem { //makes conveyer transport 
         }
     }
 
-    private void setRollerPower(double power){
-        if(contract.isKickerReady()){
-            rollerMotor.simpleSet(power);
-        }
-    }
-
     private double getPower() {
         if (contract.isKickerReady()) {
-            return rollerMotor.getMotorOutputPercent();
+            return wheelMotor.getMotorOutputPercent();
         }
         return 0;
     }
@@ -97,6 +84,6 @@ public class KickerSubsystem extends BaseSubsystem { //makes conveyer transport 
 
     @Override
     public void periodic() {
-        feedCellClearTimer();
+        isKickerClearProp.set(feedCellClearTimer());
     }
 }
