@@ -22,9 +22,14 @@ public class CommandMapDumpTest extends BaseCompetitionTest {
     public void dumpGamepad(XXboxController gamepad, String name) {
         System.out.println("Gamepad: " + name);
         gamepad.allocatedButtons.values().forEach((button) -> {
-            if(button.command != null) {
-                System.out.println("\t" + button.buttonName.name() + " -> " + button.command.getName());
-            }
+            button.triggeredCommands.forEach((trigger, command) -> {
+                System.out.println(
+                    String.format(
+                        "\t%s -> %s (%s)", 
+                        button.buttonName.name(), 
+                        command.getName(), 
+                        trigger.name()));
+            });
         });
     }
 }
