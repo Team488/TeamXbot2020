@@ -3,6 +3,7 @@ package competition.commandgroups;
 import com.google.inject.Inject;
 
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand;
+import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand.FieldPosition;
 import competition.subsystems.drive.commands.AutonomousDriveCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -27,7 +28,8 @@ public class BasicAutonomousCommand extends SequentialCommandGroup {
         delayBeforeShootProp = pf.createPersistentProperty("Delay before auto fire seconds", 0.0);
 
         var delayBeforeShoot = new DelayViaSupplierCommand(() -> delayBeforeShootProp.get());
-
+        shoot.setStreamFire();
+        setGoals.setGoals(FieldPosition.InitiationCloseToGoal);
         // ParallelDeadline: TimeToShoot, combined with SetGoals/Prepare/SpinCarousel
         // ParallelDeadine: TimeToDrive, combined with StopShooting/DriveBackwards
         var timeToShoot = new DelayViaSupplierCommand(() -> 10.0);

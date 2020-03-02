@@ -195,4 +195,12 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     public double getRange() {
         return rangeProp.get();
     }
+
+    @Override
+    public boolean isMaintainerAtGoal() {
+        if (!contract.isHoodReady()) {
+            return true;
+        }
+        return super.isMaintainerAtGoal();
+    }
 }
