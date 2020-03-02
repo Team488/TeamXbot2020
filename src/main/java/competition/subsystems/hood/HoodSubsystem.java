@@ -191,4 +191,8 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         }
         return false;
     }
+
+    public double getRange() {
+        return rangeProp.get();
+    }
 }
