@@ -93,9 +93,9 @@ public class OperatorCommandMap {
         safe.setGoals(FieldPosition.SafeMode);
 
         bindGoalsAndSafety(oi.operatorGamepad.getifAvailable(XboxButton.A), initiationLob, safe);
-        bindGoalsAndSafety(oi.operatorGamepad.getifAvailable(XboxButton.A), intitationLaser, safe);
-        bindGoalsAndSafety(oi.operatorGamepad.getifAvailable(XboxButton.A), trenchNearGoal, safe);
-        bindGoalsAndSafety(oi.operatorGamepad.getifAvailable(XboxButton.A), pass, safe);
+        bindGoalsAndSafety(oi.operatorGamepad.getifAvailable(XboxButton.B), intitationLaser, safe);
+        bindGoalsAndSafety(oi.operatorGamepad.getifAvailable(XboxButton.X), trenchNearGoal, safe);
+        bindGoalsAndSafety(oi.operatorGamepad.getifAvailable(XboxButton.Y), pass, safe);
 
         oi.operatorGamepad.getifAvailable(XboxButton.RightTrigger).whileHeld(shoot);
 

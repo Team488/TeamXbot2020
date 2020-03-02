@@ -76,6 +76,9 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
 
     @Override
     public String getName() {
+        if (currentPosition == null) {
+            return super.getName();
+        }
         return super.getName() + "-" + currentPosition.toString();
     }
 
@@ -111,6 +114,7 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
             break;
         case SafeMode:
             setGoals(0, 0);
+            break;
         default:
             // How did you get here?
             log.warn("Tried to aim at a position that doesn't have any properties ready!");
