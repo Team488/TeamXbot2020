@@ -16,8 +16,10 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
     private double wheelRpmGoal;
     private double hoodPercentGoal;
 
+    private FieldPosition currentPosition;
+
     public enum FieldPosition {
-        PointBlank, InitiationLaser, InitiationCloseToGoal, TrenchCloseToGoal, TrenchFarFromGoal, InitiationFarFromGoal
+        Custom, PointBlank, InitiationLaser, InitiationCloseToGoal, TrenchCloseToGoal, TrenchFarFromGoal, InitiationFarFromGoal, SafeMode
     }
 
     private final DoubleProperty pointBlankRpmProp;
@@ -42,7 +44,8 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
     public SetWheelAndHoodGoalsCommand(ShooterWheelSubsystem wheel, HoodSubsystem hood, PropertyFactory pf) {
         this.wheel = wheel;
         this.hood = hood;
-        pf.setPrefix(this);
+        pf.setPrefix(this.getClass().toString());
+        currentPosition = FieldPosition.SafeMode;
 
         // TODO: Find values for this one.
         pointBlankRpmProp = pf.createPersistentProperty("Point Blank RPM", 2500);
@@ -71,7 +74,20 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
         this.addRequirements(wheel.getSetpointLock(), hood.getSetpointLock());
     }
 
-    public void setGoals(double wheelRPM, double hoodPercent) {
+    @Override
+    public String getName() {
+        if (currentPosition == null) {
+            return super.getName();
+        }
+        return super.getName() + "-" + currentPosition.toString();
+    }
+
+    public void setCustomGoals(double wheelRPM, double hoodPercent) {
+        currentPosition = FieldPosition.Custom;
+        setGoals(wheelRPM, hoodPercent);
+    }
+
+    private void setGoals(double wheelRPM, double hoodPercent) {
         this.wheelRpmGoal = wheelRPM;
         this.hoodPercentGoal = hoodPercent;
     }
@@ -96,6 +112,9 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
         case InitiationFarFromGoal: // aka "Pass"
             setGoals(initiationFarFromGoalRpmProp.get(), initiationFarfromGoalHoodProp.get());
             break;
+        case SafeMode:
+            setGoals(0, 0);
+            break;
         default:
             // How did you get here?
             log.warn("Tried to aim at a position that doesn't have any properties ready!");
@@ -107,7 +126,7 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
     @Override
     public void initialize() {
         log.info("Initializing");
-
+        log.info("RPM:" + wheelRpmGoal + ", Hood:" + hoodPercentGoal);
         wheel.setTargetRPM(wheelRpmGoal);
         hood.setGoalPercent(hoodPercentGoal);
     }
@@ -115,10 +134,5 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
     @Override
     public void execute() {
         // nothing to do, intentionally
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
     }
 }
