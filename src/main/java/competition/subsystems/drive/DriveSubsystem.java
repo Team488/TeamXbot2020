@@ -112,13 +112,19 @@ public class DriveSubsystem extends BaseDriveSubsystem {
         double leftPower = feedforward.calculate(leftSetPoint);
         double rightPower = feedforward.calculate(rightSetPoint);
 
-        leftMaster.setVoltage(leftPower);
-        rightMaster.setVoltage(rightPower);
+        if (contract.isDriveReady()) 
+        {
+            leftMaster.setVoltage(leftPower);
+            rightMaster.setVoltage(rightPower);
+        }
     }
 
     public void setRawPower(double left, double right) {
-        this.leftMaster.set(left);
-        this.rightMaster.set(right);
+        if (contract.isDriveReady()) 
+        {
+            this.leftMaster.set(left);
+            this.rightMaster.set(right);
+        }
     }
 
     public double getLeftTotalDistance() {

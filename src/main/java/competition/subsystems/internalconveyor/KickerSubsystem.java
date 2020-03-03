@@ -22,7 +22,6 @@ public class KickerSubsystem extends BaseSubsystem { //makes conveyer transport 
 
     private IdealElectricalContract contract;
     public XCANTalon wheelMotor;
-    public XCANTalon rollerMotor;
 
     private final DoubleProperty cellClearTimerProp;
     private final TimeStableValidator cellClearTimer;

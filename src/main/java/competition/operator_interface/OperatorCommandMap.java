@@ -4,39 +4,31 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
-import competition.commandgroups.PassTowardsTargetCommand;
-import competition.commandgroups.PrepareToFireCommand;
-import competition.commandgroups.ShutdownShootingCommand;
-import competition.commandgroups.TrenchSafetyCommand;
+import competition.autonomous.BasicAutonomousCommand;
+import competition.autonomous.DoNothingInAutonomousCommand;
+import competition.autonomous.OnlyDriveAutonomousCommand;
 import competition.commandgroups.ShakeCarouselCommand;
+import competition.commandgroups.ShootCommand;
+import competition.commandgroups.TrenchSafetyCommand;
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand;
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand.FieldPosition;
 import competition.subsystems.arm.commands.LowerArmCommand;
 import competition.subsystems.arm.commands.RaiseArmCommand;
-import competition.subsystems.carousel.commands.CarouselFiringModeCommand;
-import competition.subsystems.carousel.commands.StopCarouselCommand;
 import competition.subsystems.climber.commands.DynamicClimbCommand;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 import competition.subsystems.hood.HoodSubsystem;
-import competition.subsystems.intake.commands.EjectCommand;
-import competition.subsystems.intake.commands.IntakeCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
-import competition.subsystems.shooterwheel.commands.BangBangCommand;
-import competition.subsystems.shooterwheel.commands.ShooterWheelMaintainerCommand;
 import competition.subsystems.turret.TurretSubsystem;
 import competition.subsystems.turret.commands.PointTurretToFieldOrientedHeadingCommand;
 import competition.subsystems.turret.commands.ReCenterTurretCommand;
 import competition.subsystems.turret.commands.TurretRotateToVisionTargetCommand;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import xbot.common.command.DelayViaSupplierCommand;
 import xbot.common.controls.sensors.AdvancedButton;
 import xbot.common.controls.sensors.XXboxController.XboxButton;
+import xbot.common.subsystems.autonomous.SetAutonomousCommand;
 import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
 
 /**
@@ -75,15 +67,44 @@ public class OperatorCommandMap {
     }
 
     @Inject
-    public void setupShooterCommands(OperatorInterface operatorInterface, ShooterWheelSubsystem shooter,
-            ShooterWheelMaintainerCommand singleWheel, BangBangCommand bangBang) {
+    public void setupShooterCommands(OperatorInterface oi, ShooterWheelSubsystem shooter, 
+    Provider<SetWheelAndHoodGoalsCommand> setGoalsProvider, ShootCommand shoot) {
 
+        // MANUAL OVERRIDES
         Command speedUp = new InstantCommand(() -> shooter.changeTargetRPM(500), shooter.getSetpointLock());
         Command slowDown = new InstantCommand(() -> shooter.changeTargetRPM(-500), shooter.getSetpointLock());
-        Command stop = new RunCommand(() -> shooter.stop(), shooter);
+        Command stopShooter = new RunCommand(() -> shooter.stop(), shooter);
 
-        operatorInterface.manualOperatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(speedUp);
-        operatorInterface.manualOperatorGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(slowDown);
+        oi.manualOperatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(speedUp);
+        oi.manualOperatorGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(slowDown);
+        oi.manualOperatorGamepad.getifAvailable(XboxButton.B).whenPressed(stopShooter);
+
+        // REAL COMMANDS
+        
+        Command increaseTrim = new InstantCommand(() -> shooter.changeTrimRPM(100));
+        Command decreaseTrim = new InstantCommand(() -> shooter.changeTrimRPM(-100));
+
+        SetWheelAndHoodGoalsCommand initiationLob = setGoalsProvider.get();
+        SetWheelAndHoodGoalsCommand intitationLaser = setGoalsProvider.get();
+        SetWheelAndHoodGoalsCommand trenchNearGoal = setGoalsProvider.get();
+        SetWheelAndHoodGoalsCommand pass = setGoalsProvider.get();
+        SetWheelAndHoodGoalsCommand safe = setGoalsProvider.get();
+
+        initiationLob.setGoals(FieldPosition.InitiationCloseToGoal);
+        intitationLaser.setGoals(FieldPosition.InitiationLaser);
+        trenchNearGoal.setGoals(FieldPosition.TrenchCloseToGoal);
+        pass.setGoals(FieldPosition.InitiationFarFromGoal);
+        safe.setGoals(FieldPosition.SafeMode);
+
+        bindGoalsAndSafety(oi.operatorGamepad.getifAvailable(XboxButton.A), initiationLob, safe);
+        bindGoalsAndSafety(oi.operatorGamepad.getifAvailable(XboxButton.B), intitationLaser, safe);
+        bindGoalsAndSafety(oi.operatorGamepad.getifAvailable(XboxButton.X), trenchNearGoal, safe);
+        bindGoalsAndSafety(oi.operatorGamepad.getifAvailable(XboxButton.Y), pass, safe);
+
+        oi.operatorGamepad.getifAvailable(XboxButton.RightTrigger).whileHeld(shoot);
+
+        oi.operatorGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(increaseTrim);
+        oi.operatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(decreaseTrim);
     }
 
     @Inject
@@ -91,49 +112,8 @@ public class OperatorCommandMap {
         oi.operatorGamepad.getifAvailable(XboxButton.LeftStick).whileHeld(shake);
     }
 
-    @Inject
-    public void setupOperatorCommandGroups(OperatorInterface oi, PassTowardsTargetCommand passCommand,
-            Provider<PrepareToFireCommand> prepareToFireProvider,
-            Provider<CarouselFiringModeCommand> carouselFiringModeProvider,
-            Provider<ShutdownShootingCommand> stopShootingProvider, Provider<SetWheelAndHoodGoalsCommand> goalsProvider,
-            Provider<ShakeCarouselCommand> unJamCarouselProvider, StopCarouselCommand stopCarousel) {
-
-        var aButton = oi.operatorGamepad.getifAvailable(XboxButton.A);
-                var bButton = oi.operatorGamepad.getifAvailable(XboxButton.B);
-        var xButton = oi.operatorGamepad.getifAvailable(XboxButton.X);
-        var yButton = oi.operatorGamepad.getifAvailable(XboxButton.Y);
-
-        var preheatGoals = goalsProvider.get();
-        var preheatGoalsDelay = goalsProvider.get();
-        var preheatGoalsCooldown = goalsProvider.get();
-        preheatGoals.setGoals(3000, .1);
-        preheatGoalsDelay.setGoals(3000, .1);
-        preheatGoalsCooldown.setGoals(0, 0.1);
-        DelayViaSupplierCommand preheatDelay = new DelayViaSupplierCommand(() -> 1.0);
-        var waitingPhase = new ParallelDeadlineGroup(preheatDelay, preheatGoalsDelay);
-        var cooldownSequence = waitingPhase.andThen(preheatGoalsCooldown);
-
-        twinBindButton(aButton, preheatGoals, cooldownSequence);
-
-        setupFiringCommand(bButton, FieldPosition.TrenchCloseToGoal, goalsProvider.get(),
-                prepareToFireProvider.get(), carouselFiringModeProvider.get(), stopShootingProvider.get());
-
-        setupFiringCommand(xButton, FieldPosition.InitiationCloseToGoal, goalsProvider.get(),
-                prepareToFireProvider.get(), carouselFiringModeProvider.get(), stopShootingProvider.get());
-
-        setupFiringCommand(yButton, FieldPosition.InitiationFarFromGoal, goalsProvider.get(),
-                prepareToFireProvider.get(), carouselFiringModeProvider.get(), stopShootingProvider.get());
-    }
-
-    private void setupFiringCommand(AdvancedButton button, FieldPosition position, SetWheelAndHoodGoalsCommand setGoals,
-            PrepareToFireCommand prepare, CarouselFiringModeCommand runCarousel, ShutdownShootingCommand stopShooting) {
-        setGoals.setGoals(position);
-        var firingSequence = new SequentialCommandGroup(setGoals, prepare, runCarousel);
-        twinBindButton(button, firingSequence, stopShooting);
-    }
-
-    private void twinBindButton(AdvancedButton button, Command pressCommand, Command releaseCommand) {
-        button.whenPressed(pressCommand);
+    private void bindGoalsAndSafety(AdvancedButton button, Command heldCommand, Command releaseCommand) {
+        button.whileHeld(heldCommand);
         button.whenReleased(releaseCommand);
     }
 
@@ -154,10 +134,27 @@ public class OperatorCommandMap {
         oi.manualOperatorGamepad.getPovIfAvailable(180).whenPressed(hoodBack);
     }
 
+    @Inject
     public void setupArmCommands(OperatorInterface oi, RaiseArmCommand raiseArm, LowerArmCommand lowerArm, TrenchSafetyCommand trenchSafety) {
         oi.driverGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(raiseArm);
         oi.driverGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(lowerArm);
 
         oi.driverGamepad.getifAvailable(XboxButton.X).whenPressed(trenchSafety);
+    }
+
+    @Inject
+    public void setupAutonomousCommands(Provider<SetAutonomousCommand> setAuto, BasicAutonomousCommand basicAuto,
+    DoNothingInAutonomousCommand doNothing, OnlyDriveAutonomousCommand onlyDrive)  {
+        var setBasicAuto = setAuto.get();
+        var setDoNothing = setAuto.get();
+        var setOnlyDrive = setAuto.get();
+
+        setBasicAuto.setAutoCommand(basicAuto);
+        setDoNothing.setAutoCommand(doNothing);
+        setOnlyDrive.setAutoCommand(onlyDrive);
+
+        setBasicAuto.includeOnSmartDashboard("Auto Programs/Shoot 3 Then Drive");
+        setDoNothing.includeOnSmartDashboard("Auto Programs/Do Nothing In Auto");
+        setOnlyDrive.includeOnSmartDashboard("Auto Programs/Only Drive In Auto");
     }
 }
