@@ -1,7 +1,11 @@
-package competition.commandgroups;
+package competition.autonomous;
 
 import com.google.inject.Inject;
 
+import org.apache.log4j.Logger;
+
+import competition.commandgroups.ShootCommand;
+import competition.commandgroups.ShutdownShootingCommand;
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand;
 import competition.multisubsystemcommands.SetWheelAndHoodGoalsCommand.FieldPosition;
 import competition.subsystems.drive.commands.AutonomousDriveCommand;
@@ -15,6 +19,7 @@ import xbot.common.properties.PropertyFactory;
 public class BasicAutonomousCommand extends SequentialCommandGroup {
 
     private final DoubleProperty delayBeforeShootProp;
+    private static Logger log = Logger.getLogger(BasicAutonomousCommand.class);
 
     @Inject
     public BasicAutonomousCommand(
@@ -43,5 +48,11 @@ public class BasicAutonomousCommand extends SequentialCommandGroup {
         var driveFortime = new ParallelDeadlineGroup(timeToDrive, driveSequence);
 
         this.addCommands(delayBeforeShoot, shootForTime, driveFortime);
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        log.info("Initializing");
     }
 }
