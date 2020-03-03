@@ -4,6 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
+import competition.autonomous.BasicAutonomousCommand;
+import competition.autonomous.DoNothingInAutonomousCommand;
+import competition.autonomous.OnlyDriveAutonomousCommand;
 import competition.commandgroups.ShakeCarouselCommand;
 import competition.commandgroups.ShootCommand;
 import competition.commandgroups.TrenchSafetyCommand;
@@ -25,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import xbot.common.controls.sensors.AdvancedButton;
 import xbot.common.controls.sensors.XXboxController.XboxButton;
+import xbot.common.subsystems.autonomous.SetAutonomousCommand;
 import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
 
 /**
@@ -130,10 +134,27 @@ public class OperatorCommandMap {
         oi.manualOperatorGamepad.getPovIfAvailable(180).whenPressed(hoodBack);
     }
 
+    @Inject
     public void setupArmCommands(OperatorInterface oi, RaiseArmCommand raiseArm, LowerArmCommand lowerArm, TrenchSafetyCommand trenchSafety) {
         oi.driverGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(raiseArm);
         oi.driverGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(lowerArm);
 
         oi.driverGamepad.getifAvailable(XboxButton.X).whenPressed(trenchSafety);
+    }
+
+    @Inject
+    public void setupAutonomousCommands(Provider<SetAutonomousCommand> setAuto, BasicAutonomousCommand basicAuto,
+    DoNothingInAutonomousCommand doNothing, OnlyDriveAutonomousCommand onlyDrive)  {
+        var setBasicAuto = setAuto.get();
+        var setDoNothing = setAuto.get();
+        var setOnlyDrive = setAuto.get();
+
+        setBasicAuto.setAutoCommand(basicAuto);
+        setDoNothing.setAutoCommand(doNothing);
+        setOnlyDrive.setAutoCommand(onlyDrive);
+
+        setBasicAuto.includeOnSmartDashboard("Auto Programs/Shoot 3 Then Drive");
+        setDoNothing.includeOnSmartDashboard("Auto Programs/Do Nothing In Auto");
+        setOnlyDrive.includeOnSmartDashboard("Auto Programs/Only Drive In Auto");
     }
 }

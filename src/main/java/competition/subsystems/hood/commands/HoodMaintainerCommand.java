@@ -25,7 +25,7 @@ public class HoodMaintainerCommand extends BaseMaintainerCommand {
         super(hood, pf, clf, 1, 0.33);
         this.hood = hood;
         this.oi = oi;
-        pid = pidf.createPIDManager("HoodPID", 3, 0, 1);
+        pid = pidf.createPIDManager(getPrefix()+"HoodPID", 3, 0, 1);
         pid.setMaxOutput(0.5);
         pid.setMinOutput(-0.5);
         this.contract = contract;

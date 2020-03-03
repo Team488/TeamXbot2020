@@ -25,7 +25,7 @@ public class TurretMaintainerCommand extends BaseMaintainerCommand {
         this.turret = turret;
         this.oi = oi;
         decider = clf.createHumanVsMachineDecider(this.getPrefix());
-        pid = pidf.createPIDManager("TurretPID", 0.04, 0, 0);
+        pid = pidf.createPIDManager(this.getPrefix()+"TurretPID", 0.04, 0, 0);
     }
 
     @Override
