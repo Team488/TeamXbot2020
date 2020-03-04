@@ -56,8 +56,8 @@ public class SetWheelAndHoodGoalsCommand extends BaseCommand {
         initiationClosetoGoalHoodProp = pf.createPersistentProperty("Initiation CLOSE to Goal Hood", 0.1);
 
         // Laser for autonomous
-        initiationLaserRpmProp = pf.createPersistentProperty("Initiation LASER Goal RPM", 2400);
-        initiationLaserHoodProp = pf.createPersistentProperty("Initiation LASER Goal Hood", 0.1);
+        initiationLaserRpmProp = pf.createPersistentProperty("Initiation LASER Goal RPM", 3500);
+        initiationLaserHoodProp = pf.createPersistentProperty("Initiation LASER Goal Hood", 0.45);
 
         // Tested, works
         trenchCloseToGoalRpmProp = pf.createPersistentProperty("Trench CLOSE to Goal RPM", 3300);
