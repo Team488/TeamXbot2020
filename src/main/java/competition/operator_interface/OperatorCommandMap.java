@@ -18,6 +18,7 @@ import competition.subsystems.climber.commands.DynamicClimbCommand;
 import competition.subsystems.drive.commands.ArcadeDriveCommand;
 import competition.subsystems.drive.commands.TankDriveWithJoysticksCommand;
 import competition.subsystems.hood.HoodSubsystem;
+import competition.subsystems.internalconveyor.KickerSubsystem;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;
 import competition.subsystems.turret.TurretSubsystem;
 import competition.subsystems.turret.commands.PointTurretToFieldOrientedHeadingCommand;
@@ -156,5 +157,14 @@ public class OperatorCommandMap {
         setBasicAuto.includeOnSmartDashboard("Auto Programs/Shoot 3 Then Drive");
         setDoNothing.includeOnSmartDashboard("Auto Programs/Do Nothing In Auto");
         setOnlyDrive.includeOnSmartDashboard("Auto Programs/Only Drive In Auto");
+    }
+
+    @Inject
+    public void setupKickerCommands(OperatorInterface oi, KickerSubsystem kicker) {
+        Command kickerLift = new InstantCommand(() -> kicker.setLiftPowerProp(1), kicker.lift());
+        Command kickerReverse = new InstantCommand(() -> kicker.setReversePowerProp(-.15), kicker.reverse());
+
+        oi.manualOperatorGamepad.getifAvailable(XboxButton.A).whenPressed(kickerLift);
+        oi.manualOperatorGamepad.getifAvailable(XboxButton.B).whenPressed(kickerReverse);
     }
 }
