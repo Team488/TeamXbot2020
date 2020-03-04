@@ -191,4 +191,16 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         }
         return false;
     }
+
+    public double getRange() {
+        return rangeProp.get();
+    }
+
+    @Override
+    public boolean isMaintainerAtGoal() {
+        if (!contract.isHoodReady()) {
+            return true;
+        }
+        return super.isMaintainerAtGoal();
+    }
 }

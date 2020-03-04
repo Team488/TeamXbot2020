@@ -224,4 +224,12 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     public void setTargetValue(double value) {
         setGoalAngle(value);
     }
+
+    @Override
+    public boolean isMaintainerAtGoal() {
+        if (!contract.isTurretReady()) {
+            return true;
+        }
+        return super.isMaintainerAtGoal();
+    }
 }

@@ -14,7 +14,6 @@ import competition.subsystems.hood.HoodSubsystem;
 import competition.subsystems.hood.commands.HoodMaintainerCommand;
 import competition.subsystems.intake.IntakeSubsystem;
 import competition.subsystems.intake.commands.CollectViaTriggersCommand;
-import competition.subsystems.intake.commands.StopIntakeCommand;
 import competition.subsystems.internalconveyor.KickerSubsystem;
 import competition.subsystems.internalconveyor.commands.KickerViaTriggerCommand;
 import competition.subsystems.shooterwheel.ShooterWheelSubsystem;

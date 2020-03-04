@@ -76,6 +76,10 @@ public class CarouselManagerCommand extends BaseCommand {
             default:
                 break;
             }
+        } else {
+            direction = CarouselDirection.Forward;
+            forwardValidator.checkStable(false);
+            reverseValidator.checkStable(false);
         }
 
         carousel.setPower(power);

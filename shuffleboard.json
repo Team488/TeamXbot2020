@@ -1,6 +1,148 @@
 {
   "tabPane": [
     {
+      "title": "Competition",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "6,0": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Current autonomous command name",
+              "_title": "SmartDashboard/Current autonomous command name"
+            }
+          },
+          "1,1": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/HoodMaintainerCommand/Subsystem Ready",
+              "_title": "SmartDashboard/HoodMaintainerCommand/Subsystem Ready",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "1,3": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/TurretMaintainerCommand/Subsystem Ready",
+              "_title": "SmartDashboard/TurretMaintainerCommand/Subsystem Ready",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "1,2": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelMaintainerCommand/Subsystem Ready",
+              "_title": "SmartDashboard/ShooterWheelMaintainerCommand/Subsystem Ready",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "1,0": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/KickerSubsystem/Is Kicker Clear",
+              "_title": "SmartDashboard/KickerSubsystem/Is Kicker Clear",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "4,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/CommonAutonomousSubsystem/Delay Before Autonomous",
+              "_title": "SmartDashboard/CommonAutonomousSubsystem/Delay Before Autonomous"
+            }
+          },
+          "4,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/CommonAutonomousSubsystem/Simple Drive Power",
+              "_title": "SmartDashboard/CommonAutonomousSubsystem/Simple Drive Power"
+            }
+          },
+          "4,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/CommonAutonomousSubsystem/Simple Drive Time",
+              "_title": "SmartDashboard/CommonAutonomousSubsystem/Simple Drive Time"
+            }
+          },
+          "6,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Auto Programs/Do Nothing In Auto",
+              "_title": "SmartDashboard/Auto Programs/Do Nothing In Auto"
+            }
+          },
+          "6,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Auto Programs/Only Drive In Auto",
+              "_title": "SmartDashboard/Auto Programs/Only Drive In Auto"
+            }
+          },
+          "6,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Auto Programs/Shoot 3 Then Drive",
+              "_title": "SmartDashboard/Auto Programs/Shoot 3 Then Drive"
+            }
+          }
+        }
+      }
+    },
+    {
       "title": "LiveWindow",
       "autoPopulate": true,
       "autoPopulatePrefix": "LiveWindow/",
