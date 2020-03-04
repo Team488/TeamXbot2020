@@ -9,17 +9,17 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isKickerReady() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isIntakeReady() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isHoodReady() {
-        return false;
+        return true;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isShooterWheelReady() {
-        return false;
+        return true;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isCarouselReady() {
-        return false;
+        return true;
     }
 
     @Override
@@ -49,6 +49,6 @@ public class ActualElectricalContract extends IdealElectricalContract {
 
     @Override
     public boolean isDriveReady() {
-        return false;
+        return true;
     }
 }
