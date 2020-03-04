@@ -1,6 +1,7 @@
 package competition.subsystems.turret;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,7 +35,7 @@ public class TurretRotateToVisionTargetCommandRotationTest extends BaseCompetiti
     public double ambanYawToTarget;
 
     @Parameter(4)
-    public double expectedTarget;
+    public double expectedGoalAngle;
 
     @Parameters
     public static Collection<Object[]> data() {
@@ -51,25 +52,32 @@ public class TurretRotateToVisionTargetCommandRotationTest extends BaseCompetiti
         TurretSubsystem turret = this.injector.getInstance(TurretSubsystem.class);
         VisionSubsystem vision = this.injector.getInstance(VisionSubsystem.class);
         NetworkTableInstance networkTableInstance = this.injector.getInstance(NetworkTableInstance.class);
-        
-        TurretRotateToVisionTargetCommand rotateToVisionTargetCommand =
-            new TurretRotateToVisionTargetCommand(turret, vision);
+
+        setRawTurretAngle(turret, 0);
 
         turret.calibrateTurret();
         setRawTurretAngle(turret, this.initialAngle - 90);
         turret.setGoalAngle(turret.getCurrentAngle());
 
-        assertEquals(this.initialAngle, turret.getCurrentAngle(), 0.001);
+        double currentAngle = turret.getCurrentAngle();
+        assertEquals(this.initialAngle, currentAngle, 0.001);
+        assertTrue(currentAngle >= turret.getMinAngle());
+        assertTrue(currentAngle <= turret.getMaxAngle());
 
         NetworkTable nt = networkTableInstance.getTable("amban");
         nt.getEntry("active").setBoolean(this.ambanActive);
         nt.getEntry("fixAcquired").setBoolean(this.ambanFixAcquired);
         nt.getEntry("yawToTarget").setNumber(this.ambanYawToTarget);
+        
+        TurretRotateToVisionTargetCommand rotateToVisionTargetCommand = this.injector.getInstance(TurretRotateToVisionTargetCommand.class);
 
         rotateToVisionTargetCommand.initialize();
         rotateToVisionTargetCommand.execute();
 
-        assertEquals(this.expectedTarget, turret.getGoalAngle(), 0.001);
+        double actualGoalAngle = turret.getGoalAngle();
+        assertEquals(this.expectedGoalAngle, actualGoalAngle, 0.001);
+        assertTrue(actualGoalAngle >= turret.getMinAngle());
+        assertTrue(actualGoalAngle <= turret.getMaxAngle());
     }
 
     private void setRawTurretAngle(TurretSubsystem turret, double angle) {

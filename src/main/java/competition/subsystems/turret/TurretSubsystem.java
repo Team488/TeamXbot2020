@@ -11,6 +11,8 @@ import xbot.common.command.BaseSetpointSubsystem;
 import xbot.common.command.XScheduler;
 import xbot.common.controls.actuators.XCANTalon;
 import xbot.common.injection.wpi_factories.CommonLibFactory;
+import xbot.common.math.ContiguousDouble;
+import xbot.common.math.ContiguousHeading;
 import xbot.common.math.MathUtils;
 import xbot.common.properties.BooleanProperty;
 import xbot.common.properties.DoubleProperty;
@@ -194,7 +196,7 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
     }
 
     public void setGoalAngle(double angle) {
-        goalAngle = angle;
+        goalAngle = wrapGoalAngle(angle);
     }
 
     public double getGoalAngle() {
@@ -231,5 +233,29 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
             return true;
         }
         return super.isMaintainerAtGoal();
+    }
+
+    public double wrapGoalAngle(double goalAngle) {
+        double angleRange = getMaxAngle() - getMinAngle();
+        double deadbandSize = 360 - angleRange;
+
+        double minBound = getMinAngle() - (deadbandSize / 2);
+
+        ContiguousHeading contiguousHeading = new ContiguousHeading(goalAngle);
+        double shiftMagnitude = minBound - contiguousHeading.getLowerBound();
+
+        contiguousHeading.shiftBounds(shiftMagnitude);
+
+        double wrappedAngle = contiguousHeading.getValue();
+
+        if (wrappedAngle < getMinAngle()) {
+            log.warn("target angle is within deadband");
+            return getMinAngle();
+        } else if (wrappedAngle > getMaxAngle()) {
+            log.warn("target angle is within deadband");
+            return getMaxAngle();
+        }
+
+        return wrappedAngle;
     }
 }
