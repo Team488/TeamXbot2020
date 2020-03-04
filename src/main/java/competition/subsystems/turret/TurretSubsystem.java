@@ -69,6 +69,7 @@ public class TurretSubsystem extends BaseSetpointSubsystem {
                 calibrateTurret();
             }
 
+            setGoalAngle(getCurrentAngle());
         }
 
         scheduler.registerSubsystem(this);
