@@ -15,6 +15,7 @@ public class SendInitialPositionToRaspberryCommand extends BaseCommand{
     public SendInitialPositionToRaspberryCommand(VisionSubsystem eyes, PoseSubsystem pos){
         this.vision = eyes;
         this.pose = pos;
+        this.addRequirements(this.vision);
     }
 
     @Override
@@ -24,9 +25,10 @@ public class SendInitialPositionToRaspberryCommand extends BaseCommand{
     @Override
     public void initialize() {
         log.info("Initializing");
-        double theta = pose.getCurrentFieldPose().getHeading().getValue(); // Theta value
-        double x = pose.getCurrentFieldPose().getPoint().x; // XY Values
-        double y = pose.getCurrentFieldPose().getPoint().y; // XY Values
+
+        final double theta = pose.getCurrentFieldPose().getHeading().getValue(); // Theta value
+        final double x = pose.getCurrentFieldPose().getPoint().x; // XY Values
+        final double y = pose.getCurrentFieldPose().getPoint().y; // XY Values
 
         vision.sendXYThetaPos(x, y, theta);
 
