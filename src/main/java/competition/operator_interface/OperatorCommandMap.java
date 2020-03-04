@@ -4,6 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
+import competition.autonomous.BasicAutonomousCommand;
+import competition.autonomous.DoNothingInAutonomousCommand;
+import competition.autonomous.OnlyDriveAutonomousCommand;
 import competition.commandgroups.ShakeCarouselCommand;
 import competition.commandgroups.ShootCommand;
 import competition.commandgroups.TrenchSafetyCommand;
@@ -21,10 +24,11 @@ import competition.subsystems.turret.commands.PointTurretToFieldOrientedHeadingC
 import competition.subsystems.turret.commands.ReCenterTurretCommand;
 import competition.subsystems.turret.commands.TurretRotateToVisionTargetCommand;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import xbot.common.command.NamedInstantCommand;
 import xbot.common.controls.sensors.AdvancedButton;
 import xbot.common.controls.sensors.XXboxController.XboxButton;
+import xbot.common.subsystems.autonomous.SetAutonomousCommand;
 import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
 
 /**
@@ -52,8 +56,8 @@ public class OperatorCommandMap {
             TurretRotateToVisionTargetCommand rotateToVisionTarget,
             PointTurretToFieldOrientedHeadingCommand pointDownrange,
             ReCenterTurretCommand recenter) {
-        Command calibrate = new InstantCommand(() -> turret.calibrateTurret());
-        Command oriented90 = new InstantCommand(() -> turret.setFieldOrientedGoalAngle(90));
+        Command calibrate = new NamedInstantCommand("TurretCalibrateInstantCommand", () -> turret.calibrateTurret());
+        Command oriented90 = new NamedInstantCommand("TurretOriented90InstantCommand", () -> turret.setFieldOrientedGoalAngle(90));
 
         // oi.operatorGamepad.getifAvailable(XboxButton.Start).whenPressed(rotateToVisionTarget);
         // oi.operatorGamepad.getifAvailable(XboxButton.X).whileHeld(pointDownrange);
@@ -67,8 +71,8 @@ public class OperatorCommandMap {
     Provider<SetWheelAndHoodGoalsCommand> setGoalsProvider, ShootCommand shoot) {
 
         // MANUAL OVERRIDES
-        Command speedUp = new InstantCommand(() -> shooter.changeTargetRPM(500), shooter.getSetpointLock());
-        Command slowDown = new InstantCommand(() -> shooter.changeTargetRPM(-500), shooter.getSetpointLock());
+        Command speedUp = new NamedInstantCommand("ShooterSpeedUp500RPMInstantCommand", () -> shooter.changeTargetRPM(500), shooter.getSetpointLock());
+        Command slowDown = new NamedInstantCommand("ShooterSlowDown500RPMInstantCommand", () -> shooter.changeTargetRPM(-500), shooter.getSetpointLock());
         Command stopShooter = new RunCommand(() -> shooter.stop(), shooter);
 
         oi.manualOperatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(speedUp);
@@ -77,8 +81,8 @@ public class OperatorCommandMap {
 
         // REAL COMMANDS
         
-        Command increaseTrim = new InstantCommand(() -> shooter.changeTrimRPM(100));
-        Command decreaseTrim = new InstantCommand(() -> shooter.changeTrimRPM(-100));
+        Command increaseTrim = new NamedInstantCommand("ShooterIncreaseTrim100RPMInstantCommand", () -> shooter.changeTrimRPM(100));
+        Command decreaseTrim = new NamedInstantCommand("ShooterDecreaseTrim100RPMInstantCommand", () -> shooter.changeTrimRPM(-100));
 
         SetWheelAndHoodGoalsCommand initiationLob = setGoalsProvider.get();
         SetWheelAndHoodGoalsCommand intitationLaser = setGoalsProvider.get();
@@ -121,19 +125,35 @@ public class OperatorCommandMap {
     @Inject
     public void setUpHoodCommands(OperatorInterface oi, HoodSubsystem hood) {
         oi.manualOperatorGamepad.getifAvailable(XboxButton.LeftStick)
-                .whenPressed(new InstantCommand(hood::calibrateHood));
-
-        var hoodForward = new InstantCommand(() -> hood.changeTargetPercent(0.05), hood.getSetpointLock());
-        var hoodBack = new InstantCommand(() -> hood.changeTargetPercent(-0.05), hood.getSetpointLock());
+                .whenPressed(new NamedInstantCommand("HoodCalibrate", (hood::calibrateHood)));
+        var hoodForward = new NamedInstantCommand("HoodForwardInstantCommand", () -> hood.changeTargetPercent(0.05), hood.getSetpointLock());
+        var hoodBack = new NamedInstantCommand("HoodBackInstantCommand", () -> hood.changeTargetPercent(-0.05), hood.getSetpointLock());
 
         oi.manualOperatorGamepad.getPovIfAvailable(0).whenPressed(hoodForward);
         oi.manualOperatorGamepad.getPovIfAvailable(180).whenPressed(hoodBack);
     }
 
+    @Inject
     public void setupArmCommands(OperatorInterface oi, RaiseArmCommand raiseArm, LowerArmCommand lowerArm, TrenchSafetyCommand trenchSafety) {
         oi.driverGamepad.getifAvailable(XboxButton.LeftBumper).whenPressed(raiseArm);
         oi.driverGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(lowerArm);
 
         oi.driverGamepad.getifAvailable(XboxButton.X).whenPressed(trenchSafety);
+    }
+
+    @Inject
+    public void setupAutonomousCommands(Provider<SetAutonomousCommand> setAuto, BasicAutonomousCommand basicAuto,
+    DoNothingInAutonomousCommand doNothing, OnlyDriveAutonomousCommand onlyDrive)  {
+        var setBasicAuto = setAuto.get();
+        var setDoNothing = setAuto.get();
+        var setOnlyDrive = setAuto.get();
+
+        setBasicAuto.setAutoCommand(basicAuto);
+        setDoNothing.setAutoCommand(doNothing);
+        setOnlyDrive.setAutoCommand(onlyDrive);
+
+        setBasicAuto.includeOnSmartDashboard("Auto Programs/Shoot 3 Then Drive");
+        setDoNothing.includeOnSmartDashboard("Auto Programs/Do Nothing In Auto");
+        setOnlyDrive.includeOnSmartDashboard("Auto Programs/Only Drive In Auto");
     }
 }
