@@ -21,11 +21,14 @@ public class VisionSubsystem extends BaseSubsystem {
     private final PoseSubsystem pose;
 
     private final NetworkTableInstance netTableInstance;
-    
+
     private final BooleanProperty ambanActiveProperty;
     private final BooleanProperty ambanFixAcquiredProperty;
     private final DoubleProperty ambanYawToTargetProperty;
-    
+    public DoubleProperty initialX;
+    public DoubleProperty initialY;
+    public DoubleProperty initialTheta;
+
     final LoggingLatch ambanFixAquiredLogLatch;
     final LoggingLatch ambanFixLostLogLatch;
 
@@ -34,6 +37,10 @@ public class VisionSubsystem extends BaseSubsystem {
             NetworkTableInstance netTableInstance, PoseSubsystem pose) {
         log.info("Creating VisionSubsystem");
         pf.setPrefix(this);
+
+        this.initialX = pf.createEphemeralProperty("Initial X Position", 0);
+        this.initialY = pf.createEphemeralProperty("Initial Y Position", 0);
+        this.initialTheta = pf.createEphemeralProperty("Initial Heading", 0);
 
         this.pose = pose;
         this.netTableInstance = netTableInstance;
@@ -88,6 +95,18 @@ public class VisionSubsystem extends BaseSubsystem {
         poseTable.getEntry("pitch").setNumber(this.pose.getRobotPitch());
         poseTable.getEntry("roll").setNumber(this.pose.getRobotRoll());
         poseTable.getEntry("yawAngularVelocity").setNumber(this.pose.getYawAngularVelocity());
+        poseTable.getEntry("rawXVelocity").setNumber(this.pose.imu.getDeviceVelocityX());
+        poseTable.getEntry("rawYVelocity").setNumber(this.pose.imu.getDeviceVelocityY());
+        poseTable.getEntry("rawZVelocity").setNumber(this.pose.imu.getDeviceVelocityZ());
+        poseTable.getEntry("rawXAccel").setNumber(this.pose.imu.getDeviceRawAccelX());
+        poseTable.getEntry("rawYAccel").setNumber(this.pose.imu.getDeviceRawAccelY());
+        poseTable.getEntry("rawZAccel").setNumber(this.pose.imu.getDeviceRawAccelZ());
+    }
+
+    public void sendXYThetaPos(double x, double y, double theta){
+        this.initialX.set(x);
+        this.initialY.set(y);
+        this.initialTheta.set(theta);
     }
 
     private NetworkTable getAmbanNetworkTable() {

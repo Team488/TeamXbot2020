@@ -23,7 +23,7 @@ public class PoseSubsystem extends BasePoseSubsystem {
     final DoubleProperty wpiRobotHeading;
 
     @Inject
-    public PoseSubsystem(CommonLibFactory clf, PropertyFactory propManager, DriveSubsystem drive) {
+    public PoseSubsystem(CommonLibFactory clf, PropertyFactory propManager, DriveSubsystem drive, PropertyFactory pf) {
         super(clf, propManager);
 
         this.drive = drive;
