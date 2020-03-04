@@ -26,6 +26,6 @@ public class KickerReverseCommandTest extends BaseCompetitionTest{
 
         reverse.execute();
 
-        assertEquals(-0.25, kicker.rollerMotor.getMotorOutputPercent(), 0.001);
+        assertEquals(-0.25, kicker.wheelMotor.getMotorOutputPercent(), 0.001);
     }
 }

@@ -19,14 +19,4 @@ public class KickerLiftCommandTest extends BaseCompetitionTest{
         assertEquals(1 , kicker.wheelMotor.getMotorOutputPercent(), 0.001);
     }
 
-    @Test
-    public void kickerLiftRoller(){
-        KickerSubsystem kicker = this.injector.getInstance(KickerSubsystem.class);
-        KickerLiftCommand lift = this.injector.getInstance(KickerLiftCommand.class);
-
-        lift.execute();
-
-        assertEquals(1, kicker.rollerMotor.getMotorOutputPercent(), 0.001);
-    }
-
 }
