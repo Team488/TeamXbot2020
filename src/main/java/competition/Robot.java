@@ -1,7 +1,7 @@
 
 package competition;
 
-import competition.commandgroups.BasicAutonomousCommand;
+import competition.autonomous.BasicAutonomousCommand;
 import competition.operator_interface.OperatorCommandMap;
 import competition.subsystems.SubsystemDefaultCommandMap;
 import xbot.common.command.BaseRobot;
