@@ -24,7 +24,6 @@ import competition.subsystems.turret.commands.PointTurretToFieldOrientedHeadingC
 import competition.subsystems.turret.commands.ReCenterTurretCommand;
 import competition.subsystems.turret.commands.TurretRotateToVisionTargetCommand;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import xbot.common.command.NamedInstantCommand;
 import xbot.common.controls.sensors.AdvancedButton;
@@ -72,8 +71,8 @@ public class OperatorCommandMap {
     Provider<SetWheelAndHoodGoalsCommand> setGoalsProvider, ShootCommand shoot) {
 
         // MANUAL OVERRIDES
-        Command speedUp = new NamedInstantCommand("ShooterSpeedUpInstantCommand", () -> shooter.changeTargetRPM(500), shooter.getSetpointLock());
-        Command slowDown = new NamedInstantCommand("ShooterSlowDownInstantCommand", () -> shooter.changeTargetRPM(-500), shooter.getSetpointLock());
+        Command speedUp = new NamedInstantCommand("ShooterSpeedUp500RPMInstantCommand", () -> shooter.changeTargetRPM(500), shooter.getSetpointLock());
+        Command slowDown = new NamedInstantCommand("ShooterSlowDown500RPMInstantCommand", () -> shooter.changeTargetRPM(-500), shooter.getSetpointLock());
         Command stopShooter = new RunCommand(() -> shooter.stop(), shooter);
 
         oi.manualOperatorGamepad.getifAvailable(XboxButton.RightBumper).whenPressed(speedUp);
@@ -82,8 +81,8 @@ public class OperatorCommandMap {
 
         // REAL COMMANDS
         
-        Command increaseTrim = new NamedInstantCommand("ShooterIncreaseTrimInstantCommand", () -> shooter.changeTrimRPM(100));
-        Command decreaseTrim = new NamedInstantCommand("ShooterDecreaseTrimInstantCommand", () -> shooter.changeTrimRPM(-100));
+        Command increaseTrim = new NamedInstantCommand("ShooterIncreaseTrim100RPMInstantCommand", () -> shooter.changeTrimRPM(100));
+        Command decreaseTrim = new NamedInstantCommand("ShooterDecreaseTrim100RPMInstantCommand", () -> shooter.changeTrimRPM(-100));
 
         SetWheelAndHoodGoalsCommand initiationLob = setGoalsProvider.get();
         SetWheelAndHoodGoalsCommand intitationLaser = setGoalsProvider.get();
@@ -126,7 +125,7 @@ public class OperatorCommandMap {
     @Inject
     public void setUpHoodCommands(OperatorInterface oi, HoodSubsystem hood) {
         oi.manualOperatorGamepad.getifAvailable(XboxButton.LeftStick)
-                .whenPressed(new NamedInstantCommand("HoodCalibrateInstantCommand", (hood::calibrateHood)));
+                .whenPressed(new NamedInstantCommand("HoodCalibrate", (hood::calibrateHood)));
         var hoodForward = new NamedInstantCommand("HoodForwardInstantCommand", () -> hood.changeTargetPercent(0.05), hood.getSetpointLock());
         var hoodBack = new NamedInstantCommand("HoodBackInstantCommand", () -> hood.changeTargetPercent(-0.05), hood.getSetpointLock());
 
