@@ -95,6 +95,12 @@ public class VisionSubsystem extends BaseSubsystem {
         poseTable.getEntry("pitch").setNumber(this.pose.getRobotPitch());
         poseTable.getEntry("roll").setNumber(this.pose.getRobotRoll());
         poseTable.getEntry("yawAngularVelocity").setNumber(this.pose.getYawAngularVelocity());
+        poseTable.getEntry("rawXVelocity").setNumber(this.pose.imu.getDeviceVelocityX());
+        poseTable.getEntry("rawYVelocity").setNumber(this.pose.imu.getDeviceVelocityY());
+        poseTable.getEntry("rawZVelocity").setNumber(this.pose.imu.getDeviceVelocityZ());
+        poseTable.getEntry("rawXAccel").setNumber(this.pose.imu.getDeviceRawAccelX());
+        poseTable.getEntry("rawYAccel").setNumber(this.pose.imu.getDeviceRawAccelY());
+        poseTable.getEntry("rawZAccel").setNumber(this.pose.imu.getDeviceRawAccelZ());
     }
 
     public void sendXYThetaPos(double x, double y, double theta){
