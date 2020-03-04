@@ -60,6 +60,7 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
         }
 
         calibrationStartTime = -1;
+        setGoalPercent(getPercentExtended());
 
         scheduler.registerSubsystem(this);
     }
@@ -67,6 +68,7 @@ public class HoodSubsystem extends BaseSetpointSubsystem{
     public void calibrateHood(){
         calibrationOffsetProp.set(getCurrentRawPosition());
         setIsCalibrated(true);
+        setGoalPercent(getPercentExtended());
         calibrationStartTime = -1;
     }
     
