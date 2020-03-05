@@ -18,16 +18,16 @@ public class BestShotAdjustment extends BaseCommand{
     final PoseSubsystem pose;
     final TurretSubsystem turret;
     final VisionSubsystem vision;
-    final DoubleProperty minAngle;
-    final DoubleProperty maxAngle;
-    final DoubleProperty maxvelocityProperty;
-    final DoubleProperty heightToGoal;
-    final DoubleProperty incrementShotAdjustment;
-    final DoubleProperty initialHeight;
     final HoodSubsystem hood;
-    public double bestAngle;
-    public double bestvelocity;
 
+    public DoubleProperty minAngle;
+    public DoubleProperty maxAngle;
+    public DoubleProperty maxVelocityProperty;
+    public DoubleProperty heightToGoal;
+    public DoubleProperty initialHeight;
+
+    public double bestAngle;
+    public double bestVelocity;
 
     @Inject
     public BestShotAdjustment( final PropertyFactory pf,  final ShooterWheelSubsystem wheel, 
@@ -38,10 +38,10 @@ public class BestShotAdjustment extends BaseCommand{
         this.wheel = wheel;
         this.pose = pose;
         this.turret = turret;
-        incrementShotAdjustment = pf.createPersistentProperty("Increment Shot Adjustment", .5);
+
         minAngle = pf.createPersistentProperty("MinAngle", 0);
         maxAngle = pf.createPersistentProperty("MaxAngle", 60);
-        maxvelocityProperty = pf.createPersistentProperty("Maxvelocity", 20);
+        maxVelocityProperty = pf.createPersistentProperty("Maxvelocity", 40);
         heightToGoal = pf.createPersistentProperty("Height of goal", 8.5);
         initialHeight = pf.createPersistentProperty("Initial Height", 2.5);
         this.addRequirements(this.wheel);
@@ -54,36 +54,33 @@ public class BestShotAdjustment extends BaseCommand{
     }
 
     public void execute(){
+        
         hood.setAngle(bestAngle);
-        wheel.setTargetValue(wheel.velocityToRPM(bestvelocity));
+        wheel.setTargetValue(wheel.velocityToRPM(bestVelocity));
     }
 
     public void findBestShot(double distance)
     {
-        double tvelocity = 4;
-        double angle = (findAngleWvelocity(tvelocity, distance)/Math.PI) * 180;
-        while(!(angleIsPossible(angle*Math.PI/180, distance)&& tvelocity <= 5400)){
-            tvelocity += incrementShotAdjustment.get();
-        }
-        bestAngle = angle;
-        bestvelocity = tvelocity;
+        bestAngle = findAngle(distance);
+        bestVelocity = findVelocity(distance);
     }
 
-    public double findAngleWvelocity(final double velocity, final double distance)
+    public double findAngle(double distance)
     {
-        return 0.5*Math.asin((32*distance)/(velocity * velocity));
+        return Math.atan(2*((heightToGoal.get() - initialHeight.get())/(distance)));
     }
 
-    public double findvelocityWAngle(final double theta, final double distance, final double initHeight){
-        return Math.sqrt(1/(Math.pow(Math.cos(theta), 2)*(initHeight + (distance * Math.tan(theta)-heightToGoal.get()))));
+    public double findVelocity(double distance) {
+        double num = (Math.sqrt(64 * (heightToGoal.get() - initialHeight.get())));
+        double den = Math.sin(findAngle(distance));
+        return num/den;
     }
 
-    public boolean angleIsPossible(final double angle, final double distance)
+    public boolean shotIsPossible(double angle, double velosity)
     {
-        final double heightOfGoal = heightToGoal.get();
-        final double heightAtPeak = initialHeight.get() + (maxvelocityProperty.get() * Math.sin(angle) * distance -(32) * Math.pow( distance, 2));
-
-        return Math.abs(heightOfGoal-heightAtPeak) < .2;
+        boolean angleIsPossible = angle>=minAngle.get() && angle<=maxAngle.get();
+        boolean velosityIsPossible = velosity > 0 && velosity < maxVelocityProperty.get();
+        return angleIsPossible && velosityIsPossible;
     }
 
 
