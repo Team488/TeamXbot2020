@@ -138,11 +138,11 @@ public class TurretSubsystemTest extends BaseCompetitionTest {
         verifyRobotHeading(-45);
         // Robot pointed "Southeast"
         turret.setFieldOrientedGoalAngle(90);
-        verifyTurretgoal(225);
+        verifyTurretgoal(225 - 360); // wrapped due to range
         turret.setFieldOrientedGoalAngle(45);
         verifyTurretgoal(180);
         turret.setFieldOrientedGoalAngle(135);
-        verifyTurretgoal(270);
+        verifyTurretgoal(270 - 360); // wrapped due to range
 
         changeMockGyroHeading(-90);
         verifyRobotHeading(-135);

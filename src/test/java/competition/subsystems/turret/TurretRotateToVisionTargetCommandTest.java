@@ -15,8 +15,7 @@ public class TurretRotateToVisionTargetCommandTest extends BaseCompetitionTest {
         TurretSubsystem turret = this.injector.getInstance(TurretSubsystem.class);
         VisionSubsystem vision = this.injector.getInstance(VisionSubsystem.class);
 
-        TurretRotateToVisionTargetCommand rotateToVisionTargetCommand =
-            new TurretRotateToVisionTargetCommand(turret, vision);
+        TurretRotateToVisionTargetCommand rotateToVisionTargetCommand = this.injector.getInstance(TurretRotateToVisionTargetCommand.class);
 
         double initialAngle = turret.getCurrentAngle();
 
